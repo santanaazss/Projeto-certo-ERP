@@ -1,247 +1,429 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato - ERP Flash</title>
-
+    <title>Contato | ERP Flash</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/sidebar.css">
-
     <style>
+        /* ============================================================
+           VARIÁVEIS DO DARK MODE (LIGHT & DARK)
+           ============================================================ */
+        :root {
+            --bg-page:        #f4f7fb;
+            --bg-sidebar:     #0f172a;
+            --bg-topbar:      rgba(255, 255, 255, .92);
+            --bg-footer:      #ffffff;
+            --bg-card:        #ffffff;
+            --bg-icon-circle: #f8fafc;
+            --text-primary:   #1e293b;
+            --text-secondary: #64748b;
+            --text-sidebar:   #cbd5e1;
+            --text-sidebar-active: #ffffff;
+            --accent:         #2563eb;
+            --accent-light:   #eff6ff;
+            --border:         #e2e8f0;
+            --toggle-track:   #e2e8f0;
+            --toggle-thumb:   #ffffff;
+            --transition:     .35s cubic-bezier(.4,0,.2,1);
+        }
+
+        [data-theme="dark"] {
+            --bg-page:        #060d1a;
+            --bg-sidebar:     #080f1e;
+            --bg-topbar:      rgba(13, 21, 38, 0.92);
+            --bg-footer:      #0d1526;
+            --bg-card:        #111827;
+            --bg-icon-circle: #1e293b;
+            --text-primary:   #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-sidebar:   #94a3b8;
+            --text-sidebar-active: #ffffff;
+            --accent:         #3b82f6;
+            --accent-light:   #1e293b;
+            --border:         #1e293b;
+            --toggle-track:   #1e40af;
+            --toggle-thumb:   #e0f2fe;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: #f4f7fb; color: #0f172a; min-height: 100vh; }
+        
+        body { 
+            background: var(--bg-page) !important; 
+            color: var(--text-primary) !important; 
+            min-height: 100vh; 
+            transition: background var(--transition), color var(--transition);
+        }
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); min-height: 100vh; display: flex; flex-direction: column; }
-
-        .topbar {
-            background: white;
-            padding: 18px 35px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #e2e8f0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        
+        /* Topbar */
+        .topbar { 
+            background: var(--bg-topbar) !important; 
+            backdrop-filter: blur(12px); 
+            padding: 18px 35px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid var(--border) !important; 
+            position: sticky; 
+            top: 0; 
+            z-index: 999; 
+            transition: background var(--transition), border-color var(--transition);
         }
+
+        .breadcrumb { font-weight: 500; color: var(--text-secondary) !important; transition: color var(--transition); }
 
         .user-profile { display: flex; align-items: center; gap: 16px; }
-        .user-info { text-align: right; }
-        .user-name { font-weight: 600; }
-        .user-role { font-size: 13px; color: #64748b; }
-        .user-profile img { width: 45px; height: 45px; border-radius: 50%; }
+        .user-info { display: flex; flex-direction: column; text-align: right; }
+        .user-name { font-weight: 600; color: var(--text-primary) !important; transition: color var(--transition); }
+        .user-role { font-size: 13px; color: var(--text-secondary) !important; transition: color var(--transition); }
+        .user-profile img { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--accent); transition: border-color var(--transition); }
 
-        .content { padding: 40px; }
+        .content { padding: 40px; flex: 1; position: relative; z-index: 1; }
+        
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 { font-size: 42px; color: var(--text-primary) !important; margin-bottom: 12px; font-weight: 800; transition: color var(--transition); }
+        .page-header p { font-size: 17px; color: var(--text-secondary) !important; max-width: 600px; margin: 0 auto; line-height: 1.7; transition: color var(--transition); }
 
-        .page-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .page-header h1 {
-            font-size: 40px;
-            color: #0f172a;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-
-        .page-header p {
-            font-size: 16px;
-            color: #64748b;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* GRID DE CONTATOS */
-        .contact-grid {
-            display: grid;
+        /* Grid de Contatos */
+        .contact-grid { 
+            display: grid; 
             grid-template-columns: repeat(4, 1fr); 
-            gap: 25px;
-            max-width: 1400px;
-            margin: 0 auto;
+            gap: 25px; 
+            max-width: 1400px; 
+            margin: 0 auto; 
         }
 
-        .contact-card {
-            background: white;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.03);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 50px 20px;
-            min-height: 250px;
+        .contact-card { 
+            background: var(--bg-card) !important; 
+            border-radius: 24px; 
+            border: 1px solid var(--border) !important; 
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.03); 
+            transition: transform .35s, box-shadow .35s, background var(--transition), border-color var(--transition); 
+            text-decoration: none; 
+            color: inherit; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 50px 20px; 
+            min-height: 250px; 
         }
 
         .contact-card:hover { 
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(15, 23, 42, 0.1);
-            border-color: #2563eb;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .08);
+            border-color: var(--accent) !important;
         }
 
-        .icon-circle {
-            width: 70px;
-            height: 70px;
-            background: #f8fafc;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
+        .icon-circle { 
+            width: 70px; height: 70px; 
+            background: var(--bg-icon-circle) !important; 
+            border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--border) !important; 
+            transition: all var(--transition); 
         }
 
-        .contact-card:hover .icon-circle {
-            background: #2563eb;
-            border-color: #2563eb;
+        .contact-card:hover .icon-circle { 
+            background: var(--accent) !important; 
+            border-color: var(--accent) !important; 
         }
 
-        .contact-card:hover .icon-circle i {
-            color: white;
-        }
+        .contact-card:hover .icon-circle i { color: white !important; }
 
-        .icon-circle i { font-size: 28px; }
+        .icon-circle i { font-size: 28px; transition: color var(--transition); }
         .fa-whatsapp { color: #25D366; }
         .fa-envelope { color: #2563eb; }
+        [data-theme="dark"] .fa-envelope { color: #60a5fa; }
         .fa-phone { color: #3b82f6; }
+        [data-theme="dark"] .fa-phone { color: #60a5fa; }
         .fa-telegram { color: #0088cc; }
+        [data-theme="dark"] .fa-telegram { color: #38bdf8; }
 
         .card-details { text-align: center; }
-        .card-details h3 { font-size: 22px; margin-bottom: 10px; color: #0f172a; font-weight: 700; }
-        .card-details p { color: #64748b; font-size: 15px; line-height: 1.5; }
+        .card-details h3 { font-size: 22px; margin-bottom: 10px; color: var(--text-primary) !important; font-weight: 700; transition: color var(--transition); }
+        .card-details p { color: var(--text-secondary) !important; font-size: 15px; line-height: 1.5; transition: color var(--transition); }
 
-        /* --- CÓDIGO DA CORREÇÃO --- */
-        /* Estilo para garantir o destaque e a cor branca do ícone */
+        /* Sidebar Active Custom */
         .sidebar-active-custom {
             background-color: #2563eb !important;
             color: white !important;
             border-radius: 8px;
         }
 
-        /* Essa regra força todos os ícones (i) dentro do item ativo a ficarem brancos */
         .sidebar-active-custom i {
             color: white !important;
         }
 
+        /* ============================================================
+           ESTILOS DO TOGGLE E CANVAS DE ESTRELAS
+           ============================================================ */
+        .dark-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            margin-right: 15px;
+        }
+
+        .dark-toggle-label {
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: .02em;
+            transition: color var(--transition);
+            white-space: nowrap;
+        }
+
+        .toggle-track {
+            position: relative;
+            width: 48px; height: 26px;
+            background: var(--toggle-track);
+            border-radius: 99px;
+            transition: background var(--transition);
+            flex-shrink: 0;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px; left: 3px;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--toggle-thumb);
+            box-shadow: 0 1px 6px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .65rem;
+            transition: transform var(--transition), background var(--transition);
+        }
+
+        .toggle-thumb .icon-sun  { display: block; color: #f59e0b; }
+        .toggle-thumb .icon-moon { display: none; color: #3b82f6; }
+
+        [data-theme="dark"] .toggle-thumb { transform: translateX(22px); }
+        [data-theme="dark"] .toggle-thumb .icon-sun  { display: none; }
+        [data-theme="dark"] .toggle-thumb .icon-moon { display: block; }
+
+        .toggle-track::after {
+            content: '';
+            position: absolute;
+            inset: 0; border-radius: 99px;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity .2s;
+        }
+
+        .toggle-track.ripple::after { animation: ripple .3s ease-out; }
+        @keyframes ripple {
+            0%   { opacity: .3; }
+            100% { opacity: 0; }
+        }
+
+        .stars {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            opacity: 0;
+            transition: opacity .6s ease;
+        }
+        [data-theme="dark"] .stars { opacity: 1; }
+
         @media(max-width: 1200px) { .contact-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media(max-width: 900px) { .main-content { margin-left: 0; width: 100%; } }
+        @media(max-width: 900px) { .sidebar { display: none; } .main-content { width: 100%; margin-left: 0; } }
         @media(max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
+    <canvas class="stars" id="stars"></canvas>
 
-<div id="sidebar-component"></div>
+    <div id="sidebar-component"></div>
 
-<main class="main-content">
-    <header class="topbar">
-        <div style="font-weight: 500; color: #64748b;">Institucional > Contato</div>
-        <div class="user-profile">
-            <div class="user-info">
-                <span class="user-name">Administrador</span>
-                <span class="user-role">ERP Flash</span>
+    <main class="main-content">
+        <header class="topbar">
+            <div class="breadcrumb">Institucional > Contato</div>
+            <div class="user-profile">
+                
+                <label class="dark-toggle" id="headerToggle" title="Alternar tema">
+                    <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
+                    <div class="toggle-track" id="toggleTrack">
+                        <div class="toggle-thumb">
+                            <i class="fas fa-sun icon-sun"></i>
+                            <i class="fas fa-moon icon-moon"></i>
+                        </div>
+                    </div>
+                </label>
+
+                <div class="user-info">
+                    <span class="user-name">Administrador</span>
+                    <span class="user-role">ERP Flash</span>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
             </div>
-            <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff">
-        </div>
-    </header>
+        </header>
 
-    <section class="content">
-        <div class="page-header">
-            <h1>Fale Conosco</h1>
-            <p>Escolha o melhor canal para falar com nosso suporte técnico ou consultores comerciais.</p>
-        </div>
+        <section class="content">
+            <div class="page-header">
+                <h1>Fale Conosco</h1>
+                <p>Escolha o melhor canal para falar com nosso suporte técnico ou consultores comerciais. Estamos prontos para atender você.</p>
+            </div>
 
-        <div class="contact-grid">
-            <a href="https://wa.me/5500000000000" class="contact-card" target="_blank">
-                <div class="icon-circle">
-                    <i class="fab fa-whatsapp"></i>
-                </div>
-                <div class="card-details">
-                    <h3>WhatsApp</h3>
-                    <p>Suporte rápido via chat.</p>
-                </div>
-            </a>
+            <div class="contact-grid">
+                <a href="https://wa.me/5500000000000" class="contact-card" target="_blank">
+                    <div class="icon-circle">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div class="card-details">
+                        <h3>WhatsApp</h3>
+                        <p>Suporte rápido via chat.</p>
+                    </div>
+                </a>
 
-            <a href="mailto:contato@erpflash.com.br" class="contact-card">
-                <div class="icon-circle">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <div class="card-details">
-                    <h3>E-mail</h3>
-                    <p>suporte@erpflash.com.br</p>
-                </div>
-            </a>
+                <a href="mailto:contato@erpflash.com.br" class="contact-card">
+                    <div class="icon-circle">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="card-details">
+                        <h3>E-mail</h3>
+                        <p>suporte@erpflash.com.br</p>
+                    </div>
+                </a>
 
-            <a href="tel:0800700600" class="contact-card">
-                <div class="icon-circle">
-                    <i class="fas fa-phone"></i>
-                </div>
-                <div class="card-details">
-                    <h3>0800 700 600</h3>
-                    <p>Atendimento 24h.</p>
-                </div>
-            </a>
+                <a href="tel:0800700600" class="contact-card">
+                    <div class="icon-circle">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="card-details">
+                        <h3>0800 700 600</h3>
+                        <p>Atendimento 24h.</p>
+                    </div>
+                </a>
 
-            <a href="#" class="contact-card" target="_blank">
-                <div class="icon-circle">
-                    <i class="fab fa-telegram"></i>
-                </div>
-                <div class="card-details">
-                    <h3>Telegram</h3>
-                    <p>Comunidade de usuários.</p>
-                </div>
-            </a>
-        </div>
-    </section>
-</main>
+                <a href="#" class="contact-card" target="_blank">
+                    <div class="icon-circle">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <div class="card-details">
+                        <h3>Telegram</h3>
+                        <p>Comunidade de usuários.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
 
-<script>
-    async function carregarSidebar() {
-        try {
-            const response = await fetch('../components/sidebar.html');
-            const html = await response.text();
-            const sidebarContainer = document.getElementById('sidebar-component');
-            sidebarContainer.innerHTML = html;
+    <script>
+        async function carregarSidebar() {
+            try {
+                const response = await fetch('../components/sidebar.html');
+                const html = await response.text();
+                const sidebarContainer = document.getElementById('sidebar-component');
+                sidebarContainer.innerHTML = html;
 
-            // --- LÓGICA DE DESTAQUE E COR DO ÍCONE ---
-            // 1. Procura todos os links na sidebar e remove destaques antigos
-            const allLinks = sidebarContainer.querySelectorAll('a');
-            allLinks.forEach(link => {
-                link.classList.remove('active'); // Classe padrão do seu sistema
-                link.classList.remove('sidebar-active-custom'); // Nossa classe de segurança
-            });
+                // LÓGICA DE DESTAQUE E COR DO ÍCONE
+                const allLinks = sidebarContainer.querySelectorAll('a');
+                allLinks.forEach(link => {
+                    link.classList.remove('active');
+                    link.classList.remove('sidebar-active-custom');
+                });
 
-            // 2. Procura o link de Contato e aplica o azul e ícone branco
-            allLinks.forEach(link => {
-                if (link.innerText.toLowerCase().includes('contato') || link.href.includes('contato')) {
-                    link.classList.add('sidebar-active-custom'); // Aplica o azul e o ícone branco
-                }
-            });
+                allLinks.forEach(link => {
+                    if (link.innerText.toLowerCase().includes('contato') || link.href.includes('contato')) {
+                        link.classList.add('sidebar-active-custom');
+                    }
+                });
 
-        } catch (e) { 
-            console.error("Erro ao carregar sidebar", e); 
+            } catch (e) { 
+                console.error("Erro ao carregar sidebar", e); 
+            }
         }
-    }
-    carregarSidebar();
-</script>
+        carregarSidebar();
+    </script>
 
-<div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-        <div class="vw-plugin-top-wrapper"></div>
+    <script>
+        (function () {
+            const html = document.documentElement;
+            const STORAGE_KEY = 'erpflash_theme';
+
+            /* Restaura preferência salva */
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+
+            /* Atualiza textos informativos */
+            function updateLabels() {
+                const dark = html.getAttribute('data-theme') === 'dark';
+                document.getElementById('toggleLabel').textContent = dark ? 'Modo claro' : 'Modo escuro';
+            }
+            updateLabels();
+
+            /* Alternância de temas */
+            function toggleTheme() {
+                const dark = html.getAttribute('data-theme') === 'dark';
+                html.setAttribute('data-theme', dark ? 'light' : 'dark');
+                localStorage.setItem(STORAGE_KEY, dark ? 'light' : 'dark');
+                updateLabels();
+
+                /* Efeito cascata (Ripple) no clique */
+                const track = document.getElementById('toggleTrack');
+                track.classList.remove('ripple');
+                void track.offsetWidth;
+                track.classList.add('ripple');
+            }
+
+            document.getElementById('headerToggle').addEventListener('click', toggleTheme);
+
+            /* Efeito visual de estrelas no fundo (modo escuro) */
+            const canvas = document.getElementById('stars');
+            const ctx    = canvas.getContext('2d');
+            let stars    = [];
+
+            function resize() {
+                canvas.width  = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            function initStars(n = 120) {
+                stars = Array.from({ length: n }, () => ({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 1.2 + .3,
+                    a: Math.random(),
+                    speed: Math.random() * .003 + .001,
+                    phase: Math.random() * Math.PI * 2
+                }));
+            }
+            initStars();
+
+            function drawStars(t) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                stars.forEach(s => {
+                    const alpha = .4 + .5 * Math.sin(t * s.speed * 1000 + s.phase);
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(148,163,184,${alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(drawStars);
+            }
+            requestAnimationFrame(drawStars);
+        })();
+    </script>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
     </div>
-</div>
-<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-<script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-</script>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </body>
 </html>
-
-```

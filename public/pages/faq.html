@@ -1,422 +1,335 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-BR" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>FAQ | ERP Flash</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/sidebar.css">
-
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+        /* ============================================================
+           VARIÁVEIS DO DARK MODE (LIGHT & DARK)
+           ============================================================ */
+        :root {
+            --bg-page:        #f4f7fb;
+            --bg-sidebar:     #0f172a;
+            --bg-topbar:      rgba(255, 255, 255, .92);
+            --bg-footer:      #ffffff;
+            --bg-card:        #ffffff;
+            --bg-faq-item:    #ffffff;
+            --bg-search-box:  #ffffff;
+            --bg-cat-btn:     #ffffff;
+            --text-primary:   #1e293b;
+            --text-secondary: #64748b;
+            --text-sidebar:   #cbd5e1;
+            --text-sidebar-active: #ffffff;
+            --accent:         #2563eb;
+            --accent-light:   #eff6ff;
+            --border:         #e2e8f0;
+            --toggle-track:   #e2e8f0;
+            --toggle-thumb:   #ffffff;
+            --faq-icon-bg:    #eff6ff;
+            --faq-icon-color: #2563eb;
+            --transition:     .35s cubic-bezier(.4,0,.2,1);
         }
 
-        body {
-            background: #f4f7fb;
-            color: #0f172a;
-            min-height: 100vh;
+        [data-theme="dark"] {
+            --bg-page:        #060d1a;
+            --bg-sidebar:     #080f1e;
+            --bg-topbar:      rgba(13, 21, 38, 0.92);
+            --bg-footer:      #0d1526;
+            --bg-card:        #111827;
+            --bg-faq-item:    #111827;
+            --bg-search-box:  #111827;
+            --bg-cat-btn:     #111827;
+            --text-primary:   #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-sidebar:   #94a3b8;
+            --text-sidebar-active: #ffffff;
+            --accent:         #3b82f6;
+            --accent-light:   #1e293b;
+            --border:         #1e293b;
+            --toggle-track:   #1e40af;
+            --toggle-thumb:   #e0f2fe;
+            --faq-icon-bg:    #1e293b;
+            --faq-icon-color: #3b82f6;
         }
 
-        /* MAIN */
-        .main-content {
-            margin-left: 260px;
-            width: calc(100% - 260px);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body { 
+            background: var(--bg-page) !important; 
+            color: var(--text-primary) !important; 
+            min-height: 100vh; 
+            transition: background var(--transition), color var(--transition);
         }
 
-        /* TOPBAR */
-        .topbar {
-            background: white;
-            padding: 18px 35px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #e2e8f0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        .main-content { margin-left: 260px; width: calc(100% - 260px); min-height: 100vh; display: flex; flex-direction: column; }
+        
+        /* Topbar */
+        .topbar { 
+            background: var(--bg-topbar) !important; 
+            backdrop-filter: blur(12px); 
+            padding: 18px 35px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid var(--border) !important; 
+            position: sticky; 
+            top: 0; 
+            z-index: 999; 
+            transition: background var(--transition), border-color var(--transition);
         }
 
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background: #f1f5f9;
-            padding: 12px 18px;
-            border-radius: 14px;
-            width: 350px;
-            gap: 10px;
+        .search-bar { 
+            display: flex; 
+            align-items: center; 
+            background: var(--bg-page) !important; 
+            padding: 13px 18px; 
+            border-radius: 16px; 
+            width: 360px; 
+            gap: 12px; 
+            border: 1px solid var(--border) !important; 
+            transition: background var(--transition), border-color var(--transition);
         }
+        .search-bar i { color: var(--text-secondary) !important; transition: color var(--transition); }
+        .search-bar input { border: none; background: transparent !important; outline: none; width: 100%; font-size: 14px; color: var(--text-primary) !important; }
+        .search-bar input::placeholder { color: var(--text-secondary) !important; }
 
-        .search-bar input {
-            border: none;
-            background: none;
-            outline: none;
-            width: 100%;
-            font-size: 14px;
+        .user-profile { display: flex; align-items: center; gap: 16px; }
+        .user-info { display: flex; flex-direction: column; text-align: right; }
+        .user-name { font-weight: 600; color: var(--text-primary) !important; transition: color var(--transition); }
+        .user-role { font-size: 13px; color: var(--text-secondary) !important; transition: color var(--transition); }
+        .user-profile img { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--accent); transition: border-color var(--transition); }
+        .user-profile > i.far.fa-bell { color: var(--text-secondary) !important; transition: color var(--transition); }
+
+        .content { padding: 40px; flex: 1; position: relative; z-index: 1; }
+        
+        /* Hero */
+        .hero { 
+            position: relative; overflow: hidden; 
+            background: linear-gradient(135deg, #0f172a, #1e3a8a); 
+            border-radius: 34px; padding: 60px 40px; 
+            color: white; margin-bottom: 40px; 
         }
-
-        .search-bar i {
-            color: #94a3b8;
+        .hero::before { content: '❓'; position: absolute; font-size: 320px; opacity: .05; right: -40px; bottom: -100px; }
+        .hero::after { content: '💡'; position: absolute; font-size: 220px; opacity: .05; left: -50px; top: -50px; }
+        .hero-content { position: relative; z-index: 2; }
+        
+        .badge-top { 
+            display: inline-flex; align-items: center; gap: 10px; 
+            padding: 10px 18px; border-radius: 40px; 
+            background: rgba(255, 255, 255, .1); 
+            border: 1px solid rgba(255, 255, 255, .15); 
+            margin-bottom: 22px; color: #93c5fd; font-size: 14px; 
         }
+        .hero h1 { font-size: 46px; margin-bottom: 15px; }
+        .hero p { max-width: 700px; color: #dbeafe; line-height: 1.7; font-size: 17px; }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+        /* Search Box */
+        .search-box { 
+            display: flex; gap: 12px; padding: 8px; border-radius: 22px; 
+            background: var(--bg-search-box) !important; 
+            border: 1px solid var(--border) !important; 
+            box-shadow: 0 8px 25px rgba(15, 23, 42, .05); 
+            margin-bottom: 35px; 
+            transition: background var(--transition), border-color var(--transition); 
         }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-            text-align: right;
+        .search-box input { 
+            flex: 1; border: none; outline: none; padding: 16px; 
+            font-size: 15px; background: transparent !important; 
+            color: var(--text-primary) !important; 
         }
-
-        .user-name {
-            font-weight: 600;
+        .search-box input::placeholder { color: var(--text-secondary) !important; }
+        .search-box button { 
+            border: none; padding: 14px 24px; border-radius: 16px; 
+            background: var(--accent); color: white; cursor: pointer; 
+            font-weight: 600; transition: .3s; 
         }
+        .search-box button:hover { filter: brightness(1.1); }
 
-        .user-role {
-            font-size: 13px;
-            color: #64748b;
+        /* Categorias */
+        .categorias { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 35px; }
+        .cat-btn { 
+            border: none; padding: 12px 18px; border-radius: 40px; 
+            background: var(--bg-cat-btn) !important; 
+            border: 1px solid var(--border) !important; 
+            color: var(--text-secondary) !important; 
+            cursor: pointer; transition: .3s, background var(--transition), color var(--transition), border-color var(--transition); 
+            font-weight: 500; 
         }
-
-        .user-profile img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-        }
-
-        /* CONTENT */
-        .content {
-            padding: 40px;
-        }
-
-        /* HERO */
-        .hero {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, #0f172a, #1e3a8a);
-            border-radius: 28px;
-            padding: 60px 40px;
-            color: white;
-            margin-bottom: 40px;
-        }
-
-        .hero::before {
-            content: '❓';
-            position: absolute;
-            font-size: 320px;
-            opacity: .05;
-            right: -40px;
-            bottom: -100px;
-        }
-
-        .hero::after {
-            content: '💡';
-            position: absolute;
-            font-size: 220px;
-            opacity: .05;
-            left: -50px;
-            top: -50px;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .badge-top {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 18px;
-            border-radius: 40px;
-            background: rgba(255, 255, 255, .1);
-            border: 1px solid rgba(255, 255, 255, .15);
-            margin-bottom: 22px;
-            color: #93c5fd;
-            font-size: 14px;
-        }
-
-        .hero h1 {
-            font-size: 46px;
-            margin-bottom: 15px;
-        }
-
-        .hero p {
-            max-width: 700px;
-            color: #dbeafe;
-            line-height: 1.7;
-            font-size: 17px;
-        }
-
-        /* SEARCH */
-        .search-box {
-            display: flex;
-            gap: 12px;
-            padding: 8px;
-            border-radius: 22px;
-            background: white;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 8px 25px rgba(15, 23, 42, .05);
-            margin-bottom: 35px;
-        }
-
-        .search-box input {
-            flex: 1;
-            border: none;
-            outline: none;
-            padding: 16px;
-            font-size: 15px;
-            background: none;
-        }
-
-        .search-box button {
-            border: none;
-            padding: 14px 24px;
-            border-radius: 16px;
-            background: #2563eb;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
-            transition: .3s;
-        }
-
-        .search-box button:hover {
-            background: #1d4ed8;
-        }
-
-        /* CATEGORIAS */
-        .categorias {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 35px;
-        }
-
-        .cat-btn {
-            border: none;
-            padding: 12px 18px;
-            border-radius: 40px;
-            background: white;
-            border: 1px solid #e2e8f0;
-            color: #475569;
-            cursor: pointer;
-            transition: .3s;
-            font-weight: 500;
-        }
-
         .cat-btn:hover,
-        .cat-btn.ativa {
-            background: #2563eb;
-            color: white;
+        .cat-btn.ativa { 
+            background: var(--accent) !important; 
+            color: white !important; 
+            border-color: var(--accent) !important; 
         }
 
-        /* FAQ */
-        .faq-grid {
+        /* FAQ Grid */
+        .faq-grid { display: flex; flex-direction: column; gap: 18px; }
+        .faq-item { 
+            background: var(--bg-faq-item) !important; 
+            border-radius: 24px; border: 1px solid var(--border) !important; 
+            overflow: hidden; 
+            box-shadow: 0 10px 25px rgba(15, 23, 42, .04); 
+            transition: background var(--transition), border-color var(--transition), transform .3s; 
+        }
+        .faq-item:hover { transform: translateY(-3px); }
+        
+        .pergunta { padding: 24px 28px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .pergunta-texto { display: flex; align-items: center; gap: 16px; flex: 1; }
+        .pergunta-icon { 
+            width: 42px; height: 42px; border-radius: 50%; 
+            background: var(--accent); display: flex; align-items: center; 
+            justify-content: center; color: white; font-size: 18px; 
+        }
+        .pergunta-texto span { color: var(--text-primary) !important; transition: color var(--transition); }
+        
+        .icone { 
+            width: 38px; height: 38px; border-radius: 50%; 
+            background: var(--faq-icon-bg) !important; 
+            color: var(--faq-icon-color) !important; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 22px; 
+            transition: .3s, background var(--transition), color var(--transition); 
+        }
+        
+        .resposta { 
+            max-height: 0; overflow: hidden; 
+            transition: .4s ease; padding: 0 28px; 
+            color: var(--text-secondary) !important; line-height: 1.8; 
+        }
+        .faq-item.ativo .resposta { max-height: 500px; padding: 0 28px 28px; }
+        .faq-item.ativo .icone { 
+            transform: rotate(45deg); 
+            background: var(--accent) !important; color: white !important; 
+        }
+
+        /* Contact Card */
+        .contact-card { 
+            margin-top: 50px; 
+            background: linear-gradient(135deg, #2563eb, #1d4ed8); 
+            color: white; border-radius: 28px; padding: 40px; 
+            text-align: center; 
+            box-shadow: 0 15px 35px rgba(37, 99, 235, .2); 
+        }
+        .contact-card h3 { font-size: 32px; margin-bottom: 12px; }
+        .contact-card p { opacity: .9; margin-bottom: 25px; }
+        .btn-contato { 
+            border: none; padding: 14px 28px; border-radius: 40px; 
+            background: white; color: #2563eb; font-weight: 700; 
+            cursor: pointer; transition: .3s; 
+        }
+        .btn-contato:hover { transform: translateY(-3px); }
+        
+        .meta-stats { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+        .stat-chip { 
+            background: rgba(255, 255, 255, .12); 
+            border: 1px solid rgba(255, 255, 255, .15); 
+            padding: 10px 16px; border-radius: 40px; font-size: 14px; 
+        }
+
+        /* ============================================================
+           ESTILOS DO TOGGLE E CANVAS DE ESTRELAS
+           ============================================================ */
+        .dark-toggle {
             display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .faq-item {
-            background: white;
-            border-radius: 24px;
-            border: 1px solid #e2e8f0;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, .04);
-            transition: .3s;
-        }
-
-        .faq-item:hover {
-            transform: translateY(-3px);
-        }
-
-        .pergunta {
-            padding: 24px 28px;
-            display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 8px;
             cursor: pointer;
+            user-select: none;
+            margin-right: 15px;
         }
 
-        .pergunta-texto {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex: 1;
+        .dark-toggle-label {
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: .02em;
+            transition: color var(--transition);
+            white-space: nowrap;
         }
 
-        .pergunta-icon {
-            width: 42px;
-            height: 42px;
+        .toggle-track {
+            position: relative;
+            width: 48px; height: 26px;
+            background: var(--toggle-track);
+            border-radius: 99px;
+            transition: background var(--transition);
+            flex-shrink: 0;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px; left: 3px;
+            width: 20px; height: 20px;
             border-radius: 50%;
-            background: #2563eb;
+            background: var(--toggle-thumb);
+            box-shadow: 0 1px 6px rgba(0,0,0,.25);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 18px;
+            font-size: .65rem;
+            transition: transform var(--transition), background var(--transition);
         }
 
-        .icone {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: #eff6ff;
-            color: #2563eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            transition: .3s;
+        .toggle-thumb .icon-sun  { display: block; color: #f59e0b; }
+        .toggle-thumb .icon-moon { display: none; color: #3b82f6; }
+
+        [data-theme="dark"] .toggle-thumb { transform: translateX(22px); }
+        [data-theme="dark"] .toggle-thumb .icon-sun  { display: none; }
+        [data-theme="dark"] .toggle-thumb .icon-moon { display: block; }
+
+        .toggle-track::after {
+            content: '';
+            position: absolute;
+            inset: 0; border-radius: 99px;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity .2s;
         }
 
-        .resposta {
-            max-height: 0;
-            overflow: hidden;
-            transition: .4s ease;
-            padding: 0 28px;
-            color: #475569;
-            line-height: 1.8;
+        .toggle-track.ripple::after { animation: ripple .3s ease-out; }
+        @keyframes ripple {
+            0%   { opacity: .3; }
+            100% { opacity: 0; }
         }
 
-        .faq-item.ativo .resposta {
-            max-height: 500px;
-            padding: 0 28px 28px;
+        .stars {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            opacity: 0;
+            transition: opacity .6s ease;
         }
+        [data-theme="dark"] .stars { opacity: 1; }
 
-        .faq-item.ativo .icone {
-            transform: rotate(45deg);
-            background: #2563eb;
-            color: white;
-        }
-
-        /* CONTACT */
-        .contact-card {
-            margin-top: 50px;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: white;
-            border-radius: 28px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(37, 99, 235, .2);
-        }
-
-        .contact-card h3 {
-            font-size: 32px;
-            margin-bottom: 12px;
-        }
-
-        .contact-card p {
-            opacity: .9;
-            margin-bottom: 25px;
-        }
-
-        .btn-contato {
-            border: none;
-            padding: 14px 28px;
-            border-radius: 40px;
-            background: white;
-            color: #2563eb;
-            font-weight: 700;
-            cursor: pointer;
-            transition: .3s;
-        }
-
-        .btn-contato:hover {
-            transform: translateY(-3px);
-        }
-
-        .meta-stats {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        .stat-chip {
-            background: rgba(255, 255, 255, .12);
-            border: 1px solid rgba(255, 255, 255, .15);
-            padding: 10px 16px;
-            border-radius: 40px;
-            font-size: 14px;
-        }
-
-        /* RESPONSIVO */
-        @media(max-width:900px) {
-            .sidebar {
-                display: none;
-            }
-
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-            }
-
-            .content {
-                padding: 25px;
-            }
-
-            .topbar {
-                padding: 18px 20px;
-            }
-        }
-
-        @media(max-width:600px) {
-            .topbar {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .search-bar {
-                width: 100%;
-            }
-
-            .hero h1 {
-                font-size: 32px;
-            }
-
-            .search-box {
-                flex-direction: column;
-            }
-
-            .search-box button {
-                width: 100%;
-            }
-
-            .pergunta {
-                padding: 20px;
-            }
-        }
+        @media(max-width:900px) { .sidebar { display: none; } .main-content { width: 100%; margin-left: 0; } }
     </style>
 </head>
-
 <body>
+    <canvas class="stars" id="stars"></canvas>
 
     <div id="sidebar-component"></div>
 
     <main class="main-content">
-
         <header class="topbar">
             <div class="search-bar">
                 <i class="fas fa-search"></i>
                 <input type="text" id="topbarSearchInput" placeholder="Buscar dúvidas...">
             </div>
-
             <div class="user-profile">
-                <i class="far fa-bell" style="font-size:1.2rem;color:#64748b;cursor:pointer;"></i>
+                
+                <label class="dark-toggle" id="headerToggle" title="Alternar tema">
+                    <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
+                    <div class="toggle-track" id="toggleTrack">
+                        <div class="toggle-thumb">
+                            <i class="fas fa-sun icon-sun"></i>
+                            <i class="fas fa-moon icon-moon"></i>
+                        </div>
+                    </div>
+                </label>
+
+                <i class="far fa-bell" style="font-size:1.2rem;cursor:pointer;"></i>
                 <div class="user-info">
                     <span class="user-name">Administrador</span>
                     <span class="user-role">ERP Flash</span>
@@ -426,7 +339,6 @@
         </header>
 
         <section class="content">
-
             <div class="hero">
                 <div class="hero-content">
                     <div class="badge-top">
@@ -490,9 +402,7 @@
                     </div>
                 </div>
             </div>
-
         </section>
-
     </main>
 
     <script>
@@ -556,7 +466,7 @@
             }
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<p style="text-align:center; color:#64748b; padding: 20px;">Nenhuma pergunta encontrada para sua busca.</p>`;
+                grid.innerHTML = `<p style="text-align:center; color: var(--text-secondary); padding: 20px;">Nenhuma pergunta encontrada para sua busca.</p>`;
                 return;
             }
 
@@ -612,6 +522,77 @@
         searchBtn.addEventListener("click", renderFaq);
     </script>
 
+    <script>
+        (function () {
+            const html = document.documentElement;
+            const STORAGE_KEY = 'erpflash_theme';
+
+            /* Restaura preferência salva */
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+
+            /* Atualiza textos informativos */
+            function updateLabels() {
+                const dark = html.getAttribute('data-theme') === 'dark';
+                document.getElementById('toggleLabel').textContent = dark ? 'Modo claro' : 'Modo escuro';
+            }
+            updateLabels();
+
+            /* Alternância de temas */
+            function toggleTheme() {
+                const dark = html.getAttribute('data-theme') === 'dark';
+                html.setAttribute('data-theme', dark ? 'light' : 'dark');
+                localStorage.setItem(STORAGE_KEY, dark ? 'light' : 'dark');
+                updateLabels();
+
+                /* Efeito cascata (Ripple) no clique */
+                const track = document.getElementById('toggleTrack');
+                track.classList.remove('ripple');
+                void track.offsetWidth;
+                track.classList.add('ripple');
+            }
+
+            document.getElementById('headerToggle').addEventListener('click', toggleTheme);
+
+            /* Efeito visual de estrelas no fundo (modo escuro) */
+            const canvas = document.getElementById('stars');
+            const ctx    = canvas.getContext('2d');
+            let stars    = [];
+
+            function resize() {
+                canvas.width  = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            function initStars(n = 120) {
+                stars = Array.from({ length: n }, () => ({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 1.2 + .3,
+                    a: Math.random(),
+                    speed: Math.random() * .003 + .001,
+                    phase: Math.random() * Math.PI * 2
+                }));
+            }
+            initStars();
+
+            function drawStars(t) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                stars.forEach(s => {
+                    const alpha = .4 + .5 * Math.sin(t * s.speed * 1000 + s.phase);
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(148,163,184,${alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(drawStars);
+            }
+            requestAnimationFrame(drawStars);
+        })();
+    </script>
+
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
@@ -622,6 +603,5 @@
     <script>
         new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
-    </body>
-
+</body>
 </html>

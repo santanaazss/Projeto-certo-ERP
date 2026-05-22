@@ -1,450 +1,338 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-BR" data-theme="light">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Planos | ERP Flash</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/sidebar.css">
-
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+        /* ============================================================
+           VARIÁVEIS DO DARK MODE (LIGHT & DARK)
+           ============================================================ */
+        :root {
+            --bg-page:        #f4f7fb;
+            --bg-sidebar:     #0f172a;
+            --bg-topbar:      rgba(255, 255, 255, .92);
+            --bg-footer:      #ffffff;
+            --bg-card:        #ffffff;
+            --bg-toggle:      #ffffff;
+            --bg-switch:      #dbeafe;
+            --text-primary:   #1e293b;
+            --text-secondary: #64748b;
+            --text-sidebar:   #cbd5e1;
+            --text-sidebar-active: #ffffff;
+            --accent:         #2563eb;
+            --accent-light:   #eff6ff;
+            --border:         #e2e8f0;
+            --toggle-track:   #e2e8f0;
+            --toggle-thumb:   #ffffff;
+            --feature-icon-bg: #eff6ff;
+            --transition:     .35s cubic-bezier(.4,0,.2,1);
         }
 
-        body {
-            background: #f4f7fb;
-            color: #2c3e50;
-            min-height: 100vh;
+        [data-theme="dark"] {
+            --bg-page:        #060d1a;
+            --bg-sidebar:     #080f1e;
+            --bg-topbar:      rgba(13, 21, 38, 0.92);
+            --bg-footer:      #0d1526;
+            --bg-card:        #111827;
+            --bg-toggle:      #111827;
+            --bg-switch:      #1e293b;
+            --text-primary:   #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-sidebar:   #94a3b8;
+            --text-sidebar-active: #ffffff;
+            --accent:         #3b82f6;
+            --accent-light:   #1e293b;
+            --border:         #1e293b;
+            --toggle-track:   #1e40af;
+            --toggle-thumb:   #e0f2fe;
+            --feature-icon-bg: #1e293b;
         }
 
-        /* MAIN */
-        .main-content {
-            margin-left: 260px;
-            width: calc(100% - 260px);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body { 
+            background: var(--bg-page) !important; 
+            color: var(--text-primary) !important; 
+            min-height: 100vh; 
+            transition: background var(--transition), color var(--transition);
         }
 
-        /* HEADER */
-        .topbar {
-            background: rgba(255, 255, 255, .92);
-            backdrop-filter: blur(12px);
-            padding: 18px 35px;
-            display: flex;
-            justify-content: space-between;
+        .main-content { margin-left: 260px; width: calc(100% - 260px); min-height: 100vh; display: flex; flex-direction: column; }
+        
+        /* Topbar */
+        .topbar { 
+            background: var(--bg-topbar) !important; 
+            backdrop-filter: blur(12px); 
+            padding: 18px 35px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid var(--border) !important; 
+            position: sticky; 
+            top: 0; 
+            z-index: 999; 
+            transition: background var(--transition), border-color var(--transition);
+        }
+
+        .search-bar { 
+            display: flex; 
+            align-items: center; 
+            background: var(--bg-page) !important; 
+            padding: 13px 18px; 
+            border-radius: 16px; 
+            width: 360px; 
+            gap: 12px; 
+            border: 1px solid var(--border) !important; 
+            transition: background var(--transition), border-color var(--transition);
+        }
+        .search-bar:focus-within { border-color: var(--accent) !important; }
+        .search-bar i { color: var(--text-secondary) !important; transition: color var(--transition); }
+        .search-bar input { border: none; background: transparent !important; outline: none; width: 100%; font-size: 14px; color: var(--text-primary) !important; }
+        .search-bar input::placeholder { color: var(--text-secondary) !important; }
+
+        .user-profile { display: flex; align-items: center; gap: 16px; }
+        .user-info { display: flex; flex-direction: column; text-align: right; }
+        .user-name { font-weight: 600; color: var(--text-primary) !important; transition: color var(--transition); }
+        .user-role { font-size: 13px; color: var(--text-secondary) !important; transition: color var(--transition); }
+        .user-profile img { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--accent); transition: border-color var(--transition); }
+        .user-profile > i.far.fa-bell { color: var(--text-secondary) !important; transition: color var(--transition); }
+
+        .content { padding: 40px; flex: 1; position: relative; z-index: 1; }
+        
+        .page-header { margin-bottom: 35px; }
+        .page-header h1 { font-size: 42px; color: var(--text-primary) !important; margin-bottom: 12px; transition: color var(--transition); }
+        .page-header p { color: var(--text-secondary) !important; font-size: 17px; line-height: 1.8; max-width: 800px; transition: color var(--transition); }
+        
+        /* Hero */
+        .hero { 
+            background: linear-gradient(135deg, rgba(37, 99, 235, .97), rgba(29, 78, 216, .96)); 
+            border-radius: 34px; 
+            padding: 55px; 
+            overflow: hidden; 
+            position: relative; 
+            margin-bottom: 45px; 
+            box-shadow: 0 25px 50px rgba(37, 99, 235, .15); 
+        }
+        .hero::before { content: ""; position: absolute; width: 450px; height: 450px; background: rgba(255, 255, 255, .07); border-radius: 50%; top: -200px; right: -150px; }
+        .hero-content { position: relative; z-index: 2; }
+        .hero h2 { color: white; font-size: 36px; margin-bottom: 10px; }
+        .hero p { color: rgba(255, 255, 255, .9); font-size: 18px; }
+        
+        .hero-badge { 
+            display: inline-flex;
             align-items: center;
-            border-bottom: 1px solid #e2e8f0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background: #f1f5f9;
-            padding: 12px 18px;
-            border-radius: 14px;
-            width: 350px;
             gap: 10px;
-            border: 1px solid #e2e8f0;
-            transition: border-color .3s;
+            background: rgba(255, 255, 255, .14); 
+            border: 1px solid rgba(255, 255, 255, .18); 
+            color: white; 
+            padding: 12px 20px; 
+            border-radius: 999px; 
+            font-size: 15px; 
         }
 
-        .search-bar:focus-within {
-            border-color: #2563eb;
+        /* Toggle Mensal/Anual */
+        .toggle-wrapper { display: flex; justify-content: center; margin-bottom: 45px; }
+        .toggle { 
+            display: flex; align-items: center; gap: 15px; 
+            background: var(--bg-toggle) !important; 
+            padding: 14px 22px; border-radius: 50px; 
+            border: 1px solid var(--border) !important; 
+            box-shadow: 0 8px 25px rgba(15, 23, 42, .05); 
+            transition: background var(--transition), border-color var(--transition); 
         }
-
-        .search-bar input {
-            border: none;
-            background: none;
-            outline: none;
-            width: 100%;
-            font-size: 14px;
+        .toggle span { 
+            color: var(--text-secondary) !important; 
+            font-size: 14px; font-weight: 500; 
+            transition: color var(--transition); 
         }
-
-        .search-bar i {
-            color: #94a3b8;
+        .toggle span.active-label { color: var(--accent) !important; font-weight: 600; }
+        
+        .switch { 
+            width: 70px; height: 35px; 
+            background: var(--bg-switch) !important; 
+            border-radius: 50px; position: relative; cursor: pointer; 
+            transition: background var(--transition); 
         }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-            text-align: right;
-        }
-
-        .user-name {
-            font-weight: 600;
-        }
-
-        .user-role {
-            font-size: 13px;
-            color: #64748b;
-        }
-
-        .user-profile img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: 2px solid #dbeafe;
-        }
-
-        /* CONTENT */
-        .content {
-            padding: 40px;
-            flex: 1;
-        }
-
-        .page-header {
-            margin-bottom: 35px;
-        }
-
-        .page-header h1 {
-            font-size: 34px;
-            margin-bottom: 10px;
-            color: #0f172a;
-        }
-
-        .page-header p {
-            color: #64748b;
-            font-size: 16px;
-        }
-
-        /* HERO */
-        .hero {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            border-radius: 24px;
-            padding: 40px;
-            color: white;
-            margin-bottom: 40px;
-            box-shadow: 0 15px 35px rgba(37, 99, 235, .2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: rgba(255, 255, 255, .05);
-            border-radius: 50%;
-            top: -100px;
-            right: -100px;
-        }
-
-        .hero-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h2 {
-            font-size: 30px;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            opacity: .9;
-        }
-
-        .hero-badge {
-            background: rgba(255, 255, 255, .15);
-            padding: 12px 20px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, .2);
-            font-size: 15px;
-            backdrop-filter: blur(4px);
-        }
-
-        /* TOGGLE */
-        .toggle-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 45px;
-        }
-
-        .toggle {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: white;
-            padding: 14px 22px;
-            border-radius: 50px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 8px 25px rgba(15, 23, 42, .05);
-        }
-
-        .toggle span {
-            color: #64748b;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color .3s;
-        }
-
-        .toggle span.active-label {
-            color: #2563eb;
-            font-weight: 600;
-        }
-
-        .switch {
-            width: 70px;
-            height: 35px;
-            background: #dbeafe;
-            border-radius: 50px;
-            position: relative;
-            cursor: pointer;
-            transition: .3s;
-        }
-
         .switch::before {
-            content: "";
-            position: absolute;
-            width: 27px;
-            height: 27px;
-            border-radius: 50%;
-            background: white;
-            top: 4px;
-            left: 5px;
-            transition: .3s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+            content: ""; position: absolute; width: 27px; height: 27px; 
+            border-radius: 50%; background: white; top: 4px; left: 5px; 
+            transition: .3s; box-shadow: 0 4px 10px rgba(0, 0, 0, .15); 
         }
+        .switch.active { background: var(--accent) !important; }
+        .switch.active::before { left: 38px; }
 
-        .switch.active {
-            background: #2563eb;
+        /* Plans Grid */
+        .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
+        
+        .card { 
+            background: var(--bg-card) !important; 
+            border-radius: 30px; padding: 35px; 
+            border: 1px solid var(--border) !important; 
+            box-shadow: 0 12px 30px rgba(15, 23, 42, .05); 
+            position: relative; 
+            transition: transform .35s, box-shadow .35s, background var(--transition), border-color var(--transition); 
+            display: flex; flex-direction: column; 
         }
-
-        .switch.active::before {
-            left: 38px;
+        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 0, 0, .08); }
+        .card.popular { border: 2px solid var(--accent) !important; }
+        
+        .badge { 
+            position: absolute; top: 20px; right: 20px; 
+            background: var(--accent); color: white; 
+            padding: 8px 16px; border-radius: 30px; 
+            font-size: 12px; font-weight: 600; letter-spacing: .5px; 
         }
-
-        /* PLANS */
-        .plans {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 28px;
+        
+        .plan-name { font-size: 24px; font-weight: 700; color: var(--text-primary) !important; margin-bottom: 12px; transition: color var(--transition); }
+        .description { color: var(--text-secondary) !important; line-height: 1.7; margin-bottom: 28px; font-size: 15px; transition: color var(--transition); }
+        
+        .price { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 25px; }
+        .price h2 { 
+            font-size: 52px; color: var(--accent) !important; 
+            line-height: 1; font-weight: 700; 
+            transition: transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275), color var(--transition); 
         }
-
-        .card {
-            background: white;
-            border-radius: 28px;
-            padding: 35px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
-            position: relative;
-            transition: .3s;
-            display: flex;
-            flex-direction: column;
+        .price span { color: var(--text-secondary) !important; margin-bottom: 8px; font-size: 15px; transition: color var(--transition); }
+        
+        .features { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 25px; flex: 1; }
+        .features li { 
+            display: flex; align-items: center; gap: 12px; 
+            color: var(--text-secondary) !important; font-size: 15px; 
+            transition: color var(--transition); 
         }
-
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 18px 35px rgba(15, 23, 42, .08);
+        .features li i { 
+            width: 24px; height: 24px; border-radius: 50%; 
+            background: var(--feature-icon-bg) !important; 
+            color: var(--accent) !important; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 12px; font-style: normal; font-weight: bold; 
+            transition: background var(--transition), color var(--transition); 
         }
-
-        .card.popular {
-            border: 2px solid #2563eb;
+        
+        .btn-plan { 
+            width: 100%; margin-top: 35px; padding: 15px; 
+            border: none; border-radius: 16px; 
+            background: linear-gradient(135deg, #2563eb, #3b82f6); 
+            color: white; font-size: 15px; font-weight: 600; 
+            cursor: pointer; transition: .3s; 
         }
+        .btn-plan:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(37, 99, 235, .25); }
+        .card.popular .btn-plan { background: linear-gradient(135deg, #1d4ed8, #2563eb); }
 
-        .badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #2563eb;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: .5px;
+        /* Footer */
+        .footer { 
+            background: var(--bg-footer) !important; 
+            border-top: 1px solid var(--border) !important; 
+            padding: 22px 40px; text-align: center; 
+            color: var(--text-secondary) !important; 
+            font-size: 14px; margin-top: 45px; 
+            transition: background var(--transition), border-color var(--transition), color var(--transition); 
         }
-
-        .plan-name {
-            font-size: 24px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 12px;
-        }
-
-        .description {
-            color: #64748b;
-            line-height: 1.7;
-            margin-bottom: 28px;
-            font-size: 15px;
-        }
-
-        .price {
-            display: flex;
-            align-items: flex-end;
-            gap: 8px;
-            margin-bottom: 25px;
-        }
-
-        .price h2 {
-            font-size: 52px;
-            color: #2563eb;
-            line-height: 1;
-            font-weight: 700;
-            transition: transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .price span {
-            color: #64748b;
-            margin-bottom: 8px;
-            font-size: 15px;
-        }
-
-        .features {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 25px;
-            flex: 1;
-        }
-
-        .features li {
+        
+        /* ============================================================
+           ESTILOS DO TOGGLE E CANVAS DE ESTRELAS
+           ============================================================ */
+        .dark-toggle {
             display: flex;
             align-items: center;
-            gap: 12px;
-            color: #475569;
-            font-size: 15px;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            margin-right: 15px;
         }
 
-        .features li i {
-            width: 24px;
-            height: 24px;
+        .dark-toggle-label {
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: .02em;
+            transition: color var(--transition);
+            white-space: nowrap;
+        }
+
+        .toggle-track {
+            position: relative;
+            width: 48px; height: 26px;
+            background: var(--toggle-track);
+            border-radius: 99px;
+            transition: background var(--transition);
+            flex-shrink: 0;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px; left: 3px;
+            width: 20px; height: 20px;
             border-radius: 50%;
-            background: #eff6ff;
-            color: #2563eb;
+            background: var(--toggle-thumb);
+            box-shadow: 0 1px 6px rgba(0,0,0,.25);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-            font-style: normal;
-            font-weight: bold;
+            font-size: .65rem;
+            transition: transform var(--transition), background var(--transition);
         }
 
-        .btn-plan {
-            width: 100%;
-            margin-top: 35px;
-            padding: 15px;
-            border: none;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #2563eb, #3b82f6);
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: .3s;
+        .toggle-thumb .icon-sun  { display: block; color: #f59e0b; }
+        .toggle-thumb .icon-moon { display: none; color: #3b82f6; }
+
+        [data-theme="dark"] .toggle-thumb { transform: translateX(22px); }
+        [data-theme="dark"] .toggle-thumb .icon-sun  { display: none; }
+        [data-theme="dark"] .toggle-thumb .icon-moon { display: block; }
+
+        .toggle-track::after {
+            content: '';
+            position: absolute;
+            inset: 0; border-radius: 99px;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity .2s;
         }
 
-        .btn-plan:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, .2);
+        .toggle-track.ripple::after { animation: ripple .3s ease-out; }
+        @keyframes ripple {
+            0%   { opacity: .3; }
+            100% { opacity: 0; }
         }
 
-        .card.popular .btn-plan {
-            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+        .stars {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            opacity: 0;
+            transition: opacity .6s ease;
         }
+        [data-theme="dark"] .stars { opacity: 1; }
 
-        /* FOOTER */
-        .footer {
-            background: white;
-            border-top: 1px solid #e2e8f0;
-            padding: 20px 40px;
-            text-align: center;
-            color: #64748b;
-            font-size: 14px;
-            margin-top: 40px;
-        }
-
-        /* RESPONSIVO */
-        @media(max-width:900px) {
-            .sidebar {
-                display: none;
-            }
-
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-            }
-
-            .content {
-                padding: 25px;
-            }
-
-            .topbar {
-                padding: 18px 20px;
-            }
-        }
-
-        @media(max-width:600px) {
-            .topbar {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .search-bar {
-                width: 100%;
-            }
-
-            .hero {
-                padding: 28px;
-            }
-
-            .hero h2 {
-                font-size: 25px;
-            }
-
-            .page-header h1 {
-                font-size: 28px;
-            }
-
-            .card {
-                padding: 28px;
-            }
-
-            .price h2 {
-                font-size: 42px;
-            }
-        }
+        @media(max-width:900px) { .sidebar { display: none; } .main-content { width: 100%; margin-left: 0; } }
     </style>
 </head>
-
 <body>
+    <canvas class="stars" id="stars"></canvas>
 
     <div id="sidebar-component"></div>
 
     <main class="main-content">
-
         <header class="topbar">
             <div class="search-bar">
                 <i class="fas fa-search"></i>
                 <input type="text" id="buscarPlanos" placeholder="Buscar planos ou recursos...">
             </div>
-
             <div class="user-profile">
-                <i class="far fa-bell" style="font-size:1.2rem;color:#64748b;cursor:pointer;"></i>
+                
+                <label class="dark-toggle" id="headerToggle" title="Alternar tema">
+                    <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
+                    <div class="toggle-track" id="toggleTrack">
+                        <div class="toggle-thumb">
+                            <i class="fas fa-sun icon-sun"></i>
+                            <i class="fas fa-moon icon-moon"></i>
+                        </div>
+                    </div>
+                </label>
+
+                <i class="far fa-bell" style="font-size:1.2rem;cursor:pointer;"></i>
                 <div class="user-info">
                     <span class="user-name">Administrador</span>
                     <span class="user-role">ERP Flash</span>
@@ -454,20 +342,21 @@
         </header>
 
         <section class="content">
-
             <div class="page-header">
                 <h1>Planos ERP Flash</h1>
-                <p>Escolha o plano ideal para impulsionar sua empresa.</p>
+                <p>Escolha o plano ideal para impulsionar sua empresa. Soluções flexíveis que se adaptam ao seu negócio.</p>
             </div>
 
             <div class="hero">
-                <div class="hero-top">
-                    <div>
-                        <h2>Soluções flexíveis para qualquer negócio</h2>
-                        <p>Mais performance, automação e controle em um único sistema.</p>
-                    </div>
-                    <div class="hero-badge">
-                        ⭐ Mais de 500 empresas ativas
+                <div class="hero-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                        <div>
+                            <h2>Soluções flexíveis para qualquer negócio</h2>
+                            <p style="opacity:.9;">Mais performance, automação e controle em um único sistema.</p>
+                        </div>
+                        <div class="hero-badge">
+                            ⭐ Mais de 500 empresas ativas
+                        </div>
                     </div>
                 </div>
             </div>
@@ -481,7 +370,6 @@
             </div>
 
             <div class="plans" id="listaPlanos">
-
                 <div class="card">
                     <div class="plan-name">Starter</div>
                     <div class="description">
@@ -538,19 +426,14 @@
                     </ul>
                     <button class="btn-plan">Falar com Consultor</button>
                 </div>
-
             </div>
-
         </section>
 
-        <footer class="footer">
-            © 2026 ERP Flash • Todos os direitos reservados.
-        </footer>
-
+        <footer class="footer">© 2026 ERP Flash • Plataforma inteligente de gestão empresarial.</footer>
     </main>
 
     <script>
-        // TOGGLE PLANOS
+        // TOGGLE PLANOS (MENSAL/ANUAL)
         const toggle = document.getElementById("switch");
         const prices = document.querySelectorAll(".price h2");
         const labelMensal = document.getElementById("label-mensal");
@@ -571,7 +454,6 @@
             }
 
             prices.forEach(price => {
-                // Efeito suave de pulso na mudança de valor
                 price.style.transform = "scale(0.95)";
                 setTimeout(() => {
                     price.innerHTML = "R$" + (annual ? price.dataset.year : price.dataset.month);
@@ -585,9 +467,8 @@
         const cards = document.querySelectorAll(".card");
         const listaPlanos = document.getElementById("listaPlanos");
 
-        // Criando elemento dinâmico para buscas sem resultados
         const fallbackMensagem = document.createElement("p");
-        fallbackMensagem.style.cssText = "text-align: center; color: #64748b; padding: 40px; grid-column: 1 / -1; font-weight: 500; font-size: 16px;";
+        fallbackMensagem.style.cssText = "text-align: center; color: var(--text-secondary); padding: 40px; grid-column: 1 / -1; font-weight: 500; font-size: 16px;";
         fallbackMensagem.textContent = "Nenhum plano ou recurso corresponde à sua pesquisa. 🔍";
         fallbackMensagem.style.display = "none";
         listaPlanos.appendChild(fallbackMensagem);
@@ -619,7 +500,6 @@
                 const html = await response.text();
                 document.getElementById('sidebar-component').innerHTML = html;
 
-                // LINK ATIVO
                 const links = document.querySelectorAll('.menu a');
                 links.forEach(link => {
                     link.classList.remove('active');
@@ -635,6 +515,77 @@
         carregarSidebar();
     </script>
 
+    <script>
+        (function () {
+            const html = document.documentElement;
+            const STORAGE_KEY = 'erpflash_theme';
+
+            /* Restaura preferência salva */
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+
+            /* Atualiza textos informativos */
+            function updateLabels() {
+                const dark = html.getAttribute('data-theme') === 'dark';
+                document.getElementById('toggleLabel').textContent = dark ? 'Modo claro' : 'Modo escuro';
+            }
+            updateLabels();
+
+            /* Alternância de temas */
+            function toggleTheme() {
+                const dark = html.getAttribute('data-theme') === 'dark';
+                html.setAttribute('data-theme', dark ? 'light' : 'dark');
+                localStorage.setItem(STORAGE_KEY, dark ? 'light' : 'dark');
+                updateLabels();
+
+                /* Efeito cascata (Ripple) no clique */
+                const track = document.getElementById('toggleTrack');
+                track.classList.remove('ripple');
+                void track.offsetWidth;
+                track.classList.add('ripple');
+            }
+
+            document.getElementById('headerToggle').addEventListener('click', toggleTheme);
+
+            /* Efeito visual de estrelas no fundo (modo escuro) */
+            const canvas = document.getElementById('stars');
+            const ctx    = canvas.getContext('2d');
+            let stars    = [];
+
+            function resize() {
+                canvas.width  = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            function initStars(n = 120) {
+                stars = Array.from({ length: n }, () => ({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 1.2 + .3,
+                    a: Math.random(),
+                    speed: Math.random() * .003 + .001,
+                    phase: Math.random() * Math.PI * 2
+                }));
+            }
+            initStars();
+
+            function drawStars(t) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                stars.forEach(s => {
+                    const alpha = .4 + .5 * Math.sin(t * s.speed * 1000 + s.phase);
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(148,163,184,${alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(drawStars);
+            }
+            requestAnimationFrame(drawStars);
+        })();
+    </script>
+
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
@@ -645,6 +596,5 @@
     <script>
         new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
-    </body>
-
+</body>
 </html>
