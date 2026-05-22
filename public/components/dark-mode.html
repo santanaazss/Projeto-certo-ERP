@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERP Flash – Dark Mode Component</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   CSS VARIABLES – LIGHT & DARK THEMES
+   ============================================================ */
+:root {
+  /* LIGHT */
+  --bg-page:        #f1f5f9;
+  --bg-sidebar:     #0f172a;
+  --bg-topbar:      #ffffff;
+  --bg-footer:      #ffffff;
+  --bg-card:        #ffffff;
+
+  --text-primary:   #0f172a;
+  --text-secondary: #64748b;
+  --text-sidebar:   #cbd5e1;
+  --text-sidebar-active: #ffffff;
+
+  --accent:         #2563eb;
+  --accent-glow:    rgba(37,99,235,.18);
+
+  --border:         #e2e8f0;
+  --shadow:         0 1px 6px rgba(0,0,0,.07);
+  --shadow-md:      0 4px 20px rgba(0,0,0,.09);
+
+  --menu-hover-bg:  rgba(255,255,255,.06);
+  --menu-active-bg: rgba(37,99,235,.18);
+
+  --toggle-track:   #e2e8f0;
+  --toggle-thumb:   #ffffff;
+  --toggle-icon:    #f59e0b;
+
+  --transition: .35s cubic-bezier(.4,0,.2,1);
+}
+
+[data-theme="dark"] {
+  --bg-page:        #060d1a;
+  --bg-sidebar:     #080f1e;
+  --bg-topbar:      #0d1526;
+  --bg-footer:      #0d1526;
+  --bg-card:        #111827;
+
+  --text-primary:   #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-sidebar:   #94a3b8;
+  --text-sidebar-active: #ffffff;
+
+  --accent:         #3b82f6;
+  --accent-glow:    rgba(59,130,246,.22);
+
+  --border:         #1e293b;
+  --shadow:         0 1px 6px rgba(0,0,0,.35);
+  --shadow-md:      0 4px 24px rgba(0,0,0,.45);
+
+  --menu-hover-bg:  rgba(255,255,255,.04);
+  --menu-active-bg: rgba(59,130,246,.18);
+
+  --toggle-track:   #1e40af;
+  --toggle-thumb:   #e0f2fe;
+  --toggle-icon:    #93c5fd;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+.sidebar {
+  width: 260px;
+  background: var(--bg-sidebar);
+  color: white;
+  padding: 28px 20px;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  left: 0; top: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,.04);
+  transition: background var(--transition), border-color var(--transition);
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 36px;
+  padding: 0 4px;
+}
+.logo img {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #1e3a8a;
+}
+.logo span {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: -.5px;
+  color: #fff;
+}
+.logo span b { color: var(--accent); }
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: var(--text-sidebar);
+  text-decoration: none;
+  font-size: .875rem;
+  font-weight: 500;
+  transition: background var(--transition), color var(--transition);
+  position: relative;
+}
+.menu a i {
+  width: 18px; text-align: center;
+  font-size: .95rem;
+  opacity: .7;
+  transition: opacity var(--transition);
+}
+.menu a:hover {
+  background: var(--menu-hover-bg);
+  color: var(--text-sidebar-active);
+}
+.menu a:hover i { opacity: 1; }
+
+.menu a.active {
+  background: var(--menu-active-bg);
+  color: var(--accent);
+}
+.menu a.active i { opacity: 1; color: var(--accent); }
+.menu a.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 60%;
+  background: var(--accent);
+  border-radius: 0 3px 3px 0;
+}
+
+.menu-separator {
+  font-size: .67rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: #334155;
+  padding: 18px 14px 6px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   MAIN CONTENT SHELL
+   ============================================================ */
+.main-content {
+  margin-left: 260px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   TOPBAR / HEADER
+   ============================================================ */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--bg-topbar);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 0 28px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-page);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 16px;
+  flex: 1; max-width: 340px;
+  transition: background var(--transition), border-color var(--transition);
+}
+.search-bar i { color: var(--text-secondary); font-size: .85rem; }
+.search-bar input {
+  border: none; outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: .875rem;
+  color: var(--text-primary);
+  width: 100%;
+}
+.search-bar input::placeholder { color: var(--text-secondary); }
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.bell-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 1.15rem;
+  padding: 4px;
+  transition: color var(--transition);
+  position: relative;
+}
+.bell-btn:hover { color: var(--text-primary); }
+.bell-dot {
+  position: absolute; top: 2px; right: 2px;
+  width: 7px; height: 7px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid var(--bg-topbar);
+}
+
+.user-info { text-align: right; }
+.user-name {
+  display: block;
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+  transition: color var(--transition);
+}
+.user-role {
+  display: block;
+  font-size: .75rem;
+  color: var(--text-secondary);
+  transition: color var(--transition);
+}
+
+.user-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  object-fit: cover;
+}
+
+/* ============================================================
+   DARK MODE TOGGLE
+   ============================================================ */
+.dark-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dark-toggle-label {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: .02em;
+  transition: color var(--transition);
+  white-space: nowrap;
+}
+
+/* Track */
+.toggle-track {
+  position: relative;
+  width: 48px; height: 26px;
+  background: var(--toggle-track);
+  border-radius: 99px;
+  transition: background var(--transition);
+  flex-shrink: 0;
+}
+
+/* Thumb */
+.toggle-thumb {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--toggle-thumb);
+  box-shadow: 0 1px 6px rgba(0,0,0,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .65rem;
+  transition: transform var(--transition), background var(--transition);
+}
+.toggle-thumb .icon-sun  { display: block; }
+.toggle-thumb .icon-moon { display: none;  }
+
+[data-theme="dark"] .toggle-thumb {
+  transform: translateX(22px);
+}
+[data-theme="dark"] .toggle-thumb .icon-sun  { display: none;  }
+[data-theme="dark"] .toggle-thumb .icon-moon { display: block; }
+
+.toggle-thumb .icon-sun  { color: #f59e0b; }
+.toggle-thumb .icon-moon { color: #3b82f6; }
+
+/* Ripple on click */
+.toggle-track::after {
+  content: '';
+  position: absolute;
+  inset: 0; border-radius: 99px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity .2s;
+}
+.toggle-track.ripple::after { animation: ripple .3s ease-out; }
+@keyframes ripple {
+  0%   { opacity: .3; }
+  100% { opacity: 0; }
+}
+
+/* ============================================================
+   PAGE BODY / CARD DEMO
+   ============================================================ */
+.page-body {
+  flex: 1;
+  padding: 32px 28px;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  transition: color var(--transition);
+}
+.section-sub {
+  font-size: .875rem;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+  transition: color var(--transition);
+}
+
+/* Demo component showcase */
+.showcase {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 36px;
+  box-shadow: var(--shadow-md);
+  max-width: 680px;
+  transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.showcase h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+  transition: color var(--transition);
+}
+.showcase h3 i { color: var(--accent); font-size: 1rem; }
+
+/* Big centered toggle demo */
+.big-toggle-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 0 20px;
+}
+
+.big-toggle {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.big-track {
+  position: relative;
+  width: 80px; height: 42px;
+  border-radius: 99px;
+  background: var(--toggle-track);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,.15), 0 0 0 1px var(--border);
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+.big-thumb {
+  position: absolute;
+  top: 4px; left: 4px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--toggle-thumb);
+  box-shadow: 0 2px 10px rgba(0,0,0,.22);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  transition: transform var(--transition), background var(--transition);
+}
+[data-theme="dark"] .big-thumb { transform: translateX(38px); }
+.big-thumb .icon-sun  { display: block; color: #f59e0b; }
+.big-thumb .icon-moon { display: none;  color: #93c5fd; }
+[data-theme="dark"] .big-thumb .icon-sun  { display: none;  }
+[data-theme="dark"] .big-thumb .icon-moon { display: block; }
+
+.big-toggle-label {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: color var(--transition);
+}
+
+/* Stars in dark mode */
+.stars {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+[data-theme="dark"] .stars { opacity: 1; }
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 28px;
+}
+.stat-card {
+  background: var(--bg-page);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: background var(--transition), border-color var(--transition);
+}
+.stat-card .val {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  transition: color var(--transition);
+}
+.stat-card .lbl {
+  font-size: .78rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+  transition: color var(--transition);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  background: var(--bg-footer);
+  border-top: 1px solid var(--border);
+  padding: 16px 28px;
+  font-size: .8rem;
+  color: var(--text-secondary);
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .main-content { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Stars canvas (dark mode ambiance) -->
+<canvas class="stars" id="stars"></canvas>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">
+    <img src="https://ui-avatars.com/api/?name=EF&background=2563eb&color=fff&bold=true" alt="Logo">
+    <span>ERP<b>FLASH</b></span>
+  </div>
+
+  <nav class="menu">
+    <a href="#"><i class="fas fa-home"></i> Home</a>
+    <a href="#"><i class="fas fa-list-check"></i> Funcionalidades</a>
+    <a href="#" class="active"><i class="fas fa-comments"></i> Depoimentos</a>
+    <a href="#"><i class="fas fa-plug"></i> Integrações</a>
+    <a href="#"><i class="fas fa-star"></i> Planos</a>
+    <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+    <div class="menu-separator">INSTITUCIONAL</div>
+    <a href="#"><i class="fas fa-newspaper"></i> Blog</a>
+    <a href="#"><i class="fas fa-info-circle"></i> Sobre</a>
+    <a href="#"><i class="fas fa-envelope"></i> Contato</a>
+  </nav>
+</aside>
+
+<!-- MAIN -->
+<div class="main-content">
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Buscar depoimentos...">
+    </div>
+
+    <div class="topbar-right">
+      <!-- DARK MODE TOGGLE (header) -->
+      <label class="dark-toggle" id="headerToggle" title="Alternar tema">
+        <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
+        <div class="toggle-track" id="toggleTrack">
+          <div class="toggle-thumb">
+            <i class="fas fa-sun icon-sun"></i>
+            <i class="fas fa-moon icon-moon"></i>
+          </div>
+        </div>
+      </label>
+
+      <button class="bell-btn">
+        <i class="far fa-bell"></i>
+        <span class="bell-dot"></span>
+      </button>
+
+      <div class="user-info">
+        <span class="user-name">Administrador</span>
+        <span class="user-role">ERP Flash</span>
+      </div>
+
+      <img class="user-avatar"
+        src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff"
+        alt="Avatar">
+    </div>
+  </header>
+
+  <!-- PAGE BODY -->
+  <main class="page-body">
+    <p class="section-title">Componente de Modo Escuro</p>
+    <p class="section-sub">Toggle sincronizado com Sidebar, Header e Footer — clique para alternar.</p>
+
+    <div class="showcase">
+      <h3><i class="fas fa-moon"></i> Dark Mode Toggle</h3>
+
+      <div class="big-toggle-demo">
+        <!-- BIG TOGGLE (demo) -->
+        <div class="big-toggle" id="bigToggle" title="Alternar tema">
+          <div class="big-track">
+            <div class="big-thumb">
+              <i class="fas fa-sun icon-sun"></i>
+              <i class="fas fa-moon icon-moon"></i>
+            </div>
+          </div>
+          <span class="big-toggle-label" id="bigLabel">Ativar Modo Escuro</span>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="val">3</div>
+          <div class="lbl">Componentes sincronizados</div>
+        </div>
+        <div class="stat-card">
+          <div class="val">CSS</div>
+          <div class="lbl">Variáveis via data-theme</div>
+        </div>
+        <div class="stat-card">
+          <div class="val">localStorage</div>
+          <div class="lbl">Preferência salva</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    © 2026 ERP Flash • Todos os direitos reservados.
+  </footer>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function () {
+  const html = document.documentElement;
+  const STORAGE_KEY = 'erpflash_theme';
+
+  /* ── Restore saved preference ── */
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+
+  /* ── Labels ── */
+  function updateLabels() {
+    const dark = html.getAttribute('data-theme') === 'dark';
+    document.getElementById('toggleLabel').textContent = dark ? 'Modo claro' : 'Modo escuro';
+    document.getElementById('bigLabel').textContent    = dark ? 'Desativar Modo Escuro' : 'Ativar Modo Escuro';
+  }
+  updateLabels();
+
+  /* ── Toggle logic ── */
+  function toggleTheme() {
+    const dark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', dark ? 'light' : 'dark');
+    localStorage.setItem(STORAGE_KEY, dark ? 'light' : 'dark');
+    updateLabels();
+
+    /* ripple effect on track */
+    const track = document.getElementById('toggleTrack');
+    track.classList.remove('ripple');
+    void track.offsetWidth; // reflow
+    track.classList.add('ripple');
+  }
+
+  /* ── Bind all toggles ── */
+  document.getElementById('headerToggle').addEventListener('click', toggleTheme);
+  document.getElementById('bigToggle').addEventListener('click', toggleTheme);
+
+  /* ── Sidebar menu active state ── */
+  document.querySelectorAll('.menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelectorAll('.menu a').forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  /* ── Stars canvas (dark mode ambiance) ── */
+  const canvas = document.getElementById('stars');
+  const ctx    = canvas.getContext('2d');
+  let stars    = [];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function initStars(n = 120) {
+    stars = Array.from({ length: n }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.2 + .3,
+      a: Math.random(),
+      speed: Math.random() * .003 + .001,
+      phase: Math.random() * Math.PI * 2
+    }));
+  }
+  initStars();
+
+  function drawStars(t) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      const alpha = .4 + .5 * Math.sin(t * s.speed * 1000 + s.phase);
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(148,163,184,${alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(drawStars);
+  }
+  requestAnimationFrame(drawStars);
+})();
+</script>
+</body>
+</html>
