@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - ERP Flash</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #f4f7fb; color: #0f172a; min-height: 100vh; }
+
+        .main-content { margin-left: 260px; width: calc(100% - 260px); min-height: 100vh; display: flex; flex-direction: column; }
+
+        .topbar {
+            background: white;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .user-profile { display: flex; align-items: center; gap: 16px; }
+        .user-info { text-align: right; }
+        .user-name { font-weight: 600; }
+        .user-role { font-size: 13px; color: #64748b; }
+        .user-profile img { width: 45px; height: 45px; border-radius: 50%; }
+
+        .content { padding: 40px; }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 40px;
+            color: #0f172a;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* GRID DE CONTATOS */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.03);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            min-height: 250px;
+        }
+
+        .contact-card:hover { 
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(15, 23, 42, 0.1);
+            border-color: #2563eb;
+        }
+
+        .icon-circle {
+            width: 70px;
+            height: 70px;
+            background: #f8fafc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover .icon-circle {
+            background: #2563eb;
+            border-color: #2563eb;
+        }
+
+        .contact-card:hover .icon-circle i {
+            color: white;
+        }
+
+        .icon-circle i { font-size: 28px; }
+        .fa-whatsapp { color: #25D366; }
+        .fa-envelope { color: #2563eb; }
+        .fa-phone { color: #3b82f6; }
+        .fa-telegram { color: #0088cc; }
+
+        .card-details { text-align: center; }
+        .card-details h3 { font-size: 22px; margin-bottom: 10px; color: #0f172a; font-weight: 700; }
+        .card-details p { color: #64748b; font-size: 15px; line-height: 1.5; }
+
+        /* --- CÓDIGO DA CORREÇÃO --- */
+        /* Estilo para garantir o destaque e a cor branca do ícone */
+        .sidebar-active-custom {
+            background-color: #2563eb !important;
+            color: white !important;
+            border-radius: 8px;
+        }
+
+        /* Essa regra força todos os ícones (i) dentro do item ativo a ficarem brancos */
+        .sidebar-active-custom i {
+            color: white !important;
+        }
+
+        @media(max-width: 1200px) { .contact-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media(max-width: 900px) { .main-content { margin-left: 0; width: 100%; } }
+        @media(max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div id="sidebar-component"></div>
+
+<main class="main-content">
+    <header class="topbar">
+        <div style="font-weight: 500; color: #64748b;">Institucional > Contato</div>
+        <div class="user-profile">
+            <div class="user-info">
+                <span class="user-name">Administrador</span>
+                <span class="user-role">ERP Flash</span>
+            </div>
+            <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff">
+        </div>
+    </header>
+
+    <section class="content">
+        <div class="page-header">
+            <h1>Fale Conosco</h1>
+            <p>Escolha o melhor canal para falar com nosso suporte técnico ou consultores comerciais.</p>
+        </div>
+
+        <div class="contact-grid">
+            <a href="https://wa.me/5500000000000" class="contact-card" target="_blank">
+                <div class="icon-circle">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="card-details">
+                    <h3>WhatsApp</h3>
+                    <p>Suporte rápido via chat.</p>
+                </div>
+            </a>
+
+            <a href="mailto:contato@erpflash.com.br" class="contact-card">
+                <div class="icon-circle">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="card-details">
+                    <h3>E-mail</h3>
+                    <p>suporte@erpflash.com.br</p>
+                </div>
+            </a>
+
+            <a href="tel:0800700600" class="contact-card">
+                <div class="icon-circle">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="card-details">
+                    <h3>0800 700 600</h3>
+                    <p>Atendimento 24h.</p>
+                </div>
+            </a>
+
+            <a href="#" class="contact-card" target="_blank">
+                <div class="icon-circle">
+                    <i class="fab fa-telegram"></i>
+                </div>
+                <div class="card-details">
+                    <h3>Telegram</h3>
+                    <p>Comunidade de usuários.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+</main>
+
+<script>
+    async function carregarSidebar() {
+        try {
+            const response = await fetch('../components/sidebar.html');
+            const html = await response.text();
+            const sidebarContainer = document.getElementById('sidebar-component');
+            sidebarContainer.innerHTML = html;
+
+            // --- LÓGICA DE DESTAQUE E COR DO ÍCONE ---
+            // 1. Procura todos os links na sidebar e remove destaques antigos
+            const allLinks = sidebarContainer.querySelectorAll('a');
+            allLinks.forEach(link => {
+                link.classList.remove('active'); // Classe padrão do seu sistema
+                link.classList.remove('sidebar-active-custom'); // Nossa classe de segurança
+            });
+
+            // 2. Procura o link de Contato e aplica o azul e ícone branco
+            allLinks.forEach(link => {
+                if (link.innerText.toLowerCase().includes('contato') || link.href.includes('contato')) {
+                    link.classList.add('sidebar-active-custom'); // Aplica o azul e o ícone branco
+                }
+            });
+
+        } catch (e) { 
+            console.error("Erro ao carregar sidebar", e); 
+        }
+    }
+    carregarSidebar();
+</script>
+
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
+</body>
+</html>
+
+```

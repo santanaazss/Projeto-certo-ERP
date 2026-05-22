@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Integrações | ERP Flash</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #2c3e50;
+            min-height: 100vh;
+        }
+
+        /* MAIN */
+        .main-content {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .topbar {
+            background: rgba(255, 255, 255, .92);
+            backdrop-filter: blur(12px);
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 12px 18px;
+            border-radius: 14px;
+            width: 350px;
+            gap: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .search-bar i {
+            color: #94a3b8;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #dbeafe;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 40px;
+            flex: 1;
+        }
+
+        .page-header {
+            margin-bottom: 35px;
+        }
+
+        .page-header h1 {
+            font-size: 34px;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 24px;
+            padding: 40px;
+            color: white;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(37, 99, 235, .2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, .05);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            opacity: .9;
+        }
+
+        .badge-info {
+            background: rgba(255, 255, 255, .15);
+            padding: 12px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            font-size: 15px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* BUSCA CENTRADA */
+        .busca-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 14px 18px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 15px rgba(15, 23, 42, .04);
+            transition: border-color .3s;
+        }
+
+        .busca-box:focus-within {
+            border-color: #2563eb;
+        }
+
+        .busca-box i {
+            color: #94a3b8;
+            margin-right: 12px;
+        }
+
+        .busca-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 15px;
+            background: transparent;
+        }
+
+        /* GRID */
+        .integracoes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 28px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+            transition: .3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 35px rgba(15, 23, 42, .08);
+        }
+
+        .icone {
+            width: 65px;
+            height: 65px;
+            border-radius: 18px;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+
+        .card p {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 15px;
+            margin-bottom: 18px;
+            flex: 1;
+        }
+
+        .tag {
+            align-self: flex-start;
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 30px;
+            background: #eff6ff;
+            color: #2563eb;
+            border: 1px solid #bfdbfe;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .conectar {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .conectar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, .2);
+        }
+
+        .conectar.conectado {
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+        }
+
+        .conectar.conectado:hover {
+            box-shadow: 0 8px 20px rgba(22, 163, 74, .2);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            padding: 20px 40px;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        /* RESPONSIVO */
+        @media(max-width:900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .topbar {
+                padding: 18px 20px;
+            }
+        }
+
+        @media(max-width:600px) {
+            .topbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .hero {
+                padding: 28px;
+            }
+
+            .hero h2 {
+                font-size: 26px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sidebar-component"></div>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="topbarPesquisa" placeholder="Buscar integrações...">
+            </div>
+
+            <div class="user-profile">
+                <i class="far fa-bell" style="font-size:1.2rem;color:#64748b;cursor:pointer;"></i>
+                <div class="user-info">
+                    <span class="user-name">Administrador</span>
+                    <span class="user-role">ERP Flash</span>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="page-header">
+                <h1>Integrações</h1>
+                <p>Conecte o ERP Flash com as principais plataformas do mercado.</p>
+            </div>
+
+            <div class="hero">
+                <div class="hero-top">
+                    <div>
+                        <h2>Automatize seu ecossistema</h2>
+                        <p>Integrações rápidas, seguras e inteligentes.</p>
+                    </div>
+                    <div class="badge-info">
+                        🔗 +120 integrações disponíveis
+                    </div>
+                </div>
+            </div>
+
+            <div class="busca-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="pesquisa" placeholder="Pesquisar integração...">
+            </div>
+
+            <div class="integracoes" id="listaIntegracoes">
+
+                <div class="card">
+                    <div class="icone">💬</div>
+                    <h2>WhatsApp</h2>
+                    <p>Envie mensagens automáticas e fale com clientes em tempo real.</p>
+                    <span class="tag">Comunicação</span>
+                    <button class="conectar">Conectar</button>
+                </div>
+
+                <div class="card">
+                    <div class="icone">☁️</div>
+                    <h2>Google Drive</h2>
+                    <p>Armazene relatórios e arquivos com total segurança na nuvem.</p>
+                    <span class="tag">Armazenamento</span>
+                    <button class="conectar">Conectar</button>
+                </div>
+
+                <div class="card">
+                    <div class="icone">💳</div>
+                    <h2>Stripe</h2>
+                    <p>Receba pagamentos online com integração rápida e segura.</p>
+                    <span class="tag">Financeiro</span>
+                    <button class="conectar">Conectar</button>
+                </div>
+
+                <div class="card">
+                    <div class="icone">🛒</div>
+                    <h2>Mercado Livre</h2>
+                    <p>Sincronize pedidos, produtos e estoque automaticamente.</p>
+                    <span class="tag">E-commerce</span>
+                    <button class="conectar">Conectar</button>
+                </div>
+
+                <div class="card">
+                    <div class="icone">📦</div>
+                    <h2>Correios</h2>
+                    <p>Calcule fretes e rastreie entregas automaticamente.</p>
+                    <span class="tag">Logística</span>
+                    <button class="conectar">Conectar</button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            © 2026 ERP Flash • Todos os direitos reservados.
+        </footer>
+
+    </main>
+
+    <script>
+        // ELEMENTOS DE BUSCA
+        const pesquisaMio = document.getElementById("pesquisa");
+        const pesquisaTopo = document.getElementById("topbarPesquisa");
+        const cards = document.querySelectorAll(".card");
+        const listaIntegracoes = document.getElementById("listaIntegracoes");
+
+        // Mensagem de fallback dinâmica
+        const msgSemResultados = document.createElement('p');
+        msgSemResultados.style.cssText = 'text-align: center; color: #64748b; padding: 40px; grid-column: 1 / -1; font-weight: 500; font-size: 16px;';
+        msgSemResultados.textContent = 'Nenhuma integração encontrada para sua busca. 🔍';
+        msgSemResultados.style.display = 'none';
+        listaIntegracoes.appendChild(msgSemResultados);
+
+        function filtrarCards(valor) {
+            const termo = valor.toLowerCase().trim();
+            let encontrou = false;
+
+            cards.forEach(card => {
+                const titulo = card.querySelector('h2').textContent.toLowerCase();
+                const descricao = card.querySelector('p').textContent.toLowerCase();
+                const tag = card.querySelector('.tag').textContent.toLowerCase();
+
+                if (titulo.includes(termo) || descricao.includes(termo) || tag.includes(termo)) {
+                    card.style.display = "flex";
+                    encontrou = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            msgSemResultados.style.display = encontrou ? 'none' : 'block';
+        }
+
+        // Sincronização bidirecional das barras de pesquisa
+        pesquisaMio.addEventListener("input", (e) => {
+            pesquisaTopo.value = e.target.value;
+            filtrarCards(e.target.value);
+        });
+
+        pesquisaTopo.addEventListener("input", (e) => {
+            pesquisaMio.value = e.target.value;
+            filtrarCards(e.target.value);
+        });
+
+        // BOTÕES DE CONEXÃO (TOGGLE DINÂMICO)
+        const botoes = document.querySelectorAll(".conectar");
+
+        botoes.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const estaConectado = btn.classList.contains("conectado");
+
+                if (!estaConectado) {
+                    btn.textContent = "Conectado ✔";
+                    btn.classList.add("conectado");
+                } else {
+                    btn.textContent = "Conectar";
+                    btn.classList.remove("conectado");
+                }
+            });
+        });
+
+        // CARREGAR SIDEBAR ASYNC
+        async function carregarSidebar() {
+            try {
+                const response = await fetch('../components/sidebar.html');
+                const html = await response.text();
+                document.getElementById('sidebar-component').innerHTML = html;
+
+                // Destacar link ativo
+                const links = document.querySelectorAll('.menu a');
+                links.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === 'integracoes.html') {
+                        link.classList.add('active');
+                    }
+                });
+            } catch (error) {
+                console.error("Erro ao carregar a barra lateral:", error);
+            }
+        }
+
+        carregarSidebar();
+    </script>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+    </body>
+
+</html>

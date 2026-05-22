@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blog | ERP Flash</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            background: white;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 12px 18px;
+            border-radius: 14px;
+            width: 340px;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .search-bar i {
+            color: #94a3b8;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 40px;
+            flex: 1;
+        }
+
+        .page-header {
+            margin-bottom: 35px;
+        }
+
+        .page-header h1 {
+            font-size: 34px;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 28px;
+            padding: 45px;
+            color: white;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(37,99,235,.20);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,.08);
+            border-radius: 50%;
+            top: -120px;
+            right: -120px;
+        }
+
+        .hero h2 {
+            font-size: 38px;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero p {
+            font-size: 17px;
+            opacity: .95;
+            max-width: 650px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-btn {
+            margin-top: 28px;
+            padding: 14px 26px;
+            border: none;
+            border-radius: 14px;
+            background: white;
+            color: #2563eb;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* FILTERS */
+        .filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+
+        .filter-btn {
+            border: none;
+            background: white;
+            color: #475569;
+            padding: 12px 18px;
+            border-radius: 14px;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+            font-weight: 500;
+            transition: .3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        /* GRID BLOG */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 25px rgba(15,23,42,.05);
+            transition: .35s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 35px rgba(15,23,42,.10);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 24px;
+        }
+
+        .category {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 30px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .blog-content h3 {
+            font-size: 24px;
+            color: #0f172a;
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+
+        .blog-content p {
+            color: #64748b;
+            line-height: 1.8;
+            margin-bottom: 22px;
+            font-size: 15px;
+        }
+
+        .blog-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .author img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+        }
+
+        .author-info span {
+            display: block;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: #0f172a;
+            font-size: 14px;
+        }
+
+        .author-date {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .read-more {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .read-more:hover {
+            background: #1d4ed8;
+            transform: rotate(-10deg);
+        }
+
+        /* NEWSLETTER */
+        .newsletter {
+            margin-top: 50px;
+            background: white;
+            border-radius: 28px;
+            padding: 40px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .newsletter h3 {
+            font-size: 30px;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .newsletter p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-form input {
+            padding: 15px 18px;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            outline: none;
+            min-width: 260px;
+        }
+
+        .newsletter-form button {
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg,#2563eb,#3b82f6);
+            color: white;
+            padding: 15px 24px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            padding: 20px 40px;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        /* RESPONSIVO */
+        @media(max-width: 900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .topbar {
+                padding: 18px 20px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .hero {
+                padding: 35px;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .topbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .hero h2 {
+                font-size: 30px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .newsletter {
+                padding: 28px;
+            }
+
+            .newsletter h3 {
+                font-size: 24px;
+            }
+
+            .newsletter-form {
+                width: 100%;
+            }
+
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sidebar-component"></div>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar artigos...">
+            </div>
+
+            <div class="user-profile">
+                <i class="far fa-bell" style="font-size:1.2rem;color:#64748b;cursor:pointer;"></i>
+
+                <div class="user-info">
+                    <span class="user-name">Administrador</span>
+                    <span class="user-role">ERP Flash</span>
+                </div>
+
+                <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="page-header">
+                <h1>Blog ERP Flash</h1>
+                <p>Conteúdos sobre tecnologia, produtividade e gestão empresarial.</p>
+            </div>
+
+            <div class="hero">
+                <h2>Transforme sua gestão com tecnologia inteligente</h2>
+
+                <p>
+                    Descubra tendências, dicas práticas e estratégias para otimizar sua empresa com um ERP moderno.
+                </p>
+
+                <button class="hero-btn">
+                    Explorar artigos
+                </button>
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active">Todos</button>
+                <button class="filter-btn">ERP</button>
+                <button class="filter-btn">Financeiro</button>
+                <button class="filter-btn">Automação</button>
+                <button class="filter-btn">Tecnologia</button>
+            </div>
+
+            <div class="blog-grid">
+
+                <div class="blog-card">
+                    <img class="blog-image" src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop" alt="ERP">
+
+                    <div class="blog-content">
+                        <span class="category">ERP</span>
+
+                        <h3>5 vantagens de usar um ERP na sua empresa</h3>
+
+                        <p>
+                            Descubra como um sistema ERP pode reduzir custos, aumentar produtividade e integrar setores.
+                        </p>
+
+                        <div class="blog-footer">
+                            <div class="author">
+                                <img src="https://i.pravatar.cc/100?img=12" alt="Autor">
+
+                                <div class="author-info">
+                                    <span class="author-name">Carlos Mendes</span>
+                                    <span class="author-date">12 Maio 2026</span>
+                                </div>
+                            </div>
+
+                            <button class="read-more">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <img class="blog-image" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop" alt="Financeiro">
+
+                    <div class="blog-content">
+                        <span class="category">Financeiro</span>
+
+                        <h3>Como reduzir falhas no controle financeiro</h3>
+
+                        <p>
+                            Veja estratégias para automatizar processos financeiros e melhorar o fluxo de caixa.
+                        </p>
+
+                        <div class="blog-footer">
+                            <div class="author">
+                                <img src="https://i.pravatar.cc/100?img=32" alt="Autor">
+
+                                <div class="author-info">
+                                    <span class="author-name">Fernanda Lima</span>
+                                    <span class="author-date">08 Maio 2026</span>
+                                </div>
+                            </div>
+
+                            <button class="read-more">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <img class="blog-image" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Automação">
+
+                    <div class="blog-content">
+                        <span class="category">Automação</span>
+
+                        <h3>Automação industrial e produtividade empresarial</h3>
+
+                        <p>
+                            Entenda como tecnologias inteligentes ajudam empresas a escalar operações.
+                        </p>
+
+                        <div class="blog-footer">
+                            <div class="author">
+                                <img src="https://i.pravatar.cc/100?img=45" alt="Autor">
+
+                                <div class="author-info">
+                                    <span class="author-name">Ricardo Souza</span>
+                                    <span class="author-date">02 Maio 2026</span>
+                                </div>
+                            </div>
+
+                            <button class="read-more">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="newsletter">
+                <div>
+                    <h3>Receba novidades do ERP Flash</h3>
+
+                    <p>
+                        Assine nossa newsletter e receba conteúdos exclusivos sobre gestão, tecnologia e produtividade.
+                    </p>
+                </div>
+
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Digite seu e-mail">
+                    <button>Inscrever-se</button>
+                </div>
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            © 2026 ERP Flash • Todos os direitos reservados.
+        </footer>
+
+    </main>
+
+    <script>
+        async function carregarSidebar() {
+            const response = await fetch('../components/sidebar.html');
+            const html = await response.text();
+
+            document.getElementById('sidebar-component').innerHTML = html;
+
+            const links = document.querySelectorAll('.menu a');
+
+            links.forEach(link => {
+                link.classList.remove('active');
+
+                if (link.getAttribute('href') === 'blog.html') {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        carregarSidebar();
+    </script>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+    </body>
+</html>

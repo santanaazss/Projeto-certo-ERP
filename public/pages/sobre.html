@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - ERP Flash Industrial</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #0f172a;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            background: white;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info { text-align: right; }
+        .user-name { font-weight: 600; }
+        .user-role { font-size: 13px; color: #64748b; }
+        .user-profile img { width: 45px; height: 45px; border-radius: 50%; }
+
+        .content { padding: 40px; }
+
+        .hero-industrial {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            border-radius: 28px;
+            padding: 60px 40px;
+            color: white;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-text { position: relative; z-index: 2; max-width: 600px; }
+        .hero-text h1 { font-size: 42px; margin-bottom: 15px; }
+        .hero-text p { font-size: 18px; color: #cbd5e1; line-height: 1.6; }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .card-industrial {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+            transition: transform 0.3s ease;
+        }
+
+        .card-industrial:hover { transform: translateY(-5px); }
+
+        .card-image {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: #e2e8f0;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-body { padding: 25px; }
+        .card-body i { font-size: 24px; color: #2563eb; margin-bottom: 15px; display: block; }
+        .card-body h3 { margin-bottom: 12px; font-size: 20px; color: #0f172a; }
+        .card-body p { color: #64748b; line-height: 1.6; font-size: 15px; }
+
+        @media(max-width: 900px) { .main-content { margin-left: 0; width: 100%; } }
+    </style>
+</head>
+<body>
+
+<div id="sidebar-component"></div>
+
+<main class="main-content">
+    <header class="topbar">
+        <div style="font-weight: 500; color: #64748b;">Institucional > Sobre</div>
+        <div class="user-profile">
+            <div class="user-info">
+                <span class="user-name">Administrador</span>
+                <span class="user-role">ERP Flash Industrial</span>
+            </div>
+            <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff">
+        </div>
+    </header>
+
+    <section class="content">
+        <div class="hero-industrial">
+            <div class="hero-text">
+                <h1>Potência Industrial</h1>
+                <p>O ERP Flash foi desenhado para o chão de fábrica. Transformamos sua manufatura em uma operation inteligente com controle total de ponta a ponta.</p>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            
+            <div class="card-industrial">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800" alt="Produção">
+                </div>
+                <div class="card-body">
+                    <i class="fas fa-microchip"></i>
+                    <h3>Controle de Produção (PCP)</h3>
+                    <p>Gerencie ordens de produção, acompanhe o tempo de máquina e reduza o desperdício no dia a dia da fábrica.</p>
+                </div>
+            </div>
+
+            <div class="card-industrial">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800" alt="Logística">
+                </div>
+                <div class="card-body">
+                    <i class="fas fa-boxes-stacked"></i>
+                    <h3>Gestão de Insumos</h3>
+                    <p>Rastreabilidade total de lotes e controle rigoroso de estoque de matéria-prima e produtos acabados.</p>
+                </div>
+            </div>
+
+            <div class="card-industrial">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?w=800" alt="Manutenção">
+                </div>
+                <div class="card-body">
+                    <i class="fas fa-tools"></i>
+                    <h3>Manutenção Preventiva</h3>
+                    <p>Evite paradas críticas. Monitore o ciclo de vida dos seus ativos e agende reparos de forma automatizada.</p>
+                </div>
+            </div>
+
+            <div class="card-industrial">
+                <div class="card-image">
+                    <img src="../assets/img/dashboards.png" alt="BI e Dashboards">
+                </div>
+                <div class="card-body">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>BI e Dashboards</h3>
+                    <p>Visualize indicadores de OEE e KPIs industriais em tempo real para uma gestão baseada em dados reais.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<script>
+    async function carregarSidebar() {
+        try {
+            const response = await fetch('../components/sidebar.html');
+            const html = await response.text();
+            document.getElementById('sidebar-component').innerHTML = html;
+            
+            const links = document.querySelectorAll('.menu a');
+            links.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href').includes('sobre.html')){
+                    link.classList.add('active');
+                }
+            });
+        } catch (e) { console.error("Erro ao carregar sidebar"); }
+    }
+    carregarSidebar();
+</script>
+
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Planos | ERP Flash</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #2c3e50;
+            min-height: 100vh;
+        }
+
+        /* MAIN */
+        .main-content {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .topbar {
+            background: rgba(255, 255, 255, .92);
+            backdrop-filter: blur(12px);
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 12px 18px;
+            border-radius: 14px;
+            width: 350px;
+            gap: 10px;
+            border: 1px solid #e2e8f0;
+            transition: border-color .3s;
+        }
+
+        .search-bar:focus-within {
+            border-color: #2563eb;
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .search-bar i {
+            color: #94a3b8;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #dbeafe;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 40px;
+            flex: 1;
+        }
+
+        .page-header {
+            margin-bottom: 35px;
+        }
+
+        .page-header h1 {
+            font-size: 34px;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 24px;
+            padding: 40px;
+            color: white;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(37, 99, 235, .2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, .05);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            opacity: .9;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, .15);
+            padding: 12px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            font-size: 15px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* TOGGLE */
+        .toggle-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 45px;
+        }
+
+        .toggle {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            padding: 14px 22px;
+            border-radius: 50px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, .05);
+        }
+
+        .toggle span {
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color .3s;
+        }
+
+        .toggle span.active-label {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .switch {
+            width: 70px;
+            height: 35px;
+            background: #dbeafe;
+            border-radius: 50px;
+            position: relative;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .switch::before {
+            content: "";
+            position: absolute;
+            width: 27px;
+            height: 27px;
+            border-radius: 50%;
+            background: white;
+            top: 4px;
+            left: 5px;
+            transition: .3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+        }
+
+        .switch.active {
+            background: #2563eb;
+        }
+
+        .switch.active::before {
+            left: 38px;
+        }
+
+        /* PLANS */
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 35px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+            position: relative;
+            transition: .3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 35px rgba(15, 23, 42, .08);
+        }
+
+        .card.popular {
+            border: 2px solid #2563eb;
+        }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #2563eb;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .5px;
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            font-size: 15px;
+        }
+
+        .price {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .price h2 {
+            font-size: 52px;
+            color: #2563eb;
+            line-height: 1;
+            font-weight: 700;
+            transition: transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .price span {
+            color: #64748b;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 25px;
+            flex: 1;
+        }
+
+        .features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #475569;
+            font-size: 15px;
+        }
+
+        .features li i {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: bold;
+        }
+
+        .btn-plan {
+            width: 100%;
+            margin-top: 35px;
+            padding: 15px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .btn-plan:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, .2);
+        }
+
+        .card.popular .btn-plan {
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            padding: 20px 40px;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        /* RESPONSIVO */
+        @media(max-width:900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .topbar {
+                padding: 18px 20px;
+            }
+        }
+
+        @media(max-width:600px) {
+            .topbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .hero {
+                padding: 28px;
+            }
+
+            .hero h2 {
+                font-size: 25px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 28px;
+            }
+
+            .price h2 {
+                font-size: 42px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sidebar-component"></div>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="buscarPlanos" placeholder="Buscar planos ou recursos...">
+            </div>
+
+            <div class="user-profile">
+                <i class="far fa-bell" style="font-size:1.2rem;color:#64748b;cursor:pointer;"></i>
+                <div class="user-info">
+                    <span class="user-name">Administrador</span>
+                    <span class="user-role">ERP Flash</span>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="page-header">
+                <h1>Planos ERP Flash</h1>
+                <p>Escolha o plano ideal para impulsionar sua empresa.</p>
+            </div>
+
+            <div class="hero">
+                <div class="hero-top">
+                    <div>
+                        <h2>Soluções flexíveis para qualquer negócio</h2>
+                        <p>Mais performance, automação e controle em um único sistema.</p>
+                    </div>
+                    <div class="hero-badge">
+                        ⭐ Mais de 500 empresas ativas
+                    </div>
+                </div>
+            </div>
+
+            <div class="toggle-wrapper">
+                <div class="toggle">
+                    <span id="label-mensal" class="active-label">Mensal</span>
+                    <div class="switch" id="switch"></div>
+                    <span id="label-anual">Anual -20%</span>
+                </div>
+            </div>
+
+            <div class="plans" id="listaPlanos">
+
+                <div class="card">
+                    <div class="plan-name">Starter</div>
+                    <div class="description">
+                        Ideal para pequenas empresas iniciando a gestão digital.
+                    </div>
+                    <div class="price">
+                        <h2 data-month="59" data-year="47">R$59</h2>
+                        <span>/mês</span>
+                    </div>
+                    <ul class="features">
+                        <li><i>✓</i> Controle de estoque</li>
+                        <li><i>✓</i> Gestão financeira</li>
+                        <li><i>✓</i> Relatórios básicos</li>
+                        <li><i>✓</i> Até 3 usuários</li>
+                    </ul>
+                    <button class="btn-plan">Começar Agora</button>
+                </div>
+
+                <div class="card popular">
+                    <div class="badge">POPULAR</div>
+                    <div class="plan-name">Business</div>
+                    <div class="description">
+                        Ideal para empresas em crescimento e automação avançada.
+                    </div>
+                    <div class="price">
+                        <h2 data-month="129" data-year="103">R$129</h2>
+                        <span>/mês</span>
+                    </div>
+                    <ul class="features">
+                        <li><i>✓</i> Tudo do Starter</li>
+                        <li><i>✓</i> Dashboard avançado</li>
+                        <li><i>✓</i> Emissão de notas</li>
+                        <li><i>✓</i> Integrações API</li>
+                        <li><i>✓</i> Até 15 usuários</li>
+                    </ul>
+                    <button class="btn-plan">Assinar Plano</button>
+                </div>
+
+                <div class="card">
+                    <div class="plan-name">Enterprise</div>
+                    <div class="description">
+                        Solução completa para operações robustas e múltiplas filiais.
+                    </div>
+                    <div class="price">
+                        <h2 data-month="299" data-year="239">R$299</h2>
+                        <span>/mês</span>
+                    </div>
+                    <ul class="features">
+                        <li><i>✓</i> Tudo do Business</li>
+                        <li><i>✓</i> Inteligência analítica</li>
+                        <li><i>✓</i> Usuários ilimitados</li>
+                        <li><i>✓</i> Suporte prioritário</li>
+                        <li><i>✓</i> Segurança avançada</li>
+                    </ul>
+                    <button class="btn-plan">Falar com Consultor</button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            © 2026 ERP Flash • Todos os direitos reservados.
+        </footer>
+
+    </main>
+
+    <script>
+        // TOGGLE PLANOS
+        const toggle = document.getElementById("switch");
+        const prices = document.querySelectorAll(".price h2");
+        const labelMensal = document.getElementById("label-mensal");
+        const labelAnual = document.getElementById("label-anual");
+
+        let annual = false;
+
+        toggle.addEventListener("click", () => {
+            annual = !annual;
+            toggle.classList.toggle("active");
+
+            if (annual) {
+                labelMensal.classList.remove("active-label");
+                labelAnual.classList.add("active-label");
+            } else {
+                labelAnual.classList.remove("active-label");
+                labelMensal.classList.add("active-label");
+            }
+
+            prices.forEach(price => {
+                // Efeito suave de pulso na mudança de valor
+                price.style.transform = "scale(0.95)";
+                setTimeout(() => {
+                    price.innerHTML = "R$" + (annual ? price.dataset.year : price.dataset.month);
+                    price.style.transform = "scale(1)";
+                }, 100);
+            });
+        });
+
+        // FILTRO DE BUSCA PARA OS PLANOS
+        const buscarPlanos = document.getElementById("buscarPlanos");
+        const cards = document.querySelectorAll(".card");
+        const listaPlanos = document.getElementById("listaPlanos");
+
+        // Criando elemento dinâmico para buscas sem resultados
+        const fallbackMensagem = document.createElement("p");
+        fallbackMensagem.style.cssText = "text-align: center; color: #64748b; padding: 40px; grid-column: 1 / -1; font-weight: 500; font-size: 16px;";
+        fallbackMensagem.textContent = "Nenhum plano ou recurso corresponde à sua pesquisa. 🔍";
+        fallbackMensagem.style.display = "none";
+        listaPlanos.appendChild(fallbackMensagem);
+
+        buscarPlanos.addEventListener("input", (e) => {
+            const termo = e.target.value.toLowerCase().trim();
+            let possuiResultados = false;
+
+            cards.forEach(card => {
+                const nome = card.querySelector(".plan-name").textContent.toLowerCase();
+                const desc = card.querySelector(".description").textContent.toLowerCase();
+                const recursos = Array.from(card.querySelectorAll(".features li")).map(li => li.textContent.toLowerCase()).join(" ");
+
+                if (nome.includes(termo) || desc.includes(termo) || recursos.includes(termo)) {
+                    card.style.display = "flex";
+                    possuiResultados = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            fallbackMensagem.style.display = possuiResultados ? "none" : "block";
+        });
+
+        // SIDEBAR ASYNC
+        async function carregarSidebar() {
+            try {
+                const response = await fetch('../components/sidebar.html');
+                const html = await response.text();
+                document.getElementById('sidebar-component').innerHTML = html;
+
+                // LINK ATIVO
+                const links = document.querySelectorAll('.menu a');
+                links.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === 'planos.html') {
+                        link.classList.add('active');
+                    }
+                });
+            } catch (error) {
+                console.error("Não foi possível carregar a sidebar:", error);
+            }
+        }
+
+        carregarSidebar();
+    </script>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+    </body>
+
+</html>

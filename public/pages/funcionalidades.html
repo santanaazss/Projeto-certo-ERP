@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funcionalidades | ERP Flash</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #f4f7fb; color: #1e293b; min-height: 100vh; }
+        .main-content { margin-left: 260px; width: calc(100% - 260px); min-height: 100vh; display: flex; flex-direction: column; }
+        .topbar { background: rgba(255, 255, 255, .92); backdrop-filter: blur(12px); padding: 18px 35px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 999; }
+        .search-bar { display: flex; align-items: center; background: #f1f5f9; padding: 13px 18px; border-radius: 16px; width: 360px; gap: 12px; border: 1px solid #e2e8f0; }
+        .search-bar i { color: #94a3b8; }
+        .search-bar input { border: none; background: transparent; outline: none; width: 100%; font-size: 14px; }
+        .user-profile { display: flex; align-items: center; gap: 16px; }
+        .user-info { display: flex; flex-direction: column; text-align: right; }
+        .user-name { font-weight: 600; }
+        .user-role { font-size: 13px; color: #64748b; }
+        .user-profile img { width: 48px; height: 48px; border-radius: 50%; border: 2px solid #dbeafe; }
+        .content { padding: 40px; flex: 1; }
+        .page-header { margin-bottom: 35px; }
+        .page-header h1 { font-size: 42px; color: #0f172a; margin-bottom: 12px; }
+        .page-header p { color: #64748b; font-size: 17px; line-height: 1.8; max-width: 800px; }
+        .hero { background: linear-gradient(135deg, rgba(37, 99, 235, .97), rgba(29, 78, 216, .96)); border-radius: 34px; padding: 55px; overflow: hidden; position: relative; margin-bottom: 45px; box-shadow: 0 25px 50px rgba(37, 99, 235, .22); }
+        .hero::before { content: ""; position: absolute; width: 450px; height: 450px; background: rgba(255, 255, 255, .07); border-radius: 50%; top: -200px; right: -150px; }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .18); color: white; padding: 12px 20px; border-radius: 999px; margin-bottom: 28px; font-size: 14px; }
+        .hero h2 { color: white; font-size: 52px; line-height: 1.2; max-width: 760px; margin-bottom: 20px; }
+        .hero p { color: rgba(255, 255, 255, .92); font-size: 18px; line-height: 1.9; max-width: 720px; }
+        .hero-stats { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 35px; }
+        .hero-stat { background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .16); padding: 18px 22px; border-radius: 20px; min-width: 180px; }
+        .hero-stat h3 { color: white; font-size: 28px; margin-bottom: 6px; }
+        .hero-stat span { color: rgba(255, 255, 255, .85); font-size: 14px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 28px; }
+        .feature-card { background: white; border-radius: 30px; padding: 34px; border: 1px solid #e2e8f0; position: relative; overflow: hidden; transition: .35s; box-shadow: 0 12px 30px rgba(15, 23, 42, .05); }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 25px 45px rgba(15, 23, 42, .10); }
+        .feature-card::before { content: ""; position: absolute; width: 100%; height: 6px; background: linear-gradient(90deg, #2563eb, #60a5fa); top: 0; left: 0; }
+        .feature-icon { width: 78px; height: 78px; border-radius: 24px; background: linear-gradient(135deg, #dbeafe, #eff6ff); color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 26px; }
+        .feature-card h3 { font-size: 28px; color: #0f172a; margin-bottom: 14px; }
+        .feature-card p { color: #64748b; line-height: 1.9; margin-bottom: 24px; font-size: 15px; min-height: 85px; }
+        .feature-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+        .tag { background: #eff6ff; color: #2563eb; padding: 10px 15px; border-radius: 999px; font-size: 13px; font-weight: 600; border: 1px solid #bfdbfe; }
+        .feature-btn { width: 100%; border: none; padding: 17px; border-radius: 18px; background: linear-gradient(135deg, #2563eb, #3b82f6); color: white; font-weight: 600; cursor: pointer; transition: .3s; font-size: 15px; }
+        .feature-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(37,99,235,.25); }
+        .detalhes-modulo { margin-top: 24px; background: #f8fafc; border-radius: 22px; padding: 24px; border: 1px solid #e2e8f0; display: none; animation: aparecer .4s ease; }
+        @keyframes aparecer { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .detalhe-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid #e2e8f0; color: #475569; line-height: 1.7; font-size: 15px; }
+        .detalhe-item:last-child { border-bottom: none; }
+        .detalhe-item i { color: #2563eb; margin-top: 4px; }
+        .footer { background: white; border-top: 1px solid #e2e8f0; padding: 22px 40px; text-align: center; color: #64748b; font-size: 14px; margin-top: 45px; }
+        @media(max-width:900px) { .sidebar { display: none; } .main-content { width: 100%; margin-left: 0; } }
+    </style>
+</head>
+<body>
+    <div id="sidebar-component"></div>
+    <main class="main-content">
+        <header class="topbar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar funcionalidades, módulos e setores...">
+            </div>
+            <div class="user-profile">
+                <i class="far fa-bell" style="font-size:1.2rem;color:#64748b;cursor:pointer;"></i>
+                <div class="user-info">
+                    <span class="user-name">Administrador</span>
+                    <span class="user-role">ERP Flash</span>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+            </div>
+        </header>
+        <section class="content">
+            <div class="page-header">
+                <h1>Funcionalidades ERP Flash</h1>
+                <p>O ERP Flash foi desenvolvido para centralizar, automatizar e acelerar toda a gestão empresarial com módulos inteligentes e dashboards modernos.</p>
+            </div>
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="hero-badge"><i class="fas fa-bolt"></i> Plataforma inteligente para gestão empresarial</div>
+                    <h2>Uma central completa para controlar toda a sua empresa em tempo real</h2>
+                    <div class="hero-stats">
+                        <div class="hero-stat"><h3>+120</h3><span>Recursos integrados</span></div>
+                        <div class="hero-stat"><h3>99.9%</h3><span>Estabilidade da plataforma</span></div>
+                        <div class="hero-stat"><h3>24/7</h3><span>Monitoramento inteligente</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="features-grid" id="featuresGrid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-boxes"></i></div>
+                    <h3>Controle de Estoque</h3>
+                    <p>Gerencie produtos, entradas, saídas e inventários em tempo real com monitoramento inteligente.</p>
+                    <div class="feature-tags"><span class="tag">Tempo real</span><span class="tag">Automação</span><span class="tag">Inventário</span></div>
+                    <button class="feature-btn" onclick="toggleDetalhes(this)">Abrir módulo</button>
+                    <div class="detalhes-modulo">
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Controle completo de entrada e saída.</div>
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Alertas automáticos de estoque mínimo.</div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <h3>Financeiro Inteligente</h3>
+                    <p>Controle pagamentos, recebimentos, fluxo de caixa e relatórios financeiros avançados.</p>
+                    <div class="feature-tags"><span class="tag">Financeiro</span><span class="tag">Relatórios</span><span class="tag">Fluxo de caixa</span></div>
+                    <button class="feature-btn" onclick="toggleDetalhes(this)">Ver financeiro</button>
+                    <div class="detalhes-modulo">
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Fluxo de caixa em tempo real.</div>
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Gestão de contas a pagar e receber.</div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-receipt"></i></div>
+                    <h3>Fiscal e Compliance</h3>
+                    <p>Automatize rotinas fiscais, emissão de notas e processos tributários com conformidade total.</p>
+                    <div class="feature-tags"><span class="tag">NF-e</span><span class="tag">Impostos</span><span class="tag">SPED</span></div>
+                    <button class="feature-btn" onclick="toggleDetalhes(this)">Abrir módulo fiscal</button>
+                    <div class="detalhes-modulo">
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Emissão automática de NF-e e NFC-e.</div>
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Integração completa com o SPED.</div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-handshake"></i></div>
+                    <h3>CRM e Vendas</h3>
+                    <p>Gerencie clientes, oportunidades e funis de vendas em uma plataforma moderna.</p>
+                    <div class="feature-tags"><span class="tag">Leads</span><span class="tag">Funil</span><span class="tag">Clientes</span></div>
+                    <button class="feature-btn" onclick="toggleDetalhes(this)">Ver CRM</button>
+                    <div class="detalhes-modulo">
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Gestão de leads e oportunidades.</div>
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Pipeline visual de negociações.</div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-cart-shopping"></i></div>
+                    <h3>Suprimentos</h3>
+                    <p>Centralize pedidos, fornecedores e processos de compra com mais organização.</p>
+                    <div class="feature-tags"><span class="tag">Cotações</span><span class="tag">Fornecedores</span><span class="tag">Pedidos</span></div>
+                    <button class="feature-btn" onclick="toggleDetalhes(this)">Ver suprimentos</button>
+                    <div class="detalhes-modulo">
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Comparativo de preços entre fornecedores.</div>
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Sugestão automática de compras.</div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h3>Gestão de Equipes</h3>
+                    <p>Organize colaboradores, permissões e desempenho em um único painel.</p>
+                    <div class="feature-tags"><span class="tag">RH</span><span class="tag">Produtividade</span><span class="tag">Equipe</span></div>
+                    <button class="feature-btn" onclick="toggleDetalhes(this)">Gerenciar equipe</button>
+                    <div class="detalhes-modulo">
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Controle de cargos e permissões.</div>
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Indicadores de produtividade.</div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-truck-fast"></i></div>
+                    <h3>Logística e WMS</h3>
+                    <p>Otimize a expedição, controle de rotas e o armazenamento inteligente de produtos.</p>
+                    <div class="feature-tags"><span class="tag">Expedição</span><span class="tag">Fretes</span><span class="tag">Rotas</span></div>
+                    <button class="feature-btn" onclick="toggleDetalhes(this)">Ver logística</button>
+                    <div class="detalhes-modulo">
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Separação de pedidos (Picking).</div>
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Integração com transportadoras.</div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>BI e Analytics</h3>
+                    <p>Transforme dados in decisões com dashboards avançados e análise preditiva.</p>
+                    <div class="feature-tags"><span class="tag">Gráficos</span><span class="tag">Insights</span><span class="tag">IA</span></div>
+                    <button class="feature-btn" onclick="toggleDetalhes(this)">Abrir Analytics</button>
+                    <div class="detalhes-modulo">
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Previsão de demanda via IA.</div>
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Relatórios personalizados em 1 clique.</div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3>Projetos e Serviços</h3>
+                    <p>Gerencie prazos, tarefas (Kanban) e horas trabalhadas da sua prestação de serviço.</p>
+                    <div class="feature-tags"><span class="tag">Kanban</span><span class="tag">Timesheet</span><span class="tag">Prazos</span></div>
+                    <button class="feature-btn" onclick="toggleDetalhes(this)">Ver projetos</button>
+                    <div class="detalhes-modulo">
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Controle de horas por projeto.</div>
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Gestão de contratos recorrentes.</div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-gear"></i></div>
+                    <h3>Portal Self-Service</h3>
+                    <p>Ofereça autonomia ao cliente para baixar boletos e acompanhar pedidos de forma direta.</p>
+                    <div class="feature-tags"><span class="tag">Boletos</span><span class="tag">Tickets</span><span class="tag">2ª Via</span></div>
+                    <button class="feature-btn" onclick="toggleDetalhes(this)">Abrir portal</button>
+                    <div class="detalhes-modulo">
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Área exclusiva para clientes e fornecedores.</div>
+                        <div class="detalhe-item"><i class="fas fa-check-circle"></i> Histórico de compras e suporte online.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">© 2026 ERP Flash • Plataforma inteligente de gestão empresarial.</footer>
+    </main>
+
+    <script>
+        function toggleDetalhes(botao) {
+            const detalhes = botao.nextElementSibling;
+            const aberto = detalhes.style.display === "block";
+            document.querySelectorAll(".detalhes-modulo").forEach(item => { item.style.display = "none"; });
+            if (!aberto) { detalhes.style.display = "block"; }
+        }
+
+        async function carregarSidebar() {
+            const response = await fetch('../components/sidebar.html');
+            const html = await response.text();
+            document.getElementById('sidebar-component').innerHTML = html;
+            const links = document.querySelectorAll('.menu a');
+            links.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === 'funcionalidades.html') { link.classList.add('active'); }
+            });
+        }
+        carregarSidebar();
+
+        /* LÓGICA DE BUSCA EM TEMPO REAL */
+        const searchInput = document.getElementById('searchInput');
+        const featureCards = document.querySelectorAll('.feature-card');
+        const grid = document.getElementById('featuresGrid');
+
+        // Cria a mensagem de erro dinamicamente para manter o layout limpo
+        const noResultsMsg = document.createElement('p');
+        noResultsMsg.id = 'noResultsMessage';
+        noResultsMsg.style.cssText = 'text-align: center; color: #64748b; padding: 30px; grid-column: 1 / -1; display: none; font-size: 16px; font-weight: 500;';
+        noResultsMsg.textContent = 'Nenhuma funcionalidade encontrada para sua busca. 🔍';
+        grid.appendChild(noResultsMsg);
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase().trim();
+            let hasResults = false;
+
+            featureCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('p').textContent.toLowerCase();
+                
+                // Agrupa o conteúdo das tags do card
+                const tags = Array.from(card.querySelectorAll('.tag'))
+                                  .map(t => t.textContent.toLowerCase())
+                                  .join(' ');
+
+                // Se o termo pesquisado bater com o título, descrição ou tags, exibe o card
+                if (title.includes(query) || desc.includes(query) || tags.includes(query)) {
+                    card.style.display = 'block';
+                    hasResults = true;
+                } else {
+                    card.style.display = 'none';
+                    // Se o card for escondido, garante que o painel de detalhes feche
+                    const detalhes = card.querySelector('.detalhes-modulo');
+                    if(detalhes) detalhes.style.display = 'none';
+                }
+            });
+
+            // Gerencia a exibição da mensagem de aviso
+            if (hasResults) {
+                noResultsMsg.style.display = 'none';
+            } else {
+                noResultsMsg.style.display = 'block';
+            }
+        });
+    </script>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+    </body>
+</html>

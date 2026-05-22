@@ -1,0 +1,32 @@
+/* ÁREA DA PÁGINA */
+.container {
+    min-height: calc(100vh - 160px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+/* CARD PADRÃO */
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* TÍTULO */
+.card h1 {
+    margin-bottom: 10px;
+}
+
+/* TEXTO */
+.card p {
+    margin-bottom: 20px;
+}

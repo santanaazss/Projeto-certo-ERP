@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - ERP Flash</title>
+
+    <link rel="stylesheet" href="../assets/css/layout.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #1e293b;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 16px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 40px 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-top: 4px solid #2b56f5; 
+        }
+
+        .logo-container {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-img {
+            max-width: 180px;
+            height: auto;
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            color: #475569;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #f8fafc;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2b56f5;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(43, 86, 245, 0.15);
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background-color: #2b56f5;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 8px;
+        }
+
+        button:hover {
+            background-color: #1a42d9;
+        }
+
+        .footer-text {
+            margin-top: 24px;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .footer-text a {
+            color: #2b56f5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        #mensagem {
+            margin-top: 14px;
+            font-size: 13px;
+            color: #ef4444;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            
+            <div class="logo-container">
+                <img src="../assets/img/image.png" alt="ERP Flash Logo" class="logo-img">
+            </div>
+
+            <div class="input-group">
+                <label for="cadEmail">E-mail</label>
+                <input type="email" id="cadEmail" placeholder="Digite seu email">
+            </div>
+
+            <div class="input-group">
+                <label for="cadSenha">Senha</label>
+                <input type="password" id="cadSenha" placeholder="Digite sua senha">
+            </div>
+
+            <button onclick="cadastrar()">Cadastrar</button>
+
+            <p id="mensagem"></p>
+
+            <p class="footer-text">
+                Já tem uma conta? <a href="login.html">Faça login aqui</a>
+            </p>
+
+        </div>
+    </div>
+
+    <script src="../assets/js/component.js"></script>
+    <script src="../assets/js/login.js"></script>
+
+    <script>
+        function cadastrar() {
+            var email = document.getElementById('cadEmail').value;
+            var senha = document.getElementById('cadSenha').value;
+            var mensagem = document.getElementById('mensagem');
+
+            if (email === "" || senha === "") {
+                mensagem.textContent = "Por favor, preencha todos os campos.";
+                return;
+            }
+
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

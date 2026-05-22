@@ -1,0 +1,88 @@
+/* =========================
+   PÁGINA LOGIN / CADASTRO
+========================= */
+
+/* NÃO quebrar layout global */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9ecef;
+    margin: 0;
+}
+
+/* ÁREA CENTRAL */
+.container {
+    min-height: calc(100vh - 160px); /* espaço header + footer */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 30px;
+    width: 320px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* TÍTULOS */
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* INPUTS */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    outline-color: #007bff;
+}
+
+/* BOTÃO */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* MENSAGEM */
+#mensagem {
+    min-height: 20px;
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* RESPONSIVO */
+@media (max-width: 480px) {
+    .card {
+        width: 100%;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    input, button {
+        padding: 14px;
+        font-size: 16px;
+    }
+}

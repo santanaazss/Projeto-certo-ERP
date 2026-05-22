@@ -1,0 +1,130 @@
+```html id="k8x2dm"
+<!-- SIDEBAR COMPONENT -->
+
+<style>
+/* Reset básico para evitar que o sidebar 'empurre' o conteúdo errado */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar {
+    width: 260px; /* Largura fixa padronizada */
+    background: #0f172a;
+    color: white;
+    padding: 25px 20px;
+    position: fixed;
+    height: 100vh; /* Altura total da tela */
+    overflow-y: auto;
+    left: 0;
+    top: 0;
+    box-sizing: border-box; /* Garante que o padding não aumente a largura */
+}
+
+/* Ajuste o main-content dentro do componente para bater com os 260px */
+.main-content {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* ... restante do seu CSS (logos e menus) permanece igual ... */
+
+@media(max-width: 900px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 999;
+    }
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+</style>
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <img src="../assets/img/image.png" alt="Logo">
+        <span>ERP<b>FLASH</b></span>
+    </div>
+
+    <nav class="menu">
+
+        <a href="index.html">
+            <i class="fas fa-home"></i>
+            Home
+        </a>
+
+        <a href="funcionalidades.html">
+            <i class="fas fa-list-check"></i>
+            Funcionalidades
+        </a>
+
+        <a href="depoimentos.html" >
+            <i class="fas fa-comments"></i>
+            Depoimentos
+        </a>
+
+        <a href="integracoes.html">
+            <i class="fas fa-plug"></i>
+            Integrações
+        </a>
+
+        <a href="planos.html">
+            <i class="fas fa-star"></i>
+            Planos
+        </a>
+
+        <a href="faq.html">
+            <i class="fas fa-question-circle"></i>
+            FAQ
+        </a>
+
+        <div class="menu-separator">
+            INSTITUCIONAL
+        </div>
+
+        <a href="blog.html">
+            <i class="fas fa-newspaper"></i>
+            Blog
+        </a>
+
+        <a href="sobre.html">
+            <i class="fas fa-info-circle"></i>
+            Sobre
+        </a>
+
+        <a href="contato.html">
+            <i class="fas fa-envelope"></i>
+            Contato
+        </a>
+
+    </nav>
+
+</aside>
+```
+<script>
+
+    // PEGA TODOS OS LINKS DO MENU
+    const menuLinks = document.querySelectorAll(".menu a");
+
+    // QUANDO CLICAR
+    menuLinks.forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            // REMOVE ACTIVE DE TODOS
+            menuLinks.forEach(item => {
+                item.classList.remove("active");
+            });
+
+            // ADICIONA ACTIVE NO CLICADO
+            link.classList.add("active");
+
+        });
+
+    });
+
+</script>

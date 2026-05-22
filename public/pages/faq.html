@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FAQ | ERP Flash</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #0f172a;
+            min-height: 100vh;
+        }
+
+        /* MAIN */
+        .main-content {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            background: white;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 12px 18px;
+            border-radius: 14px;
+            width: 350px;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .search-bar i {
+            color: #94a3b8;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 40px;
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            border-radius: 28px;
+            padding: 60px 40px;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .hero::before {
+            content: '❓';
+            position: absolute;
+            font-size: 320px;
+            opacity: .05;
+            right: -40px;
+            bottom: -100px;
+        }
+
+        .hero::after {
+            content: '💡';
+            position: absolute;
+            font-size: 220px;
+            opacity: .05;
+            left: -50px;
+            top: -50px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .15);
+            margin-bottom: 22px;
+            color: #93c5fd;
+            font-size: 14px;
+        }
+
+        .hero h1 {
+            font-size: 46px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            max-width: 700px;
+            color: #dbeafe;
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        /* SEARCH */
+        .search-box {
+            display: flex;
+            gap: 12px;
+            padding: 8px;
+            border-radius: 22px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, .05);
+            margin-bottom: 35px;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 16px;
+            font-size: 15px;
+            background: none;
+        }
+
+        .search-box button {
+            border: none;
+            padding: 14px 24px;
+            border-radius: 16px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+        .search-box button:hover {
+            background: #1d4ed8;
+        }
+
+        /* CATEGORIAS */
+        .categorias {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .cat-btn {
+            border: none;
+            padding: 12px 18px;
+            border-radius: 40px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+            cursor: pointer;
+            transition: .3s;
+            font-weight: 500;
+        }
+
+        .cat-btn:hover,
+        .cat-btn.ativa {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* FAQ */
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 24px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, .04);
+            transition: .3s;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .pergunta {
+            padding: 24px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .pergunta-texto {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .pergunta-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .icone {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            transition: .3s;
+        }
+
+        .resposta {
+            max-height: 0;
+            overflow: hidden;
+            transition: .4s ease;
+            padding: 0 28px;
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        .faq-item.ativo .resposta {
+            max-height: 500px;
+            padding: 0 28px 28px;
+        }
+
+        .faq-item.ativo .icone {
+            transform: rotate(45deg);
+            background: #2563eb;
+            color: white;
+        }
+
+        /* CONTACT */
+        .contact-card {
+            margin-top: 50px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border-radius: 28px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(37, 99, 235, .2);
+        }
+
+        .contact-card h3 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .contact-card p {
+            opacity: .9;
+            margin-bottom: 25px;
+        }
+
+        .btn-contato {
+            border: none;
+            padding: 14px 28px;
+            border-radius: 40px;
+            background: white;
+            color: #2563eb;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .btn-contato:hover {
+            transform: translateY(-3px);
+        }
+
+        .meta-stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .stat-chip {
+            background: rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .15);
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-size: 14px;
+        }
+
+        /* RESPONSIVO */
+        @media(max-width:900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .topbar {
+                padding: 18px 20px;
+            }
+        }
+
+        @media(max-width:600px) {
+            .topbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-box button {
+                width: 100%;
+            }
+
+            .pergunta {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="sidebar-component"></div>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="topbarSearchInput" placeholder="Buscar dúvidas...">
+            </div>
+
+            <div class="user-profile">
+                <i class="far fa-bell" style="font-size:1.2rem;color:#64748b;cursor:pointer;"></i>
+                <div class="user-info">
+                    <span class="user-name">Administrador</span>
+                    <span class="user-role">ERP Flash</span>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="badge-top">
+                        🤔 Dúvidas Frequentes
+                    </div>
+                    <h1>Perguntas Frequentes</h1>
+                    <p>
+                        Tire suas dúvidas sobre o ERP Flash e descubra como
+                        transformar sua gestão empresarial com mais produtividade,
+                        automação e controle.
+                    </p>
+                </div>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar pergunta...">
+                <button id="searchBtn">
+                    Pesquisar
+                </button>
+            </div>
+
+            <div class="categorias">
+                <button class="cat-btn ativa" data-cat="all">
+                    Todas
+                </button>
+                <button class="cat-btn" data-cat="funcionalidades">
+                    ⚙️ Funcionalidades
+                </button>
+                <button class="cat-btn" data-cat="tecnico">
+                    ☁️ Técnico
+                </button>
+                <button class="cat-btn" data-cat="financeiro">
+                    💰 Financeiro
+                </button>
+                <button class="cat-btn" data-cat="suporte">
+                    🎧 Suporte
+                </button>
+            </div>
+
+            <div class="faq-grid" id="faqGrid"></div>
+
+            <div class="contact-card">
+                <h3>Ainda com dúvidas? 💬</h3>
+                <p>
+                    Fale com um especialista do ERP Flash e descubra
+                    como podemos ajudar sua empresa.
+                </p>
+                <button class="btn-contato">
+                    📞 Falar com consultor
+                </button>
+
+                <div class="meta-stats">
+                    <div class="stat-chip">
+                        ✅ Resposta média: 2min
+                    </div>
+                    <div class="stat-chip">
+                        ⭐ 98% de aprovação
+                    </div>
+                    <div class="stat-chip">
+                        📅 Suporte 24/7
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        /* SIDEBAR */
+        async function carregarSidebar() {
+            const response = await fetch('../components/sidebar.html');
+            const html = await response.text();
+
+            document.getElementById('sidebar-component').innerHTML = html;
+            const links = document.querySelectorAll('.menu a');
+
+            links.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === 'faq.html') {
+                    link.classList.add('active');
+                }
+            });
+        }
+        carregarSidebar();
+
+        /* FAQ DATA */
+        const faqData = [
+            {
+                pergunta: "O que é um ERP?",
+                resposta: "ERP é um sistema integrado de gestão empresarial que centraliza estoque, vendas, financeiro e produção.",
+                categoria: "funcionalidades"
+            },
+            {
+                pergunta: "O sistema funciona na nuvem?",
+                resposta: "Sim. Você pode acessar o ERP Flash de qualquer lugar usando navegador.",
+                categoria: "tecnico"
+            },
+            {
+                pergunta: "Existe suporte técnico?",
+                resposta: "Sim. Temos suporte especializado 24 horas por dia.",
+                categoria: "suporte"
+            }
+        ];
+
+        let currentCategory = "all";
+        const searchInput = document.getElementById("searchInput");
+        const topbarSearchInput = document.getElementById("topbarSearchInput");
+        const searchBtn = document.getElementById("searchBtn");
+
+        function renderFaq() {
+            const grid = document.getElementById("faqGrid");
+            let filtered = faqData;
+
+            // Filtro de Categoria
+            if (currentCategory !== "all") {
+                filtered = faqData.filter(item => item.categoria === currentCategory);
+            }
+
+            // Filtro de Busca por Texto (Sincronizado entre os dois inputs)
+            const query = (searchInput.value || topbarSearchInput.value || "").toLowerCase().trim();
+            if (query) {
+                filtered = filtered.filter(item =>
+                    item.pergunta.toLowerCase().includes(query) ||
+                    item.resposta.toLowerCase().includes(query)
+                );
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p style="text-align:center; color:#64748b; padding: 20px;">Nenhuma pergunta encontrada para sua busca.</p>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="faq-item">
+                    <div class="pergunta">
+                        <div class="pergunta-texto">
+                            <div class="pergunta-icon">?</div>
+                            <span>${item.pergunta}</span>
+                        </div>
+                        <span class="icone">+</span>
+                    </div>
+                    <div class="resposta">
+                        <p>${item.resposta}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Adiciona eventos de clique nos sanfonados (Accordion)
+            const items = document.querySelectorAll(".faq-item");
+            items.forEach(item => {
+                item.querySelector(".pergunta").addEventListener("click", () => {
+                    item.classList.toggle("ativo");
+                });
+            });
+        }
+
+        // Inicializa a renderização
+        renderFaq();
+
+        /* CATEGORIAS */
+        const btns = document.querySelectorAll(".cat-btn");
+        btns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                btns.forEach(b => b.classList.remove("ativa"));
+                btn.classList.add("ativa");
+                currentCategory = btn.dataset.cat;
+                renderFaq();
+            });
+        });
+
+        /* EVENTOS DE BUSCA SINCRONIZADOS */
+        searchInput.addEventListener("input", () => {
+            topbarSearchInput.value = searchInput.value;
+            renderFaq();
+        });
+
+        topbarSearchInput.addEventListener("input", () => {
+            searchInput.value = topbarSearchInput.value;
+            renderFaq();
+        });
+
+        searchBtn.addEventListener("click", renderFaq);
+    </script>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+    </body>
+
+</html>
