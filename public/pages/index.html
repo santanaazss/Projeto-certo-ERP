@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
 
@@ -6,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ERP Flash | Dashboard</title>
+    <title>ERP Flash | Dashboard Preview</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -60,7 +59,6 @@
            CORREÇÃO E MAPEAMENTO DOS SEUS COMPONENTES (index.css)
            ============================================================ */
         
-        /* 1. Correção da Topbar */
         .topbar {
             background: var(--bg-topbar) !important;
             border-bottom: 1px solid var(--border) !important;
@@ -92,7 +90,6 @@
             transition: color var(--transition);
         }
 
-        /* 2. Correção dos Textos do Cabeçalho (Visão Geral do Sistema) */
         .dashboard-header h1 {
             color: var(--text-primary) !important;
             transition: color var(--transition);
@@ -102,11 +99,33 @@
             transition: color var(--transition);
         }
 
-        /* 3. Correção dos Cards (Gestão de Inventário, etc.) */
+        /* 3. Correção dos Cards com Interatividade de Vitrine */
         .grid-modulos .card {
             background: var(--bg-card) !important;
             border: 1px solid var(--border) !important;
-            transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+            transition: transform var(--transition), background var(--transition), border-color var(--transition), box-shadow var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Selo discreto de demonstração nos cards */
+        .grid-modulos .card::after {
+            content: 'LOCK';
+            font-family: 'Inter', sans-serif;
+            position: absolute;
+            top: 10px; right: 12px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            background: rgba(100, 116, 139, 0.1);
+            color: var(--text-secondary);
+            padding: 2px 6px;
+            border-radius: 6px;
+        }
+        .grid-modulos .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent) !important;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
         }
         .grid-modulos .card h3 {
             color: var(--text-primary) !important;
@@ -118,102 +137,165 @@
         }
         .grid-modulos .card .card-icon i {
             color: var(--accent) !important;
-            transition: color var(--transition);
+            transition: color var(--transition), transform var(--transition);
+        }
+        .grid-modulos .card:hover .card-icon i {
+            transform: scale(1.1);
+        }
+
+        /* ============================================================
+           ESTILOS DO MODAL DE VENDAS (DESIGN PREMIUM)
+           ============================================================ */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+        .modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background: var(--bg-card) !important;
+            color: var(--text-primary) !important;
+            border: 1px solid var(--border) !important;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform var(--transition);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            text-align: center;
+        }
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color .2s;
+        }
+        .modal-close:hover { color: #ef4444; }
+        
+        .modal-sales-icon {
+            width: 70px; height: 70px;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--accent);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; margin: 0 auto 20px auto;
+        }
+        [data-theme="dark"] .modal-sales-icon {
+            background: rgba(59, 130, 246, 0.15);
+        }
+        
+        .modal-content h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 10px; }
+        .modal-pitch { color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 25px; }
+        
+        /* Lista de Benefícios com checkmarks */
+        .modal-benefits {
+            text-align: left; background: var(--bg-page);
+            padding: 20px; border-radius: 16px; margin-bottom: 30px;
+            list-style: none; display: inline-block; width: 100%; box-sizing: border-box;
+        }
+        .modal-benefits li {
+            font-size: 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+            color: var(--text-primary);
+        }
+        .modal-benefits li:last-child { margin-bottom: 0; }
+        .modal-benefits li i { color: #22c55e; font-size: 16px; }
+
+        /* Botão de Chamada para Ação (CTA) */
+        .modal-cta-btn {
+            background: var(--accent);
+            color: white; border: none;
+            width: 100%; padding: 15px 25px;
+            border-radius: 12px; font-size: 16px; font-weight: 600;
+            cursor: pointer; transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        }
+        .modal-cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+            filter: brightness(1.1);
+        }
+        .modal-cta-btn:active { transform: translateY(0); }
+        
+        .modal-footer-note {
+            font-size: 11px; color: var(--text-secondary); margin-top: 15px; display: block;
         }
 
         /* ============================================================
            ESTILOS DO TOGGLE E ESTRELAS
            ============================================================ */
         .dark-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            user-select: none;
-            margin-right: 15px;
+            display: flex; align-items: center; gap: 8px;
+            cursor: pointer; user-select: none; margin-right: 15px;
         }
-
         .dark-toggle-label {
-            font-size: .78rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            letter-spacing: .02em;
-            transition: color var(--transition);
-            white-space: nowrap;
+            font-size: .78rem; font-weight: 600; color: var(--text-secondary);
+            letter-spacing: .02em; transition: color var(--transition); white-space: nowrap;
         }
-
         .toggle-track {
-            position: relative;
-            width: 48px; height: 26px;
-            background: var(--toggle-track);
-            border-radius: 99px;
-            transition: background var(--transition);
-            flex-shrink: 0;
+            position: relative; width: 48px; height: 26px;
+            background: var(--toggle-track); border-radius: 99px;
+            transition: background var(--transition); flex-shrink: 0;
         }
-
         .toggle-thumb {
-            position: absolute;
-            top: 3px; left: 3px;
-            width: 20px; height: 20px;
-            border-radius: 50%;
-            background: var(--toggle-thumb);
-            box-shadow: 0 1px 6px rgba(0,0,0,.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: .65rem;
+            position: absolute; top: 3px; left: 3px;
+            width: 20px; height: 20px; border-radius: 50%;
+            background: var(--toggle-thumb); box-shadow: 0 1px 6px rgba(0,0,0,.25);
+            display: flex; align-items: center; justify-content: center; font-size: .65rem;
             transition: transform var(--transition), background var(--transition);
         }
-
         .toggle-thumb .icon-sun  { display: block; color: #f59e0b; }
         .toggle-thumb .icon-moon { display: none; color: #3b82f6; }
-
         [data-theme="dark"] .toggle-thumb { transform: translateX(22px); }
         [data-theme="dark"] .toggle-thumb .icon-sun  { display: none; }
         [data-theme="dark"] .toggle-thumb .icon-moon { display: block; }
-
         .toggle-track::after {
-            content: '';
-            position: absolute;
-            inset: 0; border-radius: 99px;
-            background: var(--accent);
-            opacity: 0;
-            transition: opacity .2s;
+            content: ''; position: absolute; inset: 0; border-radius: 99px;
+            background: var(--accent); opacity: 0; transition: opacity .2s;
         }
-
         .toggle-track.ripple::after { animation: ripple .3s ease-out; }
-        @keyframes ripple {
-            0%   { opacity: .3; }
-            100% { opacity: 0; }
-        }
+        @keyframes ripple { 0% { opacity: .3; } 100% { opacity: 0; } }
 
         .stars {
             position: fixed; inset: 0; pointer-events: none; z-index: -1;
-            opacity: 0;
-            transition: opacity .6s ease;
+            opacity: 0; transition: opacity .6s ease;
         }
         [data-theme="dark"] .stars { opacity: 1; }
     </style>
-
 </head>
 
 <body>
 
     <canvas class="stars" id="stars"></canvas>
-
     <div id="sidebar-component"></div>
 
     <main class="main-content">
-
         <header class="topbar">
-
             <div class="search-bar">
                 <i class="fas fa-search"></i>
                 <input type="text" placeholder="Buscar módulos...">
             </div>
 
             <div class="user-profile" style="display: flex; align-items: center;">
-                
                 <label class="dark-toggle" id="headerToggle" title="Alternar tema">
                     <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
                     <div class="toggle-track" id="toggleTrack">
@@ -224,26 +306,20 @@
                     </div>
                 </label>
 
-                <i class="far fa-bell" style="margin-right: 15px;"></i>
+                <i class="far fa-bell" style="margin-right: 15px; cursor: pointer;"></i>
 
                 <div class="user-info">
-                    <span class="user-name">Administrador</span>
-                    <span class="user-role">ERP Flash</span>
+                    <span class="user-name">Demonstração</span>
+                    <span class="user-role">Acesso Limitado</span>
                 </div>
-
-                <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff"
-                    alt="Avatar"
-                    href="perfil.html">
-
+                <img src="https://ui-avatars.com/api/?name=User&background=64748b&color=fff" alt="Avatar">
             </div>
-
         </header>
 
         <section class="content">
-
             <section class="dashboard-header">
                 <h1>Visão Geral do Sistema</h1>
-                <p>Bem-vindo ao centro de controle industrial.</p>
+                <p>Explore o potencial do ERP Flash na sua indústria. Clique nos módulos para conhecer.</p>
             </section>
 
             <section class="carousel">
@@ -274,8 +350,7 @@
             </section>
 
             <div class="grid-modulos">
-
-                <div class="card">
+                <div class="card" onclick="abrirModalVenda('inventario')">
                     <div class="card-icon"><i class="fas fa-warehouse"></i></div>
                     <div class="card-info">
                         <h3>Gestão de Inventário</h3>
@@ -283,7 +358,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card" onclick="abrirModalVenda('manutencao')">
                     <div class="card-icon"><i class="fas fa-cogs"></i></div>
                     <div class="card-info">
                         <h3>Manutenção Ativa</h3>
@@ -291,7 +366,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card" onclick="abrirModalVenda('ordens')">
                     <div class="card-icon"><i class="fas fa-file-invoice"></i></div>
                     <div class="card-info">
                         <h3>Ordens de Serviço</h3>
@@ -299,62 +374,157 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card" onclick="abrirModalVenda('producao')">
                     <div class="card-icon"><i class="fas fa-chart-line"></i></div>
                     <div class="card-info">
                         <h3>Linha de Produção</h3>
                         <p>Monitoramento em tempo real.</p>
                     </div>
                 </div>
-
             </div>
-
         </section>
-
     </main>
     
+    <div id="moduloModal" class="modal-overlay" onclick="fecharModalFora(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="fecharModalModulo()"><i class="fas fa-times"></i></button>
+            <div id="modalDinamicoConteudo">
+                </div>
+        </div>
+    </div>
+
     <script>
         // Carregamento da Sidebar
         async function carregarSidebar() {
             const response = await fetch('../components/sidebar.html');
             const html = await response.text();
             document.getElementById('sidebar-component').innerHTML = html;
-
-            const links = document.querySelectorAll('.menu a');
-            links.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === 'index.html') {
-                    link.classList.add('active');
-                }
-            });
         }
         carregarSidebar();
     </script>
 
     <script>
+        const modalOverlay = document.getElementById('moduloModal');
+        const modalConteudo = document.getElementById('modalDinamicoConteudo');
+
+        // Textos focados em converter o visitante em comprador pago
+        // Objeto com os textos de vendas direcionando para a página de integrações
+        const pitchesVenda = {
+            inventario: {
+                titulo: "Controle de Inventário Profissional",
+                icone: "fa-warehouse",
+                pitch: "Chega de perder dinheiro com furos de estoque ou compras desnecessárias. Automatize as entradas, saídas e rastreabilidade da sua indústria.",
+                beneficios: [
+                    "Alertas automáticos de estoque crítico",
+                    "Rastreabilidade por lote e almoxarifado",
+                    "Integração rápida com leitores de código de barras"
+                ],
+                textoCTA: "Ativar Módulo de Inventário",
+                linkCTA: "planos.html?modulo=inventario" // Link para sua página
+            },
+            manutencao: {
+                titulo: "Evite Paradas Críticas de Maquinário",
+                icone: "fa-cogs",
+                pitch: "Máquina parada é sinônimo de prejuízo. Gerencie o plano de manutenção preventiva e preditiva de forma automatizada para manter o chão de fábrica rodando.",
+                beneficios: [
+                    "Cronograma automático de preventivas",
+                    "Histórico detalhado de falhas por máquina",
+                    "Cálculo automático de MTBF e MTTR"
+                ],
+                textoCTA: "Liberar Gestão de Manutenção",
+                linkCTA: "planos.html?modulo=inventario" // Link para sua página
+            },
+            ordens: {
+                titulo: "Gerencie Ordens de Serviço sem Papel",
+                icone: "fa-file-invoice",
+                pitch: "Chega de ordens de serviço perdidas em pranchetas ou planilhas confusas. Distribua tarefas diretamente para a equipe técnica e controle SLAs em tempo real.",
+                beneficios: [
+                    "Abertura e encerramento de OS via celular",
+                    "Controle de tempo e custo de mão de obra",
+                    "Avisos automáticos de atraso por e-mail/WhatsApp"
+                ],
+                textoCTA: "Desbloquear Ordens de Serviço",
+                linkCTA: "planos.html?modulo=inventario" // Link para sua página
+            },
+            producao: {
+                titulo: "Sua Fábrica Conectada em Tempo Real",
+                icone: "fa-chart-line",
+                pitch: "Monitore a produtividade (OEE), identifique gargalos operacionais e tome decisões estratégicas baseadas em dados consolidados de produção.",
+                beneficios: [
+                    "Painéis Dashboard para TVs no chão de fábrica",
+                    "Monitoramento de eficiência de equipes por turno",
+                    "Exportação de relatórios industriais em um clique"
+                ],
+                textoCTA: "Adquirir Acesso à Linha de Produção",
+                linkCTA: "planos.html?modulo=inventario" // Link para sua página
+            }
+        };
+
+        function abrirModalVenda(idModulo) {
+            const dados = pitchesVenda[idModulo];
+            if (!dados) return;
+
+            // Transforma a array de benefícios em elementos <li> com ícones de check
+            const listaBeneficiosHTML = dados.beneficios
+                .map(beneficio => `<li><i class="fas fa-check-circle"></i> ${beneficio}</li>`)
+                .join('');
+
+            // Injeta a estrutura de vendas premium dentro do modal central
+            modalConteudo.innerHTML = `
+                <div class="modal-sales-icon">
+                    <i class="fas ${dados.icone}"></i>
+                </div>
+                <h2>${dados.titulo}</h2>
+                <p class="modal-pitch">${dados.pitch}</p>
+                
+                <ul class="modal-benefits">
+                    ${listaBeneficiosHTML}
+                </ul>
+                
+                <button class="modal-cta-btn" onclick="window.open('${dados.linkCTA}', '_blank')">
+                    <i class="fas fa-rocket"></i> ${dados.textoCTA}
+                </button>
+                
+                <span class="modal-footer-note"><i class="fas fa-shield-alt"></i> Liberação imediata após a confirmação do plano.</span>
+            `;
+
+            modalOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharModalModulo() {
+            modalOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function fecharModalFora(event) {
+            if (event.target === modalOverlay) {
+                fecharModalModulo();
+            }
+        }
+    </script>
+
+    <script>
+        // Lógica original de mudança de temas Light e Dark
         (function () {
             const html = document.documentElement;
             const STORAGE_KEY = 'erpflash_theme';
 
-            /* Restore saved preference */
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved === 'dark') html.setAttribute('data-theme', 'dark');
 
-            /* Labels */
             function updateLabels() {
                 const dark = html.getAttribute('data-theme') === 'dark';
                 document.getElementById('toggleLabel').textContent = dark ? 'Modo claro' : 'Modo escuro';
             }
             updateLabels();
 
-            /* Toggle logic */
             function toggleTheme() {
                 const dark = html.getAttribute('data-theme') === 'dark';
                 html.setAttribute('data-theme', dark ? 'light' : 'dark');
                 localStorage.setItem(STORAGE_KEY, dark ? 'light' : 'dark');
                 updateLabels();
 
-                /* ripple effect */
                 const track = document.getElementById('toggleTrack');
                 track.classList.remove('ripple');
                 void track.offsetWidth;
@@ -363,7 +533,6 @@
 
             document.getElementById('headerToggle').addEventListener('click', toggleTheme);
 
-            /* Stars canvas (dark mode ambiance) */
             const canvas = document.getElementById('stars');
             const ctx    = canvas.getContext('2d');
             let stars    = [];
@@ -417,5 +586,3 @@
 </body>
 
 </html>
-
-```
