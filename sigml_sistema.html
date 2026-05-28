@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
-<!-- Firebase SDK -->
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -56,8 +57,9 @@ html, body { height: 100%; background: var(--bg-primary); color: var(--text-prim
 .status-pill { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary); background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse-dot 2s infinite; }
 @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.4} }
-.alert-badge { position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 12px; color: var(--text-secondary); }
-.alert-badge .count { position: absolute; top: -4px; right: -4px; background: var(--red); color: #fff; border-radius: 50%; width: 16px; height: 16px; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+.alert-badge { position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 16px; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; }
+.alert-badge:hover { color: var(--text-primary); border-color: var(--border-light); }
+.alert-badge .count { position: absolute; top: -6px; right: -6px; background: var(--red); color: #fff; border-radius: 50%; width: 16px; height: 16px; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: 600; }
 .user-chip { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary); }
 .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--accent-dim); border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--accent); }
 
@@ -78,7 +80,7 @@ html, body { height: 100%; background: var(--bg-primary); color: var(--text-prim
 }
 .nav-item:hover { background: var(--bg-elevated); color: var(--text-primary); }
 .nav-item.active { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(59,130,246,0.2); }
-.nav-item .icon { width: 16px; text-align: center; font-size: 14px; }
+.nav-item .icon { width: 16px; text-align: center; font-size: 16px; }
 .nav-badge { margin-left: auto; background: var(--red); color: #fff; border-radius: 10px; padding: 1px 6px; font-size: 10px; font-weight: 600; }
 .nav-badge.green { background: var(--green-dim); color: var(--green); }
 
@@ -91,7 +93,7 @@ html, body { height: 100%; background: var(--bg-primary); color: var(--text-prim
 .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
 .page-title { font-size: 18px; font-weight: 600; color: var(--text-primary); }
 .page-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-.btn { padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-primary); font-family: var(--font); font-size: 13px; cursor: pointer; transition: all 0.15s; }
+.btn { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-primary); font-family: var(--font); font-size: 13px; cursor: pointer; transition: all 0.15s; }
 .btn:hover { border-color: var(--border-light); background: var(--bg-elevated); }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
 .btn.primary:hover { background: #2563eb; }
@@ -99,10 +101,7 @@ html, body { height: 100%; background: var(--bg-primary); color: var(--text-prim
 
 /* METRICS GRID */
 .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-.metric-card {
-  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px;
-  position: relative; overflow: hidden;
-}
+.metric-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; position: relative; overflow: hidden; }
 .metric-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
 .metric-card.blue::before { background: var(--accent); }
 .metric-card.green::before { background: var(--green); }
@@ -115,13 +114,11 @@ html, body { height: 100%; background: var(--bg-primary); color: var(--text-prim
 .metric-delta.down { color: var(--red); }
 .metric-delta.warn { color: var(--amber); }
 
-/* CARDS */
+/* CARDS & TABLES */
 .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
 .card-title { font-size: 13px; font-weight: 500; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-
-/* TABLE */
 .table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; }
 th { font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
@@ -143,10 +140,7 @@ tr:hover td { background: var(--bg-elevated); color: var(--text-primary); }
 .kanban-dot { width: 8px; height: 8px; border-radius: 50%; }
 .kanban-count { font-size: 11px; background: var(--bg-elevated); padding: 2px 7px; border-radius: 10px; color: var(--text-muted); }
 .kanban-body { padding: 10px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-.kanban-card {
-  background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px;
-  padding: 12px; cursor: grab; transition: all 0.2s;
-}
+.kanban-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: grab; transition: all 0.2s; }
 .kanban-card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-dim); }
 .kanban-card.dragging { opacity: 0.5; }
 .kc-id { font-size: 10px; font-family: var(--mono); color: var(--text-muted); margin-bottom: 6px; }
@@ -157,15 +151,12 @@ tr:hover td { background: var(--bg-elevated); color: var(--text-primary); }
 .kc-prio.media { background: var(--amber-dim); color: var(--amber); }
 .kc-prio.baixa { background: var(--green-dim); color: var(--green); }
 .kc-date { font-size: 10px; color: var(--text-muted); }
-.kanban-add { margin: 8px; padding: 8px; border: 1px dashed var(--border); border-radius: 8px; text-align: center; font-size: 12px; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+.kanban-add { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 8px; padding: 8px; border: 1px dashed var(--border); border-radius: 8px; text-align: center; font-size: 12px; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
 .kanban-add:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
 
 /* ESTOQUE */
 .estoque-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.item-card {
-  background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 14px;
-  transition: border-color 0.2s;
-}
+.item-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; transition: border-color 0.2s; }
 .item-card.critical { border-color: var(--red); }
 .item-card.low { border-color: var(--amber); }
 .item-sku { font-size: 10px; font-family: var(--mono); color: var(--text-muted); }
@@ -178,14 +169,11 @@ tr:hover td { background: var(--bg-elevated); color: var(--text-primary); }
 
 /* ALERTAS */
 .alert-list { display: flex; flex-direction: column; gap: 8px; }
-.alert-item {
-  background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
-  padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px;
-}
+.alert-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; }
 .alert-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-.alert-icon.red { background: var(--red-dim); }
-.alert-icon.amber { background: var(--amber-dim); }
-.alert-icon.green { background: var(--green-dim); }
+.alert-icon.red { background: var(--red-dim); color: var(--red); }
+.alert-icon.amber { background: var(--amber-dim); color: var(--amber); }
+.alert-icon.green { background: var(--green-dim); color: var(--green); }
 .alert-body { flex: 1; }
 .alert-title { font-size: 13px; font-weight: 500; color: var(--text-primary); }
 .alert-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
@@ -198,7 +186,7 @@ tr:hover td { background: var(--bg-elevated); color: var(--text-primary); }
 .chat-container { display: grid; grid-template-columns: 1fr 300px; gap: 16px; height: calc(100vh - 160px); }
 .chat-main { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; display: flex; flex-direction: column; }
 .chat-header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
-.bot-avatar { width: 32px; height: 32px; border-radius: 8px; background: var(--accent-dim); border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.bot-avatar { width: 32px; height: 32px; border-radius: 8px; background: var(--accent-dim); border: 1px solid var(--accent); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 18px; }
 .bot-name { font-size: 13px; font-weight: 500; }
 .bot-status { font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 4px; }
 .chat-messages { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
@@ -218,7 +206,7 @@ tr:hover td { background: var(--bg-elevated); color: var(--text-primary); }
 .qr-btn:hover { border-color: var(--accent); color: var(--accent); }
 .chat-sidebar-panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; overflow-y: auto; }
 
-/* MODAL */
+/* MODALS & OTHERS */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 100; }
 .modal-overlay.open { display: flex; }
 .modal { background: var(--bg-elevated); border: 1px solid var(--border-light); border-radius: 14px; padding: 24px; width: 480px; max-width: 95vw; }
@@ -229,38 +217,24 @@ tr:hover td { background: var(--bg-elevated); color: var(--text-primary); }
 .form-input:focus { border-color: var(--accent); }
 select.form-input option { background: var(--bg-elevated); }
 .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
-
-/* REALTIME INDICATOR */
 .realtime-bar { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-muted); padding: 6px 12px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; font-family: var(--mono); margin-bottom: 16px; }
 .rt-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse-dot 1.5s infinite; }
-
-/* SCROLLBAR */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-/* FIREBASE STATUS */
 .fb-status { position: fixed; bottom: 16px; right: 16px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: 12px; font-family: var(--mono); color: var(--text-secondary); z-index: 50; display: flex; align-items: center; gap: 8px; }
 .fb-dot { width: 8px; height: 8px; border-radius: 50%; }
 .fb-dot.connected { background: var(--green); }
 .fb-dot.disconnected { background: var(--red); }
 .fb-dot.demo { background: var(--amber); }
-
-/* TYPING INDICATOR */
 .typing-dots span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); margin: 0 2px; animation: typing 1.2s infinite; }
 .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
 .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes typing { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
 
 /* LOGIN */
-.login-screen {
-  position: fixed; inset: 0; background: var(--bg-primary);
-  display: flex; align-items: center; justify-content: center; z-index: 200;
-}
-.login-card {
-  background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
-  padding: 40px; width: 400px; text-align: center;
-}
+.login-screen { position: fixed; inset: 0; background: var(--bg-primary); display: flex; align-items: center; justify-content: center; z-index: 200; }
+.login-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; width: 400px; text-align: center; }
 .login-logo { font-size: 20px; font-weight: 700; font-family: var(--mono); color: var(--accent); margin-bottom: 4px; }
 .login-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 28px; }
 .login-error { font-size: 12px; color: var(--red); margin-top: 10px; display: none; }
@@ -268,7 +242,6 @@ select.form-input option { background: var(--bg-elevated); }
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">SIGML 4.0</div>
@@ -281,23 +254,21 @@ select.form-input option { background: var(--bg-elevated); }
       <label class="form-label">Senha</label>
       <input class="form-input" type="password" id="loginPassword" value="123456" placeholder="••••••••"/>
     </div>
-    <button class="btn primary" style="width:100%; margin-top:8px" onclick="doLogin()">Entrar no sistema</button>
+    <button class="btn primary" style="width:100%; margin-top:8px; justify-content:center;" onclick="doLogin()">Entrar no sistema</button>
     <p style="font-size:11px; color:var(--text-muted); margin-top:12px">Modo demonstração: credenciais já preenchidas</p>
     <div class="login-error" id="loginError">Credenciais inválidas. Tente novamente.</div>
   </div>
 </div>
 
-<!-- APP SHELL -->
 <div class="app" id="appShell" style="display:none">
 
-  <!-- TOPBAR -->
   <header class="topbar">
     <div class="logo">SIGML<span>/4.0</span></div>
     <div style="width:1px; height:20px; background:var(--border); margin:0 8px"></div>
     <div class="status-pill"><div class="status-dot"></div><span id="fbStatusText">Conectando...</span></div>
     <div class="topbar-spacer"></div>
     <div class="alert-badge" onclick="navigate('alertas')">
-      🔔
+      <i class="ph ph-bell"></i>
       <div class="count" id="alertCount">3</div>
     </div>
     <div class="user-chip">
@@ -307,57 +278,54 @@ select.form-input option { background: var(--bg-elevated); }
     <button class="btn" style="font-size:11px; padding:5px 10px" onclick="doLogout()">Sair</button>
   </header>
 
-  <!-- SIDEBAR -->
   <nav class="sidebar">
     <div class="nav-section">
       <div class="nav-label">Principal</div>
       <div class="nav-item active" onclick="navigate('dashboard')" id="nav-dashboard">
-        <span class="icon">📊</span> Dashboard
+        <i class="ph ph-squares-four icon"></i> Dashboard
       </div>
       <div class="nav-item" onclick="navigate('kanban')" id="nav-kanban">
-        <span class="icon">🗂️</span> Ordens de Produção
+        <i class="ph ph-kanban icon"></i> Ordens de Produção
         <span class="nav-badge green" id="kanbanBadge">12</span>
       </div>
       <div class="nav-item" onclick="navigate('estoque')" id="nav-estoque">
-        <span class="icon">📦</span> Estoque
+        <i class="ph ph-package icon"></i> Estoque
         <span class="nav-badge" id="estoqueBadge">2</span>
       </div>
     </div>
     <div class="nav-section">
       <div class="nav-label">Operacional</div>
       <div class="nav-item" onclick="navigate('fornecedores')" id="nav-fornecedores">
-        <span class="icon">🏭</span> Fornecedores
+        <i class="ph ph-factory icon"></i> Fornecedores
       </div>
       <div class="nav-item" onclick="navigate('alertas')" id="nav-alertas">
-        <span class="icon">⚠️</span> Alertas
+        <i class="ph ph-warning-circle icon"></i> Alertas
         <span class="nav-badge" id="alertBadge">3</span>
       </div>
       <div class="nav-item" onclick="navigate('chatbot')" id="nav-chatbot">
-        <span class="icon">🤖</span> Assistente IA
+        <i class="ph ph-robot icon"></i> Assistente IA
       </div>
     </div>
     <div class="nav-section">
       <div class="nav-label">Sistema</div>
       <div class="nav-item" onclick="navigate('relatorios')" id="nav-relatorios">
-        <span class="icon">📋</span> Relatórios
+        <i class="ph ph-file-text icon"></i> Relatórios
       </div>
       <div class="nav-item" onclick="navigate('configuracoes')" id="nav-configuracoes">
-        <span class="icon">⚙️</span> Configurações
+        <i class="ph ph-gear icon"></i> Configurações
       </div>
     </div>
   </nav>
 
-  <!-- MAIN -->
   <main class="main">
 
-    <!-- DASHBOARD -->
     <div class="view active" id="view-dashboard">
       <div class="page-header">
         <div>
           <div class="page-title">Dashboard Geral</div>
           <div class="page-subtitle">Visão em tempo real — atualizado via Firebase Realtime Database</div>
         </div>
-        <button class="btn primary" onclick="forceRefresh()">↻ Atualizar</button>
+        <button class="btn primary" onclick="forceRefresh()"><i class="ph ph-arrows-clockwise"></i> Atualizar</button>
       </div>
       <div class="realtime-bar">
         <div class="rt-dot"></div>
@@ -412,26 +380,24 @@ select.form-input option { background: var(--bg-elevated); }
       </div>
     </div>
 
-    <!-- KANBAN -->
     <div class="view" id="view-kanban">
       <div class="page-header">
         <div>
           <div class="page-title">Ordens de Produção — Kanban</div>
           <div class="page-subtitle">Arraste os cards entre colunas para atualizar o status no Firebase</div>
         </div>
-        <button class="btn primary" onclick="openAddOrdem()">+ Nova Ordem</button>
+        <button class="btn primary" onclick="openAddOrdem()"><i class="ph ph-plus"></i> Nova Ordem</button>
       </div>
       <div class="kanban-board" id="kanbanBoard"></div>
     </div>
 
-    <!-- ESTOQUE -->
     <div class="view" id="view-estoque">
       <div class="page-header">
         <div>
           <div class="page-title">Gestão de Estoque</div>
           <div class="page-subtitle">Controle de insumos e componentes automotivos</div>
         </div>
-        <button class="btn primary" onclick="openAddItem()">+ Novo Item</button>
+        <button class="btn primary" onclick="openAddItem()"><i class="ph ph-plus"></i> Novo Item</button>
       </div>
       <div class="realtime-bar">
         <div class="rt-dot"></div>
@@ -440,7 +406,6 @@ select.form-input option { background: var(--bg-elevated); }
       <div class="estoque-grid" id="estoqueGrid"></div>
     </div>
 
-    <!-- FORNECEDORES -->
     <div class="view" id="view-fornecedores">
       <div class="page-header">
         <div class="page-title">Fornecedores</div>
@@ -455,19 +420,17 @@ select.form-input option { background: var(--bg-elevated); }
       </div>
     </div>
 
-    <!-- ALERTAS -->
     <div class="view" id="view-alertas">
       <div class="page-header">
         <div>
           <div class="page-title">Central de Alertas</div>
           <div class="page-subtitle">Notificações proativas geradas automaticamente pelo sistema</div>
         </div>
-        <button class="btn" onclick="clearAllAlerts()">✓ Limpar todos</button>
+        <button class="btn" onclick="clearAllAlerts()"><i class="ph ph-check"></i> Limpar todos</button>
       </div>
       <div class="alert-list" id="alertList"></div>
     </div>
 
-    <!-- CHATBOT -->
     <div class="view" id="view-chatbot">
       <div class="page-header">
         <div>
@@ -478,7 +441,7 @@ select.form-input option { background: var(--bg-elevated); }
       <div class="chat-container">
         <div class="chat-main">
           <div class="chat-header">
-            <div class="bot-avatar">🤖</div>
+            <div class="bot-avatar"><i class="ph ph-robot"></i></div>
             <div>
               <div class="bot-name">LogBot — Assistente SIGML</div>
               <div class="bot-status"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block"></span> Online</div>
@@ -498,30 +461,28 @@ select.form-input option { background: var(--bg-elevated); }
       </div>
     </div>
 
-    <!-- RELATÓRIOS -->
     <div class="view" id="view-relatorios">
       <div class="page-header"><div class="page-title">Relatórios</div></div>
       <div class="grid-3">
         <div class="card" style="cursor:pointer" onclick="generateReport('producao')">
-          <div style="font-size:28px; margin-bottom:12px">📊</div>
+          <div style="font-size:28px; margin-bottom:12px; color:var(--text-secondary)"><i class="ph ph-chart-line-up"></i></div>
           <div style="font-weight:500; margin-bottom:6px">Relatório de Produção</div>
           <div style="font-size:12px; color:var(--text-muted)">Ordens, eficiência e OEE do período</div>
         </div>
         <div class="card" style="cursor:pointer" onclick="generateReport('estoque')">
-          <div style="font-size:28px; margin-bottom:12px">📦</div>
+          <div style="font-size:28px; margin-bottom:12px; color:var(--text-secondary)"><i class="ph ph-package"></i></div>
           <div style="font-weight:500; margin-bottom:6px">Relatório de Estoque</div>
           <div style="font-size:12px; color:var(--text-muted)">Movimentações, giro e ruptura</div>
         </div>
         <div class="card" style="cursor:pointer" onclick="generateReport('fornecedores')">
-          <div style="font-size:28px; margin-bottom:12px">🏭</div>
+          <div style="font-size:28px; margin-bottom:12px; color:var(--text-secondary)"><i class="ph ph-factory"></i></div>
           <div style="font-weight:500; margin-bottom:6px">Performance de Fornecedores</div>
           <div style="font-size:12px; color:var(--text-muted)">OTIF, qualidade e lead time</div>
         </div>
       </div>
-      <div class="card" style="margin-top:16px" id="reportOutput" style="display:none"></div>
+      <div class="card" style="margin-top:16px; display:none;" id="reportOutput"></div>
     </div>
 
-    <!-- CONFIGURAÇÕES -->
     <div class="view" id="view-configuracoes">
       <div class="page-header"><div class="page-title">Configurações do Sistema</div></div>
       <div class="grid-2">
@@ -563,7 +524,6 @@ select.form-input option { background: var(--bg-elevated); }
   </main>
 </div>
 
-<!-- MODAL NOVA ORDEM -->
 <div class="modal-overlay" id="modalOrdem">
   <div class="modal">
     <div class="modal-title">Nova Ordem de Produção</div>
@@ -598,7 +558,6 @@ select.form-input option { background: var(--bg-elevated); }
   </div>
 </div>
 
-<!-- MODAL NOVO ITEM ESTOQUE -->
 <div class="modal-overlay" id="modalItem">
   <div class="modal">
     <div class="modal-title">Novo Item de Estoque</div>
@@ -624,21 +583,11 @@ select.form-input option { background: var(--bg-elevated); }
       <label class="form-label">Estoque Mínimo (threshold alerta)</label>
       <input class="form-input" type="number" id="fi-min" placeholder="200"/>
     </div>
-    <div class="form-group">
-      <label class="form-label">Quantidade Máxima</label>
-      <input class="form-input" type="number" id="fi-max" placeholder="2000"/>
-    </div>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal('modalItem')">Cancelar</button>
-      <button class="btn primary" onclick="createItem()">Cadastrar Item</button>
+      <button class="btn primary" onclick="createItem()">Salvar Item</button>
     </div>
   </div>
-</div>
-
-<!-- FIREBASE STATUS -->
-<div class="fb-status">
-  <div class="fb-dot demo" id="fbDot"></div>
-  <span id="fbStatusLabel">Firebase: modo demo</span>
 </div>
 
 <script>
