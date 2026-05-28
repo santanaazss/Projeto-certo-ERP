@@ -74,7 +74,7 @@
             border-bottom: 1px solid var(--border) !important; 
             position: sticky; 
             top: 0; 
-            z-index: 999; 
+            z-index: 990; 
             transition: background var(--transition), border-color var(--transition);
         }
 
@@ -98,7 +98,8 @@
         .user-name { font-weight: 600; color: var(--text-primary) !important; transition: color var(--transition); }
         .user-role { font-size: 13px; color: var(--text-secondary) !important; transition: color var(--transition); }
         .user-profile img { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--accent); transition: border-color var(--transition); }
-        .user-profile > i.far.fa-bell { color: var(--text-secondary) !important; transition: color var(--transition); }
+        .user-profile > i.far.fa-bell { color: var(--text-secondary) !important; transition: color var(--transition); cursor: pointer; }
+        .user-profile > i.far.fa-bell:hover { color: var(--accent) !important; }
 
         .content { padding: 40px; flex: 1; position: relative; z-index: 1; }
         
@@ -117,7 +118,7 @@
             overflow: hidden; 
             box-shadow: 0 25px 50px rgba(37, 99, 235, .15); 
         }
-        .hero::before { content: ''; position: absolute; width: 450px; height: 450px; background: rgba(255,255,255,.08); border-radius: 50%; top: -120px; right: -120px; }
+        .hero::before { content: ''; position: absolute; width: 450px; height: 450px; background: rgba(255,255,255,.08); border-radius: 50%; top: -120px; right: -120px; pointer-events: none; }
         .hero h2 { font-size: 42px; margin-bottom: 14px; position: relative; z-index: 2; }
         .hero p { font-size: 18px; opacity: .95; max-width: 650px; line-height: 1.7; position: relative; z-index: 2; }
         .hero-btn { 
@@ -126,7 +127,7 @@
             font-weight: 600; cursor: pointer; transition: .3s; 
             position: relative; z-index: 2; 
         }
-        .hero-btn:hover { transform: translateY(-3px); }
+        .hero-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
         /* Filters */
         .filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 35px; }
@@ -154,35 +155,122 @@
             border: 1px solid var(--border) !important; 
             box-shadow: 0 12px 30px rgba(15,23,42,.05); 
             transition: transform .35s, box-shadow .35s, background var(--transition), border-color var(--transition); 
+            display: flex;
+            flex-direction: column;
         }
-        .blog-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 0, 0, .08); }
+        .blog-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 0, 0, .12); }
+        .blog-image-container { position: relative; }
         .blog-image { width: 100%; height: 220px; object-fit: cover; }
-        .blog-content { padding: 24px; }
+        
+        .card-actions {
+            position: absolute; top: 15px; right: 15px;
+            display: flex; gap: 10px;
+        }
+        .action-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none; border-radius: 50%; width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: #64748b; transition: .3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .action-btn:hover { transform: scale(1.1); color: #1e293b; }
+        .action-btn.liked { color: #ef4444; }
+        .action-btn.saved { color: #2563eb; }
+
+        .blog-content { padding: 24px; flex: 1; display: flex; flex-direction: column; }
         
         .category { 
             display: inline-block; padding: 8px 14px; border-radius: 30px; 
             background: var(--category-bg) !important; 
             color: var(--accent) !important; 
-            font-size: 13px; font-weight: 600; margin-bottom: 18px; 
+            font-size: 13px; font-weight: 600; margin-bottom: 18px; align-self: flex-start;
             transition: background var(--transition), color var(--transition); 
         }
         
-        .blog-content h3 { font-size: 24px; color: var(--text-primary) !important; margin-bottom: 14px; line-height: 1.4; transition: color var(--transition); }
-        .blog-content p { color: var(--text-secondary) !important; line-height: 1.8; margin-bottom: 22px; font-size: 15px; transition: color var(--transition); }
+        .blog-title { font-size: 20px; color: var(--text-primary) !important; margin-bottom: 14px; line-height: 1.4; transition: color var(--transition); }
+        .blog-desc { color: var(--text-secondary) !important; line-height: 1.7; margin-bottom: 22px; font-size: 15px; flex: 1; transition: color var(--transition); }
         
-        .blog-footer { display: flex; justify-content: space-between; align-items: center; }
+        .blog-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 16px; margin-top: auto; transition: border-color var(--transition); }
         .author { display: flex; align-items: center; gap: 10px; }
-        .author img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--accent); transition: border-color var(--transition); }
+        .author-img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--accent); transition: border-color var(--transition); }
         .author-info span { display: block; }
         .author-name { font-weight: 600; color: var(--text-primary) !important; font-size: 14px; transition: color var(--transition); }
         .author-date { color: var(--text-secondary) !important; font-size: 13px; transition: color var(--transition); }
         
+        /* Botão Ler Mais (Abre Modal) */
         .read-more { 
             width: 44px; height: 44px; border-radius: 50%; 
-            border: none; background: var(--accent); color: white; 
-            cursor: pointer; transition: .3s; 
+            border: none; background: var(--accent); color: white !important; 
+            cursor: pointer; transition: .3s; display: flex; justify-content: center; align-items: center;
         }
-        .read-more:hover { filter: brightness(1.1); transform: rotate(-10deg); }
+        .read-more:hover { filter: brightness(1.1); transform: translateX(5px); }
+
+        /* ============================================================
+           CSS DO MODAL DO ARTIGO
+           ============================================================ */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: none; /* Escondido por padrão */
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--bg-card) !important;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: 24px;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(30px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            border: 1px solid var(--border) !important;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: var(--bg-page);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 10;
+            transition: 0.3s;
+        }
+        .modal-close:hover { background: #ef4444; color: white; border-color: #ef4444; transform: rotate(90deg); }
+
+        .modal-banner {
+            width: 100%; height: 300px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-body { padding: 40px; }
+        
+        .modal-title { font-size: 32px; color: var(--text-primary) !important; margin: 15px 0; line-height: 1.3; }
+        .modal-text { color: var(--text-secondary) !important; font-size: 16px; line-height: 1.8; margin-top: 20px; }
+        .modal-text p { margin-bottom: 15px; }
+        
+        .modal-divider { height: 1px; background: var(--border); margin: 30px 0; }
 
         /* Newsletter */
         .newsletter { 
@@ -193,27 +281,28 @@
             display: flex; justify-content: space-between; align-items: center; 
             gap: 25px; flex-wrap: wrap; 
             transition: background var(--transition), border-color var(--transition); 
+            position: relative; overflow: hidden;
         }
         .newsletter h3 { font-size: 30px; color: var(--text-primary) !important; margin-bottom: 10px; transition: color var(--transition); }
         .newsletter p { color: var(--text-secondary) !important; line-height: 1.7; transition: color var(--transition); }
         
-        .newsletter-form { display: flex; gap: 12px; flex-wrap: wrap; }
+        .newsletter-form { display: flex; gap: 12px; flex-wrap: wrap; width: 100%; max-width: 450px; }
         .newsletter-form input { 
             padding: 15px 18px; border-radius: 14px; 
             border: 1px solid var(--border) !important; 
-            outline: none; min-width: 260px; 
+            outline: none; flex: 1; min-width: 200px; 
             background: var(--bg-page) !important; 
             color: var(--text-primary) !important; 
-            transition: background var(--transition), border-color var(--transition), color var(--transition); 
         }
         .newsletter-form input::placeholder { color: var(--text-secondary) !important; }
         .newsletter-form button { 
             border: none; border-radius: 14px; 
             background: linear-gradient(135deg,#2563eb,#3b82f6); 
             color: white; padding: 15px 24px; font-weight: 600; 
-            cursor: pointer; transition: .3s; 
+            cursor: pointer; transition: .3s; white-space: nowrap;
         }
         .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 99, 235, .2); }
+        .newsletter-success { display: none; color: #10b981; font-weight: 600; font-size: 15px; margin-top: 10px; width: 100%; text-align: left; }
 
         /* Footer */
         .footer { 
@@ -224,78 +313,20 @@
             font-size: 14px; margin-top: 40px; 
             transition: background var(--transition), border-color var(--transition), color var(--transition); 
         }
-        
-        /* ============================================================
-           ESTILOS DO TOGGLE E CANVAS DE ESTRELAS
-           ============================================================ */
-        .dark-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            user-select: none;
-            margin-right: 15px;
-        }
 
-        .dark-toggle-label {
-            font-size: .78rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            letter-spacing: .02em;
-            transition: color var(--transition);
-            white-space: nowrap;
-        }
-
-        .toggle-track {
-            position: relative;
-            width: 48px; height: 26px;
-            background: var(--toggle-track);
-            border-radius: 99px;
-            transition: background var(--transition);
-            flex-shrink: 0;
-        }
-
-        .toggle-thumb {
-            position: absolute;
-            top: 3px; left: 3px;
-            width: 20px; height: 20px;
-            border-radius: 50%;
-            background: var(--toggle-thumb);
-            box-shadow: 0 1px 6px rgba(0,0,0,.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: .65rem;
-            transition: transform var(--transition), background var(--transition);
-        }
-
+        .dark-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; margin-right: 15px; }
+        .dark-toggle-label { font-size: .78rem; font-weight: 600; color: var(--text-secondary); letter-spacing: .02em; transition: color var(--transition); white-space: nowrap; }
+        .toggle-track { position: relative; width: 48px; height: 26px; background: var(--toggle-track); border-radius: 99px; transition: background var(--transition); flex-shrink: 0; }
+        .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--toggle-thumb); box-shadow: 0 1px 6px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: center; font-size: .65rem; transition: transform var(--transition), background var(--transition); }
         .toggle-thumb .icon-sun  { display: block; color: #f59e0b; }
         .toggle-thumb .icon-moon { display: none; color: #3b82f6; }
-
         [data-theme="dark"] .toggle-thumb { transform: translateX(22px); }
         [data-theme="dark"] .toggle-thumb .icon-sun  { display: none; }
         [data-theme="dark"] .toggle-thumb .icon-moon { display: block; }
-
-        .toggle-track::after {
-            content: '';
-            position: absolute;
-            inset: 0; border-radius: 99px;
-            background: var(--accent);
-            opacity: 0;
-            transition: opacity .2s;
-        }
-
+        .toggle-track::after { content: ''; position: absolute; inset: 0; border-radius: 99px; background: var(--accent); opacity: 0; transition: opacity .2s; }
         .toggle-track.ripple::after { animation: ripple .3s ease-out; }
-        @keyframes ripple {
-            0%   { opacity: .3; }
-            100% { opacity: 0; }
-        }
-
-        .stars {
-            position: fixed; inset: 0; pointer-events: none; z-index: 0;
-            opacity: 0;
-            transition: opacity .6s ease;
-        }
+        @keyframes ripple { 0%   { opacity: .3; } 100% { opacity: 0; } }
+        .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0; transition: opacity .6s ease; }
         [data-theme="dark"] .stars { opacity: 1; }
 
         @media(max-width:900px) { .sidebar { display: none; } .main-content { width: 100%; margin-left: 0; } }
@@ -310,7 +341,7 @@
         <header class="topbar">
             <div class="search-bar">
                 <i class="fas fa-search"></i>
-                <input type="text" id="topbarSearch" placeholder="Buscar artigos...">
+                <input type="text" id="topbarSearch" placeholder="Buscar em títulos e descrições...">
             </div>
             <div class="user-profile">
                 
@@ -324,7 +355,7 @@
                     </div>
                 </label>
 
-                <i class="far fa-bell" style="font-size:1.2rem;cursor:pointer;"></i>
+                <i class="far fa-bell" style="font-size:1.2rem;cursor:pointer;" title="Notificações"></i>
                 <div class="user-info">
                     <span class="user-name">Administrador</span>
                     <span class="user-role">ERP Flash</span>
@@ -336,17 +367,13 @@
         <section class="content">
             <div class="page-header">
                 <h1>Blog ERP Flash</h1>
-                <p>Conteúdos sobre tecnologia, produtividade e gestão empresarial. Fique por dentro das tendências do mercado.</p>
+                <p>Conteúdos sobre tecnologia, produtividade e gestão empresarial. Fique por dentro das tendências do mercado e saia na frente.</p>
             </div>
 
             <div class="hero">
                 <h2>Transforme sua gestão com tecnologia inteligente</h2>
-                <p>
-                    Descubra tendências, dicas práticas e estratégias para otimizar sua empresa com um ERP moderno.
-                </p>
-                <button class="hero-btn">
-                    Explorar artigos
-                </button>
+                <p>Descubra tendências, dicas práticas e estratégias para otimizar sua empresa com um ERP moderno, escalável e seguro.</p>
+                <button class="hero-btn" onclick="document.getElementById('filters').scrollIntoView({behavior: 'smooth'})">Explorar artigos</button>
             </div>
 
             <div class="filters" id="filters">
@@ -359,167 +386,360 @@
 
             <div class="blog-grid" id="blogGrid">
                 <div class="blog-card" data-category="erp">
-                    <img class="blog-image" src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop" alt="ERP">
+                    <div class="blog-image-container">
+                        <img class="blog-image" src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop" alt="ERP">
+                        <div class="card-actions">
+                            <button class="action-btn btn-like" title="Curtir"><i class="far fa-heart"></i></button>
+                            <button class="action-btn btn-save" title="Salvar"><i class="far fa-bookmark"></i></button>
+                        </div>
+                    </div>
                     <div class="blog-content">
                         <span class="category">ERP</span>
-                        <h3>5 vantagens de usar um ERP na sua empresa</h3>
-                        <p>
-                            Descubra como um sistema ERP pode reduzir custos, aumentar produtividade e integrar setores.
-                        </p>
+                        <h3 class="blog-title">5 vantagens de usar um ERP na sua empresa</h3>
+                        <p class="blog-desc">Descubra como um sistema ERP pode reduzir custos operacionais, aumentar a produtividade e integrar todos os setores.</p>
                         <div class="blog-footer">
                             <div class="author">
-                                <img src="https://i.pravatar.cc/100?img=12" alt="Autor">
+                                <img class="author-img" src="https://i.pravatar.cc/100?img=12" alt="Autor">
                                 <div class="author-info">
                                     <span class="author-name">Carlos Mendes</span>
                                     <span class="author-date">12 Maio 2026</span>
                                 </div>
                             </div>
-                            <button class="read-more">
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
+                            <button class="read-more" title="Ler artigo completo" onclick="abrirModal(this)"><i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
                 </div>
 
                 <div class="blog-card" data-category="financeiro">
-                    <img class="blog-image" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop" alt="Financeiro">
+                    <div class="blog-image-container">
+                        <img class="blog-image" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop" alt="Financeiro">
+                        <div class="card-actions">
+                            <button class="action-btn btn-like" title="Curtir"><i class="far fa-heart"></i></button>
+                            <button class="action-btn btn-save" title="Salvar"><i class="far fa-bookmark"></i></button>
+                        </div>
+                    </div>
                     <div class="blog-content">
                         <span class="category">Financeiro</span>
-                        <h3>Como reduzir falhas no controle financeiro</h3>
-                        <p>
-                            Veja estratégias para automatizar processos financeiros e melhorar o fluxo de caixa.
-                        </p>
+                        <h3 class="blog-title">Como reduzir falhas no controle financeiro</h3>
+                        <p class="blog-desc">Veja estratégias práticas para automatizar processos financeiros e melhorar a precisão do seu fluxo de caixa diário.</p>
                         <div class="blog-footer">
                             <div class="author">
-                                <img src="https://i.pravatar.cc/100?img=32" alt="Autor">
+                                <img class="author-img" src="https://i.pravatar.cc/100?img=32" alt="Autor">
                                 <div class="author-info">
                                     <span class="author-name">Fernanda Lima</span>
                                     <span class="author-date">08 Maio 2026</span>
                                 </div>
                             </div>
-                            <button class="read-more">
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
+                            <button class="read-more" title="Ler artigo completo" onclick="abrirModal(this)"><i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
                 </div>
 
                 <div class="blog-card" data-category="automacao">
-                    <img class="blog-image" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Automação">
+                    <div class="blog-image-container">
+                        <img class="blog-image" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Automação">
+                        <div class="card-actions">
+                            <button class="action-btn btn-like" title="Curtir"><i class="far fa-heart"></i></button>
+                            <button class="action-btn btn-save" title="Salvar"><i class="far fa-bookmark"></i></button>
+                        </div>
+                    </div>
                     <div class="blog-content">
                         <span class="category">Automação</span>
-                        <h3>Automação industrial e produtividade empresarial</h3>
-                        <p>
-                            Entenda como tecnologias inteligentes ajudam empresas a escalar operações.
-                        </p>
+                        <h3 class="blog-title">Automação industrial e produtividade</h3>
+                        <p class="blog-desc">Entenda como tecnologias inteligentes ajudam empresas a escalar operações com menor intervenção manual e mais segurança.</p>
                         <div class="blog-footer">
                             <div class="author">
-                                <img src="https://i.pravatar.cc/100?img=45" alt="Autor">
+                                <img class="author-img" src="https://i.pravatar.cc/100?img=45" alt="Autor">
                                 <div class="author-info">
-                                    <span class="author-name">Ricardo Souza</span>
+                                    <span class="author-name">Nicole</span>
                                     <span class="author-date">02 Maio 2026</span>
                                 </div>
                             </div>
-                            <button class="read-more">
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
+                            <button class="read-more" title="Ler artigo completo" onclick="abrirModal(this)"><i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-category="tecnologia">
+                    <div class="blog-image-container">
+                        <img class="blog-image" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop" alt="Tecnologia">
+                        <div class="card-actions">
+                            <button class="action-btn btn-like" title="Curtir"><i class="far fa-heart"></i></button>
+                            <button class="action-btn btn-save" title="Salvar"><i class="far fa-bookmark"></i></button>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <span class="category">Tecnologia</span>
+                        <h3 class="blog-title">A revolução da Nuvem nos Negócios</h3>
+                        <p class="blog-desc">Como a migração de servidores locais para o Cloud Computing está garantindo disponibilidade e proteção de dados.</p>
+                        <div class="blog-footer">
+                            <div class="author">
+                                <img class="author-img" src="https://i.pravatar.cc/100?img=15" alt="Autor">
+                                <div class="author-info">
+                                    <span class="author-name">Aline Costa</span>
+                                    <span class="author-date">28 Abril 2026</span>
+                                </div>
+                            </div>
+                            <button class="read-more" title="Ler artigo completo" onclick="abrirModal(this)"><i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-category="tecnologia">
+                    <div class="blog-image-container">
+                        <img class="blog-image" src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop" alt="Inteligência Artificial">
+                        <div class="card-actions">
+                            <button class="action-btn btn-like" title="Curtir"><i class="far fa-heart"></i></button>
+                            <button class="action-btn btn-save" title="Salvar"><i class="far fa-bookmark"></i></button>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <span class="category">Tecnologia</span>
+                        <h3 class="blog-title">I.A. Aplicada ao Atendimento</h3>
+                        <p class="blog-desc">O impacto dos novos modelos de inteligência artificial generativa na jornada do cliente e no suporte B2B.</p>
+                        <div class="blog-footer">
+                            <div class="author">
+                                <img class="author-img" src="https://i.pravatar.cc/100?img=60" alt="Autor">
+                                <div class="author-info">
+                                    <span class="author-name">Thiago Silva</span>
+                                    <span class="author-date">20 Abril 2026</span>
+                                </div>
+                            </div>
+                            <button class="read-more" title="Ler artigo completo" onclick="abrirModal(this)"><i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Mensagem de fallback para quando não houver resultados -->
             <p id="noResultsMessage" style="text-align: center; color: var(--text-secondary); padding: 40px; display: none; font-weight: 500; font-size: 16px;">
-                Nenhum artigo encontrado para esta categoria. 📝
+                Nenhum artigo encontrado com esses termos. 📝
             </p>
 
             <div class="newsletter">
-                <div>
+                <div style="flex: 1; min-width: 300px;">
                     <h3>Receba novidades do ERP Flash</h3>
-                    <p>
-                        Assine nossa newsletter e receba conteúdos exclusivos sobre gestão, tecnologia e produtividade.
-                    </p>
+                    <p>Assine nossa newsletter e receba conteúdos exclusivos sobre gestão, tecnologia e produtividade diretamente no seu e-mail.</p>
                 </div>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Digite seu e-mail">
-                    <button>Inscrever-se</button>
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: flex-end;">
+                    <div class="newsletter-form">
+                        <input type="email" id="newsEmail" placeholder="Digite seu melhor e-mail" required>
+                        <button id="btnSubscribe">Inscrever-se <i class="fas fa-paper-plane" style="margin-left: 5px;"></i></button>
+                    </div>
+                    <div class="newsletter-success" id="newsSuccess">
+                        <i class="fas fa-check-circle"></i> Inscrição realizada com sucesso! Verifique sua caixa de entrada.
+                    </div>
                 </div>
             </div>
         </section>
+
+        <div id="artigoModal" class="modal-overlay" onclick="fecharModalFora(event)">
+            <div class="modal-content">
+                <button class="modal-close" onclick="fecharModal()"><i class="fas fa-times"></i></button>
+                
+                <img id="modalImg" src="" alt="Capa do Artigo" class="modal-banner">
+                
+                <div class="modal-body">
+                    <span class="category" id="modalCategoria">Categoria</span>
+                    <h2 class="modal-title" id="modalTitulo">Título</h2>
+                    
+                    <div class="author" style="margin-top: 20px;">
+                        <img id="modalAutorImg" class="author-img" src="" alt="Autor">
+                        <div class="author-info">
+                            <span class="author-name" id="modalAutorNome">Nome</span>
+                            <span class="author-date" id="modalAutorData">Data</span>
+                        </div>
+                    </div>
+
+                    <div class="modal-divider"></div>
+
+                    <div class="modal-text">
+                        <p id="modalDescricao"><strong>Introdução:</strong> Descrição do artigo aqui...</p>
+                        <p>Aqui começaria o texto completo do seu artigo. Você pode implementar um sistema que puxe o conteúdo inteiro do banco de dados no futuro. Por enquanto, essa visualização ajuda o usuário a ver os detalhes principais antes de tomar uma decisão, tudo sem perder a navegação original da página.</p>
+                        <p>Dica: Continue explorando os filtros para ver como a interface se adapta de forma fluida.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <footer class="footer">© 2026 ERP Flash • Plataforma inteligente de gestão empresarial.</footer>
     </main>
 
     <script>
-        async function carregarSidebar() {
-            const response = await fetch('../components/sidebar.html');
-            const html = await response.text();
-            document.getElementById('sidebar-component').innerHTML = html;
+        // LÓGICA DO MODAL (Nova função)
+        const modalOverlay = document.getElementById('artigoModal');
 
-            const links = document.querySelectorAll('.menu a');
-            links.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === 'blog.html') {
-                    link.classList.add('active');
+        function abrirModal(botaoClicado) {
+            // Busca os dados do Card que foi clicado
+            const card = botaoClicado.closest('.blog-card');
+            
+            const imgCapa = card.querySelector('.blog-image').src;
+            const categoria = card.querySelector('.category').innerText;
+            const titulo = card.querySelector('.blog-title').innerText;
+            const descricao = card.querySelector('.blog-desc').innerText;
+            const autorImg = card.querySelector('.author-img').src;
+            const autorNome = card.querySelector('.author-name').innerText;
+            const autorData = card.querySelector('.author-date').innerText;
+
+            // Joga os dados dentro do Modal
+            document.getElementById('modalImg').src = imgCapa;
+            document.getElementById('modalCategoria').innerText = categoria;
+            document.getElementById('modalTitulo').innerText = titulo;
+            document.getElementById('modalDescricao').innerHTML = "<strong>Resumo:</strong> " + descricao;
+            document.getElementById('modalAutorImg').src = autorImg;
+            document.getElementById('modalAutorNome').innerText = autorNome;
+            document.getElementById('modalAutorData').innerText = autorData;
+
+            // Mostra o Modal com animação suave
+            modalOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Impede o fundo de rolar
+        }
+
+        function fecharModal() {
+            modalOverlay.classList.remove('show');
+            document.body.style.overflow = ''; // Libera o rolamento do fundo
+        }
+
+        // Fecha o modal se o usuário clicar no fundo escuro fora da caixinha
+        function fecharModalFora(event) {
+            if (event.target === modalOverlay) {
+                fecharModal();
+            }
+        }
+
+
+        // Carrega a sidebar mantendo a originalidade do projeto
+        async function carregarSidebar() {
+            try {
+                const response = await fetch('../components/sidebar.html');
+                if (response.ok) {
+                    const html = await response.text();
+                    document.getElementById('sidebar-component').innerHTML = html;
+
+                    const links = document.querySelectorAll('.menu a');
+                    links.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === 'blog.html') {
+                            link.classList.add('active');
+                        }
+                    });
                 }
-            });
+            } catch (error) {
+                console.log("Erro ao carregar sidebar. Certifique-se de estar rodando em um servidor local.");
+            }
         }
         carregarSidebar();
 
-        // Filtro de categorias do blog
+        // LÓGICA UNIFICADA: FILTRO + BUSCA
         const filterButtons = document.querySelectorAll('.filter-btn');
         const blogCards = document.querySelectorAll('.blog-card');
         const noResultsMessage = document.getElementById('noResultsMessage');
+        const searchInput = document.getElementById('topbarSearch');
+
+        function updateBlogGrid() {
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            let hasVisibleCards = false;
+
+            blogCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const text = card.querySelector('p').textContent.toLowerCase();
+
+                const matchFilter = (activeFilter === 'todos' || category === activeFilter);
+                const matchSearch = (title.includes(searchTerm) || text.includes(searchTerm));
+
+                if (matchFilter && matchSearch) {
+                    card.style.display = 'flex';
+                    setTimeout(() => card.style.opacity = '1', 50);
+                    hasVisibleCards = true;
+                } else {
+                    card.style.opacity = '0';
+                    setTimeout(() => card.style.display = 'none', 300);
+                }
+            });
+
+            setTimeout(() => {
+                noResultsMessage.style.display = hasVisibleCards ? 'none' : 'block';
+            }, 300);
+        }
 
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // Remove classe active de todos os botões
                 filterButtons.forEach(btn => btn.classList.remove('active'));
-                // Adiciona classe active ao botão clicado
                 button.classList.add('active');
-
-                const filter = button.getAttribute('data-filter');
-                let hasVisibleCards = false;
-
-                blogCards.forEach(card => {
-                    if (filter === 'todos' || card.getAttribute('data-category') === filter) {
-                        card.style.display = 'block';
-                        hasVisibleCards = true;
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-
-                // Mostra/esconde mensagem de fallback
-                noResultsMessage.style.display = hasVisibleCards ? 'none' : 'block';
+                updateBlogGrid();
             });
+        });
+
+        searchInput.addEventListener('input', updateBlogGrid);
+
+        // INTERAÇÕES NOS CARDS (Curtir e Salvar)
+        document.querySelectorAll('.btn-like').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation(); // Evita conflitos ao clicar
+                this.classList.toggle('liked');
+                const icon = this.querySelector('i');
+                if (this.classList.contains('liked')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                }
+            });
+        });
+
+        document.querySelectorAll('.btn-save').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation(); 
+                this.classList.toggle('saved');
+                const icon = this.querySelector('i');
+                if (this.classList.contains('saved')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                }
+            });
+        });
+
+        // INTERAÇÃO NEWSLETTER
+        document.getElementById('btnSubscribe').addEventListener('click', () => {
+            const emailInput = document.getElementById('newsEmail');
+            const successMsg = document.getElementById('newsSuccess');
+            
+            if (emailInput.value.includes('@') && emailInput.value.includes('.')) {
+                successMsg.style.display = 'block';
+                emailInput.value = '';
+                setTimeout(() => { successMsg.style.display = 'none'; }, 4000);
+            } else {
+                alert("Por favor, insira um e-mail válido.");
+            }
         });
     </script>
 
     <script>
+        // LÓGICA DO TEMA DARK / LIGHT E ESTRELAS
         (function () {
             const html = document.documentElement;
             const STORAGE_KEY = 'erpflash_theme';
 
-            /* Restaura preferência salva */
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved === 'dark') html.setAttribute('data-theme', 'dark');
 
-            /* Atualiza textos informativos */
             function updateLabels() {
                 const dark = html.getAttribute('data-theme') === 'dark';
                 document.getElementById('toggleLabel').textContent = dark ? 'Modo claro' : 'Modo escuro';
             }
             updateLabels();
 
-            /* Alternância de temas */
             function toggleTheme() {
                 const dark = html.getAttribute('data-theme') === 'dark';
                 html.setAttribute('data-theme', dark ? 'light' : 'dark');
                 localStorage.setItem(STORAGE_KEY, dark ? 'light' : 'dark');
                 updateLabels();
 
-                /* Efeito cascata (Ripple) no clique */
                 const track = document.getElementById('toggleTrack');
                 track.classList.remove('ripple');
                 void track.offsetWidth;
@@ -528,7 +748,6 @@
 
             document.getElementById('headerToggle').addEventListener('click', toggleTheme);
 
-            /* Efeito visual de estrelas no fundo (modo escuro) */
             const canvas = document.getElementById('stars');
             const ctx    = canvas.getContext('2d');
             let stars    = [];
