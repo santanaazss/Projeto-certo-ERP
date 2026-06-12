@@ -11,7 +11,7 @@
     <style>
         /* ===== MESMAS VARIÁVEIS E ESTILOS DA SUA PÁGINA ===== */
         :root {
-            --bg-page:        #f4f7fb;
+            --bg-page:        #f6f9fc;
             --bg-sidebar:     #0f172a;
             --bg-topbar:      rgba(255, 255, 255, .92);
             --bg-footer:      #ffffff;
@@ -55,8 +55,8 @@
         .search-bar input::placeholder { color: var(--text-secondary); }
         .user-profile { display: flex; align-items: center; gap: 16px; cursor: pointer; }
         .user-info { display: flex; flex-direction: column; text-align: right; }
-        .user-name { font-weight: 600; color: var(--text-primary); font-size: 14px; }
-        .user-role { font-size: 12px; color: var(--text-secondary); }
+        .user-name { font-weight: 600; color: var(--text-primary); }
+        .user-role { font-size: 13px; color: var(--text-secondary); }
         .user-profile img { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--accent); }
         .user-profile > i.far.fa-bell { color: var(--text-secondary); font-size: 1.2rem; cursor: pointer; }
         
@@ -133,9 +133,29 @@
         
         /* Dark mode toggle */
         .dark-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; margin-right: 15px; }
-        .dark-toggle-label { font-size: .78rem; font-weight: 600; color: var(--text-secondary); }
+       
+        .dark-toggle-label {
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: .02em;
+            transition: color var(--transition);
+            white-space: nowrap;
+        }
         .toggle-track { position: relative; width: 48px; height: 26px; background: var(--toggle-track); border-radius: 99px; transition: background .3s; }
-        .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--toggle-thumb); display: flex; align-items: center; justify-content: center; font-size: .65rem; transition: transform .3s; }
+            .toggle-thumb {
+            position: absolute;
+            top: 3px; left: 3px;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--toggle-thumb);
+            box-shadow: 0 1px 6px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .65rem;
+            transition: transform var(--transition), background var(--transition);
+        }
         .toggle-thumb .icon-sun { display: block; color: #f59e0b; }
         .toggle-thumb .icon-moon { display: none; color: #3b82f6; }
         [data-theme="dark"] .toggle-thumb { transform: translateX(22px); }
@@ -153,28 +173,30 @@
     <div id="sidebar-component"></div>
     <main class="main-content">
         <header class="topbar">
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Buscar artigos...">
-            </div>
-            <div class="user-profile" id="profileRedirect">
-                <label class="dark-toggle" id="headerToggle">
-                    <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
-                    <div class="toggle-track" id="toggleTrack">
-                        <div class="toggle-thumb">
-                            <i class="fas fa-sun icon-sun"></i>
-                            <i class="fas fa-moon icon-moon"></i>
-                        </div>
-                    </div>
-                </label>
-                
-                <div class="user-info">
-                    <span class="user-name">Administrador</span>
-                    <span class="user-role">ERP Flash</span>
+    <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Buscar artigos...">
+    </div>
+    <div class="user-profile" id="profileRedirect">
+        <label class="dark-toggle" id="headerToggle" title="Alternar tema">
+            <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
+            <div class="toggle-track" id="toggleTrack">
+                <div class="toggle-thumb">
+                    <i class="fas fa-sun icon-sun"></i>
+                    <i class="fas fa-moon icon-moon"></i>
                 </div>
-                <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
             </div>
-        </header>
+        </label>
+
+        <a href="perfil.html" style="display: inline-flex; align-items: center; gap: 12px; text-decoration: none;">
+            <div class="user-info">
+                <span class="user-name">Administrador</span>
+                <span class="user-role">ERP Flash</span>
+            </div>
+            <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+        </a>
+    </div>
+</header>
 
         <section class="content">
             <div class="page-header">
