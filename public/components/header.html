@@ -1,29 +1,21 @@
-<!-- HEADER -->
-
 <header class="topbar">
 
     <div class="search-bar">
         <i class="fas fa-search"></i>
-
         <input type="text" placeholder="Buscar depoimentos...">
     </div>
 
     <div class="user-profile">
+        <i class="far fa-bell" style="font-size:1.2rem;color:#64748b;cursor:pointer;"></i>
 
-        <i class="far fa-bell"
-           style="font-size:1.2rem;color:#64748b;cursor:pointer;">
-        </i>
-
-        <div class="user-info">
-            <span class="user-name">Administrador</span>
-            <span class="user-role">ERP Flash</span>
-        </div>
-
-        <img
-            src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff"
-            alt="Avatar"
-        >
-
+        <!-- Link único envolvendo nome, cargo e imagem -->
+        <a href="perfil.html" style="display: flex; align-items: center; gap: 16px; text-decoration: none;">
+            <div class="user-info">
+                <span class="user-name">Administrador</span>
+                <span class="user-role">ERP Flash</span>
+            </div>
+            <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+        </a>
     </div>
 
 </header>
