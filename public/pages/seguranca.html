@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segurança Corporativa | ERP Flash</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/sidebar.css">
+    <link rel="stylesheet" href="../assets/css/terminal.css">
+    <style>
+        /* ============================================================
+           VARIÁVEIS DE DIRETRIZ VISUAL PRESTÍGIO/SAAS
+           ============================================================ */
+        :root {
+            --bg-page:        #f6f9fc;
+            --bg-sidebar:     #0f172a;
+            --bg-topbar:      rgba(255, 255, 255, 0.85);
+            --bg-footer:      #ffffff;
+            --bg-card:        #ffffff;
+            --bg-icon-circle: #eff6ff;
+            --bg-stat-card:   #ffffff;
+            --text-primary:   #0f172a;
+            --text-secondary: #475569;
+            --accent:         #2563eb;
+            --accent-dark:    #1d4ed8;
+            --accent-light:   rgba(37, 99, 235, 0.1);
+            --border:         #e2e8f0;
+            --toggle-track:   #cbd5e1;
+            --toggle-thumb:   #ffffff;
+            --glass-bg:       rgba(255, 255, 255, 0.4);
+            --glass-border:   rgba(255, 255, 255, 0.6);
+            --shadow-sm:      0 2px 8px rgba(15, 23, 42, 0.04);
+            --shadow-md:      0 12px 34px rgba(15, 23, 42, 0.06);
+            --transition:     .3s cubic-bezier(.25, .8, .25, 1);
+            --success:        #059669;
+        }
+
+        [data-theme="dark"] {
+            --bg-page:        #020617;
+            --bg-sidebar:     #070a13;
+            --bg-topbar:      rgba(15, 23, 42, 0.8);
+            --bg-footer:      #0b0f19;
+            --bg-card:        #0f172a;
+            --bg-icon-circle: #1e293b;
+            --bg-stat-card:   #0f172a;
+            --text-primary:   #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent:         #3b82f6;
+            --accent-dark:    #2563eb;
+            --accent-light:   rgba(59, 130, 246, 0.15);
+            --border:         #1e293b;
+            --toggle-track:   #1e40af;
+            --toggle-thumb:   #e0f2fe;
+            --glass-bg:       rgba(15, 23, 42, 0.4);
+            --glass-border:   rgba(255, 255, 255, 0.05);
+            --shadow-sm:      0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md:      0 16px 40px rgba(0, 0, 0, 0.4);
+            --success:        #34d399;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body { 
+            background: var(--bg-page) !important; 
+            color: var(--text-primary) !important; 
+            min-height: 100vh; 
+            transition: background var(--transition), color var(--transition);
+            overflow-x: hidden;
+        }
+
+        .main-content { margin-left: 260px; width: calc(100% - 260px); min-height: 100vh; display: flex; flex-direction: column; }
+        
+        /* Topbar */
+        .topbar { 
+            background: var(--bg-topbar) !important; 
+            backdrop-filter: blur(20px); 
+            padding: 18px 40px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid var(--border) !important; 
+            position: sticky; 
+            top: 0; 
+            z-index: 999; 
+            transition: background var(--transition), border-color var(--transition);
+        }
+
+        .breadcrumb { font-weight: 500; font-size: 14px; color: var(--text-secondary) !important; }
+
+        .user-profile { display: flex; align-items: center; gap: 16px; }
+        .user-info { display: flex; flex-direction: column; text-align: right; }
+        .user-name { font-weight: 600; font-size: 14px; color: var(--text-primary) !important; }
+        .user-role { font-size: 12px; color: var(--text-secondary) !important; }
+        .user-profile img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); }
+
+        .content { padding: 50px 40px; flex: 1; position: relative; z-index: 1; max-width: 1400px; width: 100%; margin: 0 auto; }
+        
+        /* Seções e Títulos */
+        .section-margin { margin-bottom: 70px; }
+        .section-title { font-size: 26px; font-weight: 800; color: var(--text-primary); margin-bottom: 30px; display: flex; align-items: center; gap: 12px; letter-spacing: -0.02em; }
+        .section-title i { color: var(--accent); font-size: 22px; }
+
+        /* ============================================================
+           1. HERO SECTION
+           ============================================================ */
+        .hero { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #2563eb 100%);
+            border-radius: 30px; 
+            padding: 60px; 
+            position: relative; 
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(37, 99, 235, 0.15);
+        }
+        [data-theme="dark"] .hero {
+            background: linear-gradient(135deg, #030712 0%, #0f172a 60%, #1d4ed8 100%);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+        .hero-glow {
+            position: absolute; width: 350px; height: 350px; background: rgba(37, 99, 235, 0.4);
+            filter: blur(100px); top: -50px; right: -50px; border-radius: 50%; pointer-events: none;
+        }
+        .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; position: relative; z-index: 2; }
+        .hero-text h1 { color: #ffffff; font-size: 46px; font-weight: 800; line-height: 1.2; margin-bottom: 20px; letter-spacing: -0.03em; }
+        .hero-text p { color: #94a3b8; font-size: 18px; line-height: 1.6; margin-bottom: 40px; max-width: 620px; }
+        
+        .hero-indicators { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .hero-ind-card { 
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); 
+            padding: 18px; border-radius: 16px; display: flex; align-items: center; gap: 14px; backdrop-filter: blur(10px);
+        }
+        .hero-ind-card i { color: #3b82f6; font-size: 20px; }
+        .hero-ind-card div h4 { color: #ffffff; font-size: 16px; font-weight: 700; }
+        .hero-ind-card div p { color: #94a3b8; font-size: 13px; margin: 0; }
+
+        .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; }
+        .shield-container {
+            width: 220px; height: 220px; background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative;
+            animation: pulseGlow 4s infinite alternate;
+        }
+        .shield-container i.main-shield { font-size: 90px; color: #3b82f6; filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.6)); }
+        .lock-satellite {
+            position: absolute; width: 44px; height: 44px; background: #0f172a; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #34d399; top: 10px; right: 10px;
+        }
+        @keyframes pulseGlow { 0% { transform: scale(0.98); opacity: 0.9; } 100% { transform: scale(1.03); opacity: 1; } }
+
+        /* ============================================================
+           2. SECURITY SCORE & DASHBOARD
+           ============================================================ */
+        .score-panel {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px;
+            padding: 35px; display: grid; grid-template-columns: 0.7fr 1.3fr; gap: 40px; align-items: center;
+            box-shadow: var(--shadow-sm); transition: background var(--transition), border-color var(--transition);
+        }
+        .score-radial { display: flex; flex-direction: column; align-items: center; text-align: center; border-right: 1px solid var(--border); padding-right: 40px; }
+        .radial-circle {
+            width: 140px; height: 140px; border-radius: 50%; border: 8px solid var(--accent-light);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;
+            border-top-color: var(--success); border-right-color: var(--success); border-left-color: var(--success);
+        }
+        .score-number { font-size: 38px; font-weight: 800; color: var(--text-primary); }
+        .score-max { font-size: 14px; color: var(--text-secondary); margin-top: -4px; }
+        .status-badge { background: rgba(5, 150, 105, 0.1); color: var(--success); padding: 6px 16px; border-radius: 30px; font-weight: 700; font-size: 13px; margin-top: 15px; text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        .score-checks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .check-item { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 500; color: var(--text-primary); }
+        .check-item i { color: var(--success); font-size: 18px; }
+
+        /* ============================================================
+           3. CAMADAS DE PROTEÇÃO (TIMELINE)
+           ============================================================ */
+        .timeline { position: relative; max-width: 900px; margin: 0 auto; padding: 20px 0; }
+        .timeline::before { content: ''; position: absolute; width: 2px; background: var(--border); top: 0; bottom: 0; left: 32px; }
+        .timeline-item { position: relative; margin-bottom: 40px; padding-left: 80px; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-icon {
+            position: absolute; left: 12px; top: 2px; width: 42px; height: 42px; background: var(--bg-card);
+            border: 2px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: var(--accent); z-index: 2; transition: background var(--transition), color var(--transition);
+        }
+        .timeline-content { background: var(--bg-card); border: 1px solid var(--border); padding: 24px; border-radius: 18px; box-shadow: var(--shadow-sm); }
+        .timeline-content h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
+        .timeline-content p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+        /* ============================================================
+           4. COMO PROTEGEMOS SEUS DADOS (GRID)
+           ============================================================ */
+        .protection-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .protection-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 30px 24px;
+            box-shadow: var(--shadow-sm); transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        }
+        .protection-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--accent); }
+        .card-icon-wrapper { width: 52px; height: 52px; background: var(--bg-icon-circle); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--accent); font-size: 20px; }
+        .protection-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
+        .protection-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+
+        /* ============================================================
+           5. ESTATÍSTICAS DE SEGURANÇA
+           ============================================================ */
+        .stats-dashboard { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .stat-box {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 30px;
+            text-align: center; box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+        }
+        .stat-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: transparent; }
+        .stat-box:hover::before { background: var(--accent); }
+        .stat-box h2 { font-size: 36px; font-weight: 800; color: var(--accent); margin-bottom: 6px; letter-spacing: -0.02em; }
+        .stat-box p { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+        .stat-box span { font-size: 12px; color: var(--text-secondary); }
+
+        /* ============================================================
+           6. FLUXO DE PROTEÇÃO (DIAGRAMA)
+           ============================================================ */
+        .diagram-container {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 45px;
+            overflow-x: auto; box-shadow: var(--shadow-sm);
+        }
+        .diagram-flex { display: flex; align-items: center; justify-content: space-between; min-width: 900px; gap: 15px; }
+        .diagram-node {
+            display: flex; flex-direction: column; align-items: center; text-align: center; width: 110px; position: relative;
+        }
+        .node-circle {
+            width: 58px; height: 58px; background: var(--bg-icon-circle); border: 1px solid var(--border);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent);
+            font-size: 18px; margin-bottom: 12px; transition: all var(--transition);
+        }
+        .diagram-node:hover .node-circle { background: var(--accent); color: #ffffff; transform: scale(1.08); box-shadow: 0 0 15px var(--accent-light); }
+        .diagram-node span { font-size: 13px; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+        
+        .diagram-arrow { display: flex; flex-direction: column; align-items: center; color: var(--text-secondary); flex: 1; }
+        .diagram-arrow i { font-size: 14px; animation: moveArrow 2s infinite linear; }
+        .diagram-arrow span { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; color: var(--text-secondary); opacity: 0.7; }
+        @keyframes moveArrow { 0% { transform: translateX(-4px); opacity: 0.5; } 50% { transform: translateX(4px); opacity: 1; } 100% { transform: translateX(-4px); opacity: 0.5; } }
+
+        /* ============================================================
+           7. CERTIFICAÇÕES E CONFORMIDADE
+           ============================================================ */
+        .cert-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+        .cert-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 16px;
+            text-align: center; box-shadow: var(--shadow-sm); transition: border-color var(--transition);
+        }
+        .cert-card:hover { border-color: var(--accent); }
+        .cert-card i { font-size: 26px; color: var(--accent); margin-bottom: 12px; }
+        .cert-card p { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+
+        /* ============================================================
+           8. BENEFÍCIOS
+           ============================================================ */
+        .benefits-layout {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+        }
+        .benefit-line {
+            background: var(--bg-card); border: 1px solid var(--border); padding: 22px 26px; border-radius: 16px;
+            display: flex; align-items: center; gap: 18px; box-shadow: var(--shadow-sm);
+        }
+        .benefit-icon-check {
+            width: 28px; height: 28px; background: rgba(5, 150, 105, 0.1); color: var(--success);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;
+        }
+        .benefit-line p { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+
+        /* ============================================================
+           10. CTA FINAL
+           ============================================================ */
+        .cta-block {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border-radius: 28px;
+            padding: 60px; text-align: center; color: #ffffff; position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(29, 78, 216, 0.25);
+        }
+        .cta-block h2 { font-size: 36px; font-weight: 800; margin-bottom: 15px; letter-spacing: -0.02em; }
+        .cta-block p { font-size: 17px; color: rgba(255, 255, 255, 0.8); max-width: 600px; margin: 0 auto 35px auto; line-height: 1.6; }
+        .cta-btn {
+            background: #ffffff; color: #2563eb; font-weight: 700; font-size: 16px; padding: 14px 36px;
+            border: none; border-radius: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.1); transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.15); }
+
+        /* Footer */
+        .footer { 
+            background: var(--bg-footer) !important; border-top: 1px solid var(--border) !important; 
+            padding: 24px 40px; text-align: center; color: var(--text-secondary) !important; 
+            font-size: 14px; margin-top: auto; transition: background var(--transition), border-color var(--transition); 
+        }
+
+        /* ============================================================
+           TOGGLE E ESPECIALIDADES DARK MODE
+           ============================================================ */
+        .dark-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; margin-right: 15px; }
+        .dark-toggle-label { font-size: .78rem; font-weight: 600; color: var(--text-secondary); letter-spacing: .02em; transition: color var(--transition); white-space: nowrap; }
+        .toggle-track { position: relative; width: 48px; height: 26px; background: var(--toggle-track); border-radius: 99px; transition: background var(--transition); flex-shrink: 0; }
+        
+        .toggle-thumb {
+            position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%;
+            background: var(--toggle-thumb); box-shadow: 0 1px 6px rgba(0,0,0,.25);
+            display: flex; align-items: center; justify-content: center; font-size: .65rem;
+            transition: transform var(--transition), background var(--transition);
+        }
+        .toggle-thumb .icon-sun  { display: block; color: #f59e0b; }
+        .toggle-thumb .icon-moon { display: none; color: #3b82f6; }
+
+        [data-theme="dark"] .toggle-thumb { transform: translateX(22px); }
+        [data-theme="dark"] .toggle-thumb .icon-sun  { display: none; }
+        [data-theme="dark"] .toggle-thumb .icon-moon { display: block; }
+        .toggle-track::after { content: ''; position: absolute; inset: 0; border-radius: 99px; background: var(--accent); opacity: 0; transition: opacity .2s; }
+        .toggle-track.ripple::after { animation: ripple .3s ease-out; }
+        @keyframes ripple { 0% { opacity: .3; } 100% { opacity: 0; } }
+
+        .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0; transition: opacity .6s ease; }
+        [data-theme="dark"] .stars { opacity: 1; }
+
+        /* Customização Ativa Sidebar */
+        .sidebar-active-custom { background-color: #2563eb !important; color: white !important; border-radius: 8px; }
+        .sidebar-active-custom i { color: white !important; }
+
+        /* Responsividade Avançada */
+        @media(max-width: 1200px) {
+            .protection-grid { grid-template-columns: repeat(2, 1fr); }
+            .cert-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media(max-width: 950px) {
+            .main-content { margin-left: 0; width: 100%; }
+            .sidebar { display: none; }
+            .hero-grid { grid-template-columns: 1fr; }
+            .score-panel { grid-template-columns: 1fr; }
+            .score-radial { border-right: none; padding-right: 0; padding-bottom: 30px; border-bottom: 1px solid var(--border); }
+        }
+        @media(max-width: 700px) {
+            .stats-dashboard { grid-template-columns: 1fr; }
+            .benefits-layout { grid-template-columns: 1fr; }
+            .protection-grid { grid-template-columns: 1fr; }
+            .cert-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero { padding: 35px; }
+            .hero-text h1 { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="stars" id="stars"></canvas>
+
+    <div id="sidebar-component"></div>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="breadcrumb">Institucional > Segurança</div>
+            <div class="user-profile">
+                
+                <label class="dark-toggle" id="headerToggle" title="Alternar tema">
+                    <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
+                    <div class="toggle-track" id="toggleTrack">
+                        <div class="toggle-thumb">
+                            <i class="fas fa-sun icon-sun"></i>
+                            <i class="fas fa-moon icon-moon"></i>
+                        </div>
+                    </div>
+                </label>
+
+                <div class="user-info">
+                    <span class="user-name">Administrador</span>
+                    <span class="user-role">ERP Flash</span>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+            </div>
+        </header>
+
+        <section class="content">
+            
+            <!-- 1. HERO SECTION -->
+            <div class="hero section-margin">
+                <div class="hero-glow"></div>
+                <div class="hero-grid">
+                    <div class="hero-text">
+                        <h1>Segurança de nível empresarial para proteger o que mais importa</h1>
+                        <p>O ERP Flash utiliza tecnologias avançadas para proteger dados, usuários e operações em todos os momentos.</p>
+                        <div class="hero-indicators">
+                            <div class="hero-ind-card">
+                                <i class="fas fa-server"></i>
+                                <div>
+                                    <h4>99,9%</h4>
+                                    <p>Disponibilidade</p>
+                                </div>
+                            </div>
+                            <div class="hero-ind-card">
+                                <i class="fas fa-key"></i>
+                                <div>
+                                    <h4>256 bits</h4>
+                                    <p>Criptografia</p>
+                                </div>
+                            </div>
+                            <div class="hero-ind-card">
+                                <i class="fas fa-cloud-arrow-up"></i>
+                                <div>
+                                    <h4>Automático</h4>
+                                    <p>Backup de Dados</p>
+                                </div>
+                            </div>
+                            <div class="hero-ind-card">
+                                <i class="fas fa-eye"></i>
+                                <div>
+                                    <h4>24/7</h4>
+                                    <p>Monitoramento</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="shield-container">
+                            <i class="fas fa-shield-halved main-shield"></i>
+                            <div class="lock-satellite">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. SECURITY SCORE -->
+            <h2 class="section-title"><i class="fas fa-gauge-high"></i> Estado de Saúde da Plataforma</h2>
+            <div class="score-panel section-margin">
+                <div class="score-radial">
+                    <div class="radial-circle">
+                        <span class="score-number">98</span>
+                        <span class="score-max">/100</span>
+                    </div>
+                    <span class="status-badge">Excelente</span>
+                </div>
+                <div class="score-checks">
+                    <div class="check-item"><i class="fas fa-circle-check"></i> Criptografia ativa</div>
+                    <div class="check-item"><i class="fas fa-circle-check"></i> Backups funcionando</div>
+                    <div class="check-item"><i class="fas fa-circle-check"></i> Monitoramento operacional</div>
+                    <div class="check-item"><i class="fas fa-circle-check"></i> Conformidade LGPD</div>
+                </div>
+            </div>
+
+            <!-- 3. CAMADAS DE PROTEÇÃO -->
+            <h2 class="section-title"><i class="fas fa-layer-group"></i> Camadas de Proteção Ativa</h2>
+            <div class="timeline section-margin">
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-cipher"></i><i class="fas fa-lock"></i></div>
+                    <div class="timeline-content">
+                        <h3>Criptografia de Dados</h3>
+                        <p>Blindagem total através de algoritmos simétricos que tornam os dados ilegíveis para agentes externos ou interceptações de tráfego.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-user-shield"></i></div>
+                    <div class="timeline-content">
+                        <h3>Controle de Acesso</h3>
+                        <p>Autenticação multifator e restrições por perfil garantem que apenas funcionários autorizados visualizem métricas sensíveis.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+                    <div class="timeline-content">
+                        <h3>Backup Automático</h3>
+                        <p>Cópias automáticas de segurança são processadas continuamente para assegurar a persistência e restauração imediata do sistema.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-desktop"></i></div>
+                    <div class="timeline-content">
+                        <h3>Monitoramento Contínuo</h3>
+                        <p>Varreduras automáticas e heurísticas tratam anomalias, picos de acessos e tentativas de intrusão instantaneamente.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <div class="timeline-content">
+                        <h3>Auditoria e Logs</h3>
+                        <p>Histórico e rastreabilidade total de modificações efetuadas por cada usuário dentro do ecossistema ERP Flash.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. COMO PROTEGEMOS SEUS DADOS -->
+            <h2 class="section-title"><i class="fas fa-vault"></i> Como protegemos seus dados</h2>
+            <div class="protection-grid section-margin">
+                <div class="protection-card">
+                    <div class="card-icon-wrapper"><i class="fas fa-route"></i></div>
+                    <h3>Dados em trânsito</h3>
+                    <p>Todas as informações trafegam por conexões criptografadas de ponta a ponta usando protocolos seguros.</p>
+                </div>
+                <div class="protection-card">
+                    <div class="card-icon-wrapper"><i class="fas fa-database"></i></div>
+                    <h3>Dados armazenados</h3>
+                    <p>Armazenamento protegido, monitorado e isolado logicamente em servidores de alta confiabilidade.</p>
+                </div>
+                <div class="protection-card">
+                    <div class="card-icon-wrapper"><i class="fas fa-users-gear"></i></div>
+                    <h3>Controle de usuários</h3>
+                    <p>Permissões e níveis de acesso personalizados de acordo com as necessidades e hierarquias da sua empresa.</p>
+                </div>
+                <div class="protection-card">
+                    <div class="card-icon-wrapper"><i class="fas fa-chart-line"></i></div>
+                    <h3>Auditoria</h3>
+                    <p>Registro analítico e imutável de todas as atividades críticas para auditorias posteriores.</p>
+                </div>
+            </div>
+
+            <!-- 5. ESTATÍSTICAS DE SEGURANÇA -->
+            <h2 class="section-title"><i class="fas fa-chart-bar"></i> Indicadores Globais de Operação</h2>
+            <div class="stats-dashboard section-margin">
+                <div class="stat-box">
+                    <h2>99,9%</h2>
+                    <p>Disponibilidade</p>
+                    <span>Tempo de atividade contínuo</span>
+                </div>
+                <div class="stat-box">
+                    <h2>256 bits</h2>
+                    <p>Criptografia</p>
+                    <span>Padrão militar AES</span>
+                </div>
+                <div class="stat-box">
+                    <h2>24/7</h2>
+                    <p>Monitoramento</p>
+                    <span>Varreduras em tempo real</span>
+                </div>
+                <div class="stat-box">
+                    <h2>0</h2>
+                    <p>Incidentes Críticos</p>
+                    <span>Histórico de proteção absoluto</span>
+                </div>
+                <div class="stat-box">
+                    <h2>10.000+</h2>
+                    <p>Backups realizados</p>
+                    <span>Garantia de retenção de dados</span>
+                </div>
+                <div class="stat-box">
+                    <h2>50.000+</h2>
+                    <p>Operações monitoradas</p>
+                    <span>Por minuto no ambiente de nuvem</span>
+                </div>
+            </div>
+
+
+            <!-- 7. CERTIFICAÇÕES E CONFORMIDADE -->
+            <h2 class="section-title"><i class="fas fa-certificate"></i> Certificações e Conformidade</h2>
+            <div class="cert-grid section-margin">
+                <div class="cert-card">
+                    <i class="fas fa-gavel"></i>
+                    <p>LGPD</p>
+                </div>
+                <div class="cert-card">
+                    <i class="fas fa-file-shield"></i>
+                    <p>SSL/TLS</p>
+                </div>
+                <div class="cert-card">
+                    <i class="fas fa-cloud-arrow-up"></i>
+                    <p>Cloud Backup</p>
+                </div>
+                <div class="cert-card">
+                    <i class="fas fa-receipt"></i>
+                    <p>Auditoria</p>
+                </div>
+                <div class="cert-card">
+                    <i class="fas fa-user-lock"></i>
+                    <p>Controle Acesso</p>
+                </div>
+                <div class="cert-card">
+                    <i class="fas fa-key"></i>
+                    <p>AES-256</p>
+                </div>
+            </div>
+
+            <!-- 8. BENEFÍCIOS -->
+            <h2 class="section-title"><i class="fas fa-star"></i> Vantagens Corporativas Estratégicas</h2>
+            <div class="benefits-layout section-margin">
+                <div class="benefit-line">
+                    <div class="benefit-icon-check"><i class="fas fa-check"></i></div>
+                    <p>Proteção contra acessos não autorizados</p>
+                </div>
+                <div class="benefit-line">
+                    <div class="benefit-icon-check"><i class="fas fa-check"></i></div>
+                    <p>Backups automáticos e sem interrupções</p>
+                </div>
+                <div class="benefit-line">
+                    <div class="benefit-icon-check"><i class="fas fa-check"></i></div>
+                    <p>Recuperação rápida de dados em caso de sinistro</p>
+                </div>
+                <div class="benefit-line">
+                    <div class="benefit-icon-check"><i class="fas fa-check"></i></div>
+                    <p>Controle avançado de usuários por escopo</p>
+                </div>
+                <div class="benefit-line">
+                    <div class="benefit-icon-check"><i class="fas fa-check"></i></div>
+                    <p>Monitoramento em tempo real com alertas de segurança</p>
+                </div>
+                <div class="benefit-line">
+                    <div class="benefit-icon-check"><i class="fas fa-check"></i></div>
+                    <p>Segurança empresarial equivalente a grandes corporações</p>
+                </div>
+            </div>
+
+            <!-- 10. CTA FINAL -->
+            <div class="cta-block section-margin">
+                <h2>Sua empresa merece segurança sem complicação.</h2>
+                <p>Proteja dados, operações e usuários com uma plataforma desenvolvida para crescer junto com seu negócio.</p>
+                <button class="cta-btn" onclick="window.location.href=' planos.html'">
+                    <span>Conhecer os Planos</span a href="planos.html"></a>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            &copy; 2026 ERP Flash. Todos os direitos reservados. Governança e tecnologia de ponta para a sua jornada corporativa.
+        </footer>
+    </main>
+
+    <!-- Componente Sidebar Dinâmico -->
+    <script>
+        async function carregarSidebar() {
+            try {
+                const response = await fetch('../components/sidebar.html');
+                const html = await response.text();
+                const sidebarContainer = document.getElementById('sidebar-component');
+                sidebarContainer.innerHTML = html;
+
+                const allLinks = sidebarContainer.querySelectorAll('a');
+                allLinks.forEach(link => {
+                    link.classList.remove('active', 'sidebar-active-custom');
+                });
+
+                allLinks.forEach(link => {
+                    if (link.innerText.toLowerCase().includes('segurança') || link.href.includes('seguranca')) {
+                        link.classList.add('sidebar-active-custom');
+                    }
+                });
+            } catch (e) { 
+                console.error("Erro estrutural ao carregar sidebar", e); 
+            }
+        }
+        carregarSidebar();
+    </script>
+
+    <!-- Lógica do Tema (Dark Mode / Estrelas Canvas) -->
+    <script>
+        (function () {
+            const html = document.documentElement;
+            const STORAGE_KEY = 'erpflash_theme';
+
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+
+            function updateLabels() {
+                const dark = html.getAttribute('data-theme') === 'dark';
+                document.getElementById('toggleLabel').textContent = dark ? 'Modo claro' : 'Modo escuro';
+            }
+            updateLabels();
+
+            function toggleTheme() {
+                const dark = html.getAttribute('data-theme') === 'dark';
+                html.setAttribute('data-theme', dark ? 'light' : 'dark');
+                localStorage.setItem(STORAGE_KEY, dark ? 'light' : 'dark');
+                updateLabels();
+
+                const track = document.getElementById('toggleTrack');
+                track.classList.remove('ripple');
+                void track.offsetWidth;
+                track.classList.add('ripple');
+            }
+
+            document.getElementById('headerToggle').addEventListener('click', toggleTheme);
+
+            /* Animação do Canvas Estelar */
+            const canvas = document.getElementById('stars');
+            const ctx    = canvas.getContext('2d');
+            let stars    = [];
+
+            function resize() {
+                canvas.width  = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            function initStars(n = 120) {
+                stars = Array.from({ length: n }, () => ({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 1.1 + 0.3,
+                    speed: Math.random() * 0.002 + 0.001,
+                    phase: Math.random() * Math.PI * 2
+                }));
+            }
+            initStars();
+
+            function drawStars(t) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                stars.forEach(s => {
+                    const alpha = 0.3 + 0.6 * Math.sin(t * s.speed * 0.5 + s.phase);
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(148, 163, 184, ${alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(drawStars);
+            }
+            requestAnimationFrame(drawStars);
+        })();
+    </script>
+
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+    <script src="../assets/js/terminal.js"></script>
+</body>
+</html>
