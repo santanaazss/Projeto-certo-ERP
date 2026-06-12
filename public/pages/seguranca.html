@@ -26,7 +26,7 @@
             --accent-dark:    #1d4ed8;
             --accent-light:   rgba(37, 99, 235, 0.1);
             --border:         #e2e8f0;
-            --toggle-track:   #cbd5e1;
+            --toggle-track:   #e2e8f0;
             --toggle-thumb:   #ffffff;
             --glass-bg:       rgba(255, 255, 255, 0.4);
             --glass-border:   rgba(255, 255, 255, 0.6);
@@ -109,36 +109,17 @@
 }
 .search-bar input::placeholder { color: var(--text-secondary) !important; }
 
-.user-profile { 
-    display: flex; 
-    align-items: center; 
-    gap: 16px; 
-}
-.user-info { 
-    display: flex; 
-    flex-direction: column; 
-    text-align: right; 
-}
-.user-name { 
-    font-weight: 600; 
-    color: var(--text-primary) !important; 
-    font-size: 14px;
-}
-.user-role { 
-    font-size: 12px; 
-    color: var(--text-secondary) !important; 
-}
+.user-profile { display: flex; align-items: center; gap: 16px; }
+.user-info { display: flex; flex-direction: column; text-align: right; }
+.user-name { font-weight: 600; color: var(--text-primary) !important; /* SEM font-size */ }
+.user-role { font-size: 13px; color: var(--text-secondary) !important; }
 .user-profile img { 
-    width: 45px; 
-    height: 45px; 
+    width: 48px;   /* ALTERAR de 45px para 48px */
+    height: 48px;  /* ALTERAR de 45px para 48px */
     border-radius: 50%; 
     border: 2px solid var(--accent); 
 }
-.user-profile > i.far.fa-bell { 
-    color: var(--text-secondary) !important; 
-    font-size: 1.2rem;
-    cursor: pointer;
-}
+.user-profile > i.far.fa-bell { color: var(--text-secondary) !important; font-size: 1.2rem; cursor: pointer; }
         /* Seções e Títulos */
         .section-margin { margin-bottom: 70px; }
         .section-title { font-size: 26px; font-weight: 800; color: var(--text-primary); margin-bottom: 30px; display: flex; align-items: center; gap: 12px; letter-spacing: -0.02em; }
@@ -335,22 +316,51 @@
            ============================================================ */
         .dark-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; margin-right: 15px; }
         .dark-toggle-label { font-size: .78rem; font-weight: 600; color: var(--text-secondary); letter-spacing: .02em; transition: color var(--transition); white-space: nowrap; }
-        .toggle-track { position: relative; width: 48px; height: 26px; background: var(--toggle-track); border-radius: 99px; transition: background var(--transition); flex-shrink: 0; }
         
+        .toggle-track {
+            position: relative;
+            width: 48px; height: 26px;
+            background: var(--toggle-track);
+            border-radius: 99px;
+            transition: background var(--transition);
+            flex-shrink: 0;
+        }
+
         .toggle-thumb {
-            position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%;
-            background: var(--toggle-thumb); box-shadow: 0 1px 6px rgba(0,0,0,.25);
-            display: flex; align-items: center; justify-content: center; font-size: .65rem;
+            position: absolute;
+            top: 3px; left: 3px;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--toggle-thumb);
+            box-shadow: 0 1px 6px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .65rem;
             transition: transform var(--transition), background var(--transition);
         }
+
         .toggle-thumb .icon-sun  { display: block; color: #f59e0b; }
         .toggle-thumb .icon-moon { display: none; color: #3b82f6; }
 
         [data-theme="dark"] .toggle-thumb { transform: translateX(22px); }
         [data-theme="dark"] .toggle-thumb .icon-sun  { display: none; }
         [data-theme="dark"] .toggle-thumb .icon-moon { display: block; }
-        .toggle-track::after { content: ''; position: absolute; inset: 0; border-radius: 99px; background: var(--accent); opacity: 0; transition: opacity .2s; }
+
+        .toggle-track::after {
+            content: '';
+            position: absolute;
+            inset: 0; border-radius: 99px;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity .2s;
+        }
+
         .toggle-track.ripple::after { animation: ripple .3s ease-out; }
+        @keyframes ripple {
+            0%   { opacity: .3; }
+            100% { opacity: 0; }
+        }
         @keyframes ripple { 0% { opacity: .3; } 100% { opacity: 0; } }
 
         .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0; transition: opacity .6s ease; }
@@ -422,7 +432,7 @@
     <div id="sidebar-component"></div>
 
     <main class="main-content">
-        <header class="topbar">
+      <header class="topbar">
     <div class="search-bar">
         <i class="fas fa-search"></i>
         <input type="text" id="searchInput" placeholder="Buscar funcionalidades, módulos e setores...">
@@ -437,13 +447,14 @@
                 </div>
             </div>
         </label>
-                <a href="perfil.html" style="display: inline-flex; align-items: center; gap: 12px; text-decoration: none;">
-    <div class="user-info">
-        <span class="user-name">Administrador</span>
-        <span class="user-role">ERP Flash</span>
-    </div>
-    <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
-</a>
+
+        <a href="perfil.html" style="display: inline-flex; align-items: center; gap: 12px; text-decoration: none;">
+            <div class="user-info">
+                <span class="user-name">Administrador</span>
+                <span class="user-role">ERP Flash</span>
+            </div>
+            <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+        </a>
     </div>
 </header>
 
