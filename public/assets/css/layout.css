@@ -89,10 +89,13 @@ main {
    FOOTER
 ========================= */
 .footer {
-    background: #0f172a;
-    padding: 30px;
-    margin-top: auto; /* gruda no final */
-}
+            background: var(--bg-sidebar);
+            border-top: 1px solid rgba(255,255,255,0.04);
+            padding: 2rem;
+            text-align: center;
+            color: #475569;
+            font-size: 0.8rem;
+        }
 
 /* GARANTE VISUAL SEMPRE CORRETO */
 .footer * {

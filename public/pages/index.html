@@ -633,21 +633,17 @@
         }
 
         /* Footer */
-        .footer {
-            background: var(--bg-sidebar);
-            border-top: 1px solid rgba(255,255,255,0.04);
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .footer-copy { font-size: 0.8rem; color: #475569; }
-        .footer-links { display: flex; gap: 1.5rem; }
-        .footer-links a { font-size: 0.8rem; color: #475569; text-decoration: none; transition: color 0.2s; }
-        .footer-links a:hover { color: #60a5fa; }
-
+       /* Footer – exatamente como na página de integrações */
+.footer { 
+    background: var(--bg-footer) !important; 
+    border-top: 1px solid var(--border) !important; 
+    padding: 22px 40px; 
+    text-align: center; 
+    color: var(--text-secondary) !important; 
+    font-size: 14px; 
+    margin-top: 45px; 
+    transition: background var(--transition), border-color var(--transition), color var(--transition); 
+}
         /* MODAL */
         .modal-overlay {
             position: fixed;
@@ -1134,14 +1130,7 @@
             </section>
         </div>
 
-        <footer class="footer">
-            <div class="footer-copy">© 2026 ERP Flash • Todos os direitos reservados.</div>
-            <div class="footer-links">
-                <a href="#">Política de Privacidade</a>
-                <a href="#">Termos de Serviço</a>
-                <a href="#">Contato</a>
-            </div>
-        </footer>
+<footer class="footer">© 2026 ERP Flash • Plataforma inteligente de gestão empresarial.</footer>
     </main>
 </div>
 
