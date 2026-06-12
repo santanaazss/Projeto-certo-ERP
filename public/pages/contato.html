@@ -237,6 +237,88 @@
         @media(max-width: 1200px) { .contact-grid { grid-template-columns: repeat(2, 1fr); } }
         @media(max-width: 900px) { .sidebar { display: none; } .main-content { width: 100%; margin-left: 0; } }
         @media(max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
+        /* TOPBAR CORRETO COM SEARCH */
+.topbar { 
+    background: var(--bg-topbar) !important; 
+    backdrop-filter: blur(12px); 
+    padding: 18px 35px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-bottom: 1px solid var(--border) !important; 
+    position: sticky; 
+    top: 0; 
+    z-index: 999; 
+    transition: background var(--transition), border-color var(--transition);
+}
+
+.search-bar { 
+    display: flex; 
+    align-items: center; 
+    background: var(--bg-page) !important; 
+    padding: 13px 18px; 
+    border-radius: 16px; 
+    width: 360px; 
+    gap: 12px; 
+    border: 1px solid var(--border) !important; 
+    transition: background var(--transition), border-color var(--transition);
+}
+.search-bar i { color: var(--text-secondary) !important; transition: color var(--transition); }
+.search-bar input { 
+    border: none; 
+    background: transparent !important; 
+    outline: none; 
+    width: 100%; 
+    font-size: 14px; 
+    color: var(--text-primary) !important; 
+}
+.search-bar input::placeholder { color: var(--text-secondary) !important; }
+
+.user-profile { 
+    display: flex; 
+    align-items: center; 
+    gap: 16px; 
+}
+.user-info { 
+    display: flex; 
+    flex-direction: column; 
+    text-align: right; 
+}
+.user-name { 
+    font-weight: 600; 
+    color: var(--text-primary) !important; 
+    font-size: 14px;
+}
+.user-role { 
+    font-size: 12px; 
+    color: var(--text-secondary) !important; 
+}
+.user-profile img { 
+    width: 45px; 
+    height: 45px; 
+    border-radius: 50%; 
+    border: 2px solid var(--accent); 
+}
+.user-profile > i.far.fa-bell { 
+    color: var(--text-secondary) !important; 
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Espaçamento do conteúdo */
+.content {
+    padding: 40px;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+@media(max-width: 900px) { 
+    .main-content { margin-left: 0; width: 100%; }
+    .content { padding: 20px; }
+}
     </style>
 </head>
 <body>
@@ -245,27 +327,29 @@
     <div id="sidebar-component"></div>
 
     <main class="main-content">
-        <header class="topbar">
-            <div class="breadcrumb">Institucional > Contato</div>
-            <div class="user-profile">
-                
-                <label class="dark-toggle" id="headerToggle" title="Alternar tema">
-                    <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
-                    <div class="toggle-track" id="toggleTrack">
-                        <div class="toggle-thumb">
-                            <i class="fas fa-sun icon-sun"></i>
-                            <i class="fas fa-moon icon-moon"></i>
-                        </div>
-                    </div>
-                </label>
-
-                <div class="user-info">
-                    <span class="user-name">Administrador</span>
-                    <span class="user-role">ERP Flash</span>
+<header class="topbar">
+    <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Buscar funcionalidades, módulos e setores...">
+    </div>
+    <div class="user-profile">
+        <label class="dark-toggle" id="headerToggle" title="Alternar tema">
+            <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
+            <div class="toggle-track" id="toggleTrack">
+                <div class="toggle-thumb">
+                    <i class="fas fa-sun icon-sun"></i>
+                    <i class="fas fa-moon icon-moon"></i>
                 </div>
-                <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
             </div>
-        </header>
+        </label>
+        <i class="far fa-bell"></i>
+        <div class="user-info">
+            <span class="user-name">Administrador</span>
+            <span class="user-role">ERP Flash</span>
+        </div>
+        <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+    </div>
+</header>
 
         <section class="content">
             <div class="page-header">
