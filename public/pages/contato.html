@@ -60,7 +60,7 @@
 
         .main-content { margin-left: 260px; width: calc(100% - 260px); min-height: 100vh; display: flex; flex-direction: column; }
         
-        /* Topbar */
+        /* TOPBAR CORRETO */
         .topbar { 
             background: var(--bg-topbar) !important; 
             backdrop-filter: blur(12px); 
@@ -75,15 +75,63 @@
             transition: background var(--transition), border-color var(--transition);
         }
 
-        .breadcrumb { font-weight: 500; color: var(--text-secondary) !important; transition: color var(--transition); }
+        .search-bar { 
+            display: flex; 
+            align-items: center; 
+            background: var(--bg-page) !important; 
+            padding: 13px 18px; 
+            border-radius: 16px; 
+            width: 360px; 
+            gap: 12px; 
+            border: 1px solid var(--border) !important; 
+            transition: background var(--transition), border-color var(--transition);
+        }
+        .search-bar i { color: var(--text-secondary) !important; transition: color var(--transition); }
+        .search-bar input { 
+            border: none; 
+            background: transparent !important; 
+            outline: none; 
+            width: 100%; 
+            font-size: 14px; 
+            color: var(--text-primary) !important; 
+        }
+        .search-bar input::placeholder { color: var(--text-secondary) !important; }
 
-        .user-profile { display: flex; align-items: center; gap: 16px; }
-        .user-info { display: flex; flex-direction: column; text-align: right; }
-        .user-name { font-weight: 600; color: var(--text-primary) !important; transition: color var(--transition); }
-        .user-role { font-size: 13px; color: var(--text-secondary) !important; transition: color var(--transition); }
-        .user-profile img { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--accent); transition: border-color var(--transition); }
+        .user-profile { 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+        }
+        .user-info { 
+            display: flex; 
+            flex-direction: column; 
+            text-align: right; 
+        }
+        .user-name { 
+            font-weight: 600; 
+            color: var(--text-primary) !important; 
+            /* font-size removido - herda o padrão */
+        }
+        .user-role { 
+            font-size: 13px; 
+            color: var(--text-secondary) !important; 
+        }
+        .user-profile img { 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            border: 2px solid var(--accent); 
+        }
 
-        .content { padding: 40px; flex: 1; position: relative; z-index: 1; }
+        .content { 
+            padding: 40px; 
+            flex: 1; 
+            position: relative; 
+            z-index: 1; 
+            max-width: 1400px; 
+            width: 100%; 
+            margin: 0 auto; 
+        }
         
         .page-header { text-align: center; margin-bottom: 40px; }
         .page-header h1 { font-size: 42px; color: var(--text-primary) !important; margin-bottom: 12px; font-weight: 800; transition: color var(--transition); }
@@ -124,7 +172,9 @@
             width: 70px; height: 70px; 
             background: var(--bg-icon-circle) !important; 
             border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
             margin-bottom: 20px; 
             border: 1px solid var(--border) !important; 
             transition: all var(--transition); 
@@ -234,102 +284,24 @@
         }
         [data-theme="dark"] .stars { opacity: 1; }
 
+        /* Footer */
+        .footer { 
+            background: var(--bg-footer) !important; 
+            border-top: 1px solid var(--border) !important; 
+            padding: 22px 40px; 
+            text-align: center; 
+            color: var(--text-secondary) !important; 
+            font-size: 14px; 
+            margin-top: 45px; 
+            transition: background var(--transition), border-color var(--transition), color var(--transition); 
+        }
+
         @media(max-width: 1200px) { .contact-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media(max-width: 900px) { .sidebar { display: none; } .main-content { width: 100%; margin-left: 0; } }
+        @media(max-width: 900px) { 
+            .main-content { margin-left: 0; width: 100%; }
+            .content { padding: 20px; }
+        }
         @media(max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
-        /* TOPBAR CORRETO COM SEARCH */
-.topbar { 
-    background: var(--bg-topbar) !important; 
-    backdrop-filter: blur(12px); 
-    padding: 18px 35px; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    border-bottom: 1px solid var(--border) !important; 
-    position: sticky; 
-    top: 0; 
-    z-index: 999; 
-    transition: background var(--transition), border-color var(--transition);
-}
-
-.search-bar { 
-    display: flex; 
-    align-items: center; 
-    background: var(--bg-page) !important; 
-    padding: 13px 18px; 
-    border-radius: 16px; 
-    width: 360px; 
-    gap: 12px; 
-    border: 1px solid var(--border) !important; 
-    transition: background var(--transition), border-color var(--transition);
-}
-.search-bar i { color: var(--text-secondary) !important; transition: color var(--transition); }
-.search-bar input { 
-    border: none; 
-    background: transparent !important; 
-    outline: none; 
-    width: 100%; 
-    font-size: 14px; 
-    color: var(--text-primary) !important; 
-}
-.search-bar input::placeholder { color: var(--text-secondary) !important; }
-
-.user-profile { 
-    display: flex; 
-    align-items: center; 
-    gap: 16px; 
-}
-.user-info { 
-    display: flex; 
-    flex-direction: column; 
-    text-align: right; 
-}
-.user-name { 
-    font-weight: 600; 
-    color: var(--text-primary) !important; 
-    font-size: 14px;
-}
-.user-role { 
-    font-size: 12px; 
-    color: var(--text-secondary) !important; 
-}
-.user-profile img { 
-    width: 45px; 
-    height: 45px; 
-    border-radius: 50%; 
-    border: 2px solid var(--accent); 
-}
-.user-profile > i.far.fa-bell { 
-    color: var(--text-secondary) !important; 
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-/* Espaçamento do conteúdo */
-.content {
-    padding: 40px;
-    flex: 1;
-    position: relative;
-    z-index: 1;
-    max-width: 1400px;
-    width: 100%;
-    margin: 0 auto;
-}
-@media(max-width: 900px) { 
-    .main-content { margin-left: 0; width: 100%; }
-    .content { padding: 20px; }
-}
-/* Footer – exatamente como na página de integrações */
-.footer { 
-    background: var(--bg-footer) !important; 
-    border-top: 1px solid var(--border) !important; 
-    padding: 22px 40px; 
-    text-align: center; 
-    color: var(--text-secondary) !important; 
-    font-size: 14px; 
-    margin-top: 45px; 
-    transition: background var(--transition), border-color var(--transition), color var(--transition); 
-}
     </style>
 </head>
 <body>
@@ -338,30 +310,31 @@
     <div id="sidebar-component"></div>
 
     <main class="main-content">
-<header class="topbar">
-    <div class="search-bar">
-        <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="Buscar funcionalidades, módulos e setores...">
-    </div>
-    <div class="user-profile">
-        <label class="dark-toggle" id="headerToggle" title="Alternar tema">
-            <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
-            <div class="toggle-track" id="toggleTrack">
-                <div class="toggle-thumb">
-                    <i class="fas fa-sun icon-sun"></i>
-                    <i class="fas fa-moon icon-moon"></i>
-                </div>
+        <header class="topbar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar funcionalidades, módulos e setores...">
             </div>
-        </label>
+            <div class="user-profile">
+                <label class="dark-toggle" id="headerToggle" title="Alternar tema">
+                    <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
+                    <div class="toggle-track" id="toggleTrack">
+                        <div class="toggle-thumb">
+                            <i class="fas fa-sun icon-sun"></i>
+                            <i class="fas fa-moon icon-moon"></i>
+                        </div>
+                    </div>
+                </label>
+
                 <a href="perfil.html" style="display: inline-flex; align-items: center; gap: 12px; text-decoration: none;">
-    <div class="user-info">
-        <span class="user-name">Administrador</span>
-        <span class="user-role">ERP Flash</span>
-    </div>
-    <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
-</a>
-    </div>
-</header>
+                    <div class="user-info">
+                        <span class="user-name">Administrador</span>
+                        <span class="user-role">ERP Flash</span>
+                    </div>
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+                </a>
+            </div>
+        </header>
 
         <section class="content">
             <div class="page-header">
@@ -411,7 +384,8 @@
                 </a>
             </div>
         </section>
-            <footer class="footer">© 2026 ERP Flash • Plataforma inteligente de gestão empresarial.</footer>
+        
+        <footer class="footer">© 2026 ERP Flash • Plataforma inteligente de gestão empresarial.</footer>
     </main>
 
     <script>
@@ -422,7 +396,6 @@
                 const sidebarContainer = document.getElementById('sidebar-component');
                 sidebarContainer.innerHTML = html;
 
-                // LÓGICA DE DESTAQUE E COR DO ÍCONE
                 const allLinks = sidebarContainer.querySelectorAll('a');
                 allLinks.forEach(link => {
                     link.classList.remove('active');
@@ -447,69 +420,69 @@
             const html = document.documentElement;
             const STORAGE_KEY = 'erpflash_theme';
 
-            /* Restaura preferência salva */
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved === 'dark') html.setAttribute('data-theme', 'dark');
 
-            /* Atualiza textos informativos */
             function updateLabels() {
                 const dark = html.getAttribute('data-theme') === 'dark';
-                document.getElementById('toggleLabel').textContent = dark ? 'Modo claro' : 'Modo escuro';
+                const label = document.getElementById('toggleLabel');
+                if (label) label.textContent = dark ? 'Modo claro' : 'Modo escuro';
             }
             updateLabels();
 
-            /* Alternância de temas */
             function toggleTheme() {
                 const dark = html.getAttribute('data-theme') === 'dark';
                 html.setAttribute('data-theme', dark ? 'light' : 'dark');
                 localStorage.setItem(STORAGE_KEY, dark ? 'light' : 'dark');
                 updateLabels();
 
-                /* Efeito cascata (Ripple) no clique */
                 const track = document.getElementById('toggleTrack');
-                track.classList.remove('ripple');
-                void track.offsetWidth;
-                track.classList.add('ripple');
+                if (track) {
+                    track.classList.remove('ripple');
+                    void track.offsetWidth;
+                    track.classList.add('ripple');
+                }
             }
 
-            document.getElementById('headerToggle').addEventListener('click', toggleTheme);
+            const toggleBtn = document.getElementById('headerToggle');
+            if (toggleBtn) toggleBtn.addEventListener('click', toggleTheme);
 
-            /* Efeito visual de estrelas no fundo (modo escuro) */
             const canvas = document.getElementById('stars');
-            const ctx    = canvas.getContext('2d');
-            let stars    = [];
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let stars = [];
 
-            function resize() {
-                canvas.width  = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            resize();
-            window.addEventListener('resize', resize);
+                function resize() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
+                resize();
+                window.addEventListener('resize', resize);
 
-            function initStars(n = 120) {
-                stars = Array.from({ length: n }, () => ({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: Math.random() * 1.2 + .3,
-                    a: Math.random(),
-                    speed: Math.random() * .003 + .001,
-                    phase: Math.random() * Math.PI * 2
-                }));
-            }
-            initStars();
+                function initStars(n = 120) {
+                    stars = Array.from({ length: n }, () => ({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        r: Math.random() * 1.2 + .3,
+                        speed: Math.random() * .003 + .001,
+                        phase: Math.random() * Math.PI * 2
+                    }));
+                }
+                initStars();
 
-            function drawStars(t) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                stars.forEach(s => {
-                    const alpha = .4 + .5 * Math.sin(t * s.speed * 1000 + s.phase);
-                    ctx.beginPath();
-                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(148,163,184,${alpha})`;
-                    ctx.fill();
-                });
+                function drawStars(t) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    stars.forEach(s => {
+                        const alpha = .4 + .5 * Math.sin(t * s.speed * 1000 + s.phase);
+                        ctx.beginPath();
+                        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(148,163,184,${alpha})`;
+                        ctx.fill();
+                    });
+                    requestAnimationFrame(drawStars);
+                }
                 requestAnimationFrame(drawStars);
             }
-            requestAnimationFrame(drawStars);
         })();
     </script>
 
