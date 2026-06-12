@@ -172,12 +172,12 @@
     <canvas class="stars" id="stars"></canvas>
     <div id="sidebar-component"></div>
     <main class="main-content">
-        <header class="topbar">
+    <header class="topbar">
     <div class="search-bar">
         <i class="fas fa-search"></i>
         <input type="text" id="searchInput" placeholder="Buscar artigos...">
     </div>
-    <div class="user-profile" id="profileRedirect">
+    <div class="user-profile">
         <label class="dark-toggle" id="headerToggle" title="Alternar tema">
             <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
             <div class="toggle-track" id="toggleTrack">
@@ -438,8 +438,7 @@
                 setTimeout(() => document.getElementById('newsSuccess').style.display = 'none', 4000);
             } else alert("E-mail inválido");
         });
-        document.getElementById('profileRedirect').addEventListener('click', () => window.location.href = 'perfil.html');
-        
+
         initEvents();
         renderArticles();
     </script>
