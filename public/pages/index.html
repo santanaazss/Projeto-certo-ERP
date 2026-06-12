@@ -100,8 +100,18 @@
 
         .user-profile { display: flex; align-items: center; gap: 16px; }
         .user-info { display: flex; flex-direction: column; text-align: right; }
-        .user-name { font-weight: 600; color: var(--text-primary) !important; font-size: 14px; }
-        .user-role { font-size: 12px; color: var(--text-secondary) !important; }
+       .user-name { 
+    font-weight: 600; 
+    color: var(--text-primary) !important; 
+    transition: color var(--transition); 
+    /* SEM font-size definido → herda o padrão */
+}
+
+.user-role { 
+    font-size: 13px;  /* ← TAMANHO ESPECÍFICO MENOR */
+    color: var(--text-secondary) !important; 
+    transition: color var(--transition); 
+}
         .user-profile img { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--accent); cursor: pointer; }
         .user-profile > i.far.fa-bell { color: var(--text-secondary) !important; font-size: 1.2rem; cursor: pointer; transition: color var(--transition); }
 
@@ -638,25 +648,25 @@
                     <i class="fas fa-search"></i>
                     <input type="text" id="searchInput" placeholder="Buscar funcionalidades, módulos e setores...">
                 </div>
-                <div class="user-profile">
-                    <label class="dark-toggle" id="headerToggle" title="Alternar tema">
-                        <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
-                        <div class="toggle-track" id="toggleTrack">
-                            <div class="toggle-thumb">
-                                <i class="fas fa-sun icon-sun"></i>
-                                <i class="fas fa-moon icon-moon"></i>
-                            </div>
-                        </div>
-                    </label>
-                   
-                    <a href="perfil.html" style="display: inline-flex; align-items: center; gap: 12px; text-decoration: none;">
-                        <div class="user-info">
-                            <span class="user-name">Administrador</span>
-                            <span class="user-role">ERP Flash</span>
-                        </div>
-                        <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
-                    </a>
-                </div>
+<div class="user-profile">
+    <label class="dark-toggle" id="headerToggle" title="Alternar tema">
+        <span class="dark-toggle-label" id="toggleLabel">Modo escuro</span>
+        <div class="toggle-track" id="toggleTrack">
+            <div class="toggle-thumb">
+                <i class="fas fa-sun icon-sun"></i>
+                <i class="fas fa-moon icon-moon"></i>
+            </div>
+        </div>
+    </label>
+
+    <a href="perfil.html" style="display: inline-flex; align-items: center; gap: 12px; text-decoration: none;">
+        <div class="user-info">
+            <span class="user-name">Administrador</span>
+            <span class="user-role">ERP Flash</span>
+        </div>
+        <img src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff" alt="Avatar">
+    </a>
+</div>
             </header>
 
             <div class="content">
