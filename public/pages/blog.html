@@ -409,7 +409,7 @@
             if (saved === 'dark') html.setAttribute('data-theme', 'dark');
             const toggle = document.getElementById('headerToggle');
             const label = document.getElementById('toggleLabel');
-            function updateLabel() { label.textContent = html.getAttribute('data-theme') === 'dark' ? 'Modo claro' : 'Modo escuro'; }
+            function updateLabel() { label.textContent = html.getAttribute('data-theme') === 'dark' ? 'Modo escuro' : 'Modo claro'; }
             updateLabel();
             toggle.addEventListener('click', () => {
                 const dark = html.getAttribute('data-theme') === 'dark';
