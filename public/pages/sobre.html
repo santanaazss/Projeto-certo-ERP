@@ -118,7 +118,6 @@
         .user-name { 
             font-weight: 600; 
             color: var(--text-primary) !important; 
-            /* font-size removido - herda o padrão */
         }
         .user-role { 
             font-size: 13px; 
@@ -191,6 +190,191 @@
         .card-body i { font-size: 24px; color: var(--accent) !important; margin-bottom: 15px; display: block; transition: color var(--transition); }
         .card-body h3 { margin-bottom: 12px; font-size: 20px; color: var(--text-primary) !important; transition: color var(--transition); }
         .card-body p { color: var(--text-secondary) !important; line-height: 1.6; font-size: 15px; transition: color var(--transition); }
+
+        /* ============================================================
+           MÉTRICAS, LINHA DO TEMPO E MISSÃO/VISÃO/VALORES
+           ============================================================ */
+        .section-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin: 60px 0 25px 0;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: color var(--transition);
+        }
+
+        /* Grid de Contadores/Métricas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 20px;
+            padding: 35px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            transition: transform 0.3s ease, background var(--transition), border-color var(--transition);
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+        .stat-number {
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--accent) !important;
+            margin-bottom: 8px;
+            transition: color var(--transition);
+        }
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary) !important;
+            font-weight: 500;
+            transition: color var(--transition);
+        }
+
+        /* Grid de Missão, Visão e Valores */
+        .mvv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .mvv-card {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 24px;
+            padding: 35px 30px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
+            transition: transform 0.3s ease, background var(--transition), border-color var(--transition);
+        }
+        .mvv-card:hover {
+            transform: translateY(-5px);
+        }
+        .mvv-card i {
+            font-size: 32px;
+            color: var(--accent) !important;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: color var(--transition);
+        }
+        .mvv-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        .mvv-card p {
+            color: var(--text-secondary) !important;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+        .mvv-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+        .mvv-list li {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .mvv-list li i {
+            font-size: 14px;
+            margin-bottom: 0;
+            color: var(--accent) !important;
+        }
+
+        /* Container da Linha do Tempo */
+        .timeline-container {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            transition: background var(--transition), border-color var(--transition);
+        }
+        .timeline-nav {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .timeline-nav::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 0; right: 0;
+            height: 3px;
+            background: var(--border);
+            z-index: 1;
+            transform: translateY(-50%);
+            transition: background var(--transition);
+        }
+        .timeline-btn {
+            background: var(--bg-page) !important;
+            border: 3px solid var(--border) !important;
+            color: var(--text-secondary) !important;
+            width: 65px; height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            z-index: 2;
+            transition: all var(--transition);
+        }
+        .timeline-btn:hover {
+            border-color: var(--accent) !important;
+            color: var(--accent) !important;
+        }
+        .timeline-btn.active {
+            background: var(--accent) !important;
+            border-color: var(--accent) !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+            transform: scale(1.1);
+        }
+        .timeline-content-box {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .timeline-event {
+            display: none;
+        }
+        .timeline-event.active {
+            display: block;
+            animation: slideUp 0.4s cubic-bezier(.4,0,.2,1) forwards;
+        }
+        .timeline-event h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        .timeline-event p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* ============================================================
            ESTILOS DO TOGGLE E CANVAS DE ESTRELAS
@@ -280,6 +464,8 @@
         @media(max-width: 900px) { 
             .main-content { margin-left: 0; width: 100%; }
             .content { padding: 20px; }
+            .timeline-nav::before { display: none; }
+            .timeline-nav { flex-wrap: wrap; gap: 10px; justify-content: center; }
         }
     </style>
 </head>
@@ -293,7 +479,7 @@
     <header class="topbar">
         <div class="search-bar">
             <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Buscar funcionalidades, módulos e setores...">
+            <input type="text" id="searchInput" placeholder="Buscar functionalities, módulos e setores...">
         </div>
         <div class="user-profile">
             <label class="dark-toggle" id="headerToggle" title="Alternar tema">
@@ -369,6 +555,79 @@
                 </div>
             </div>
         </div>
+
+        <h2 class="section-title"></i> O ERP Flash em Números</h2>
+        <div class="stats-grid" id="statsSection">
+            <div class="stat-card">
+                <div class="stat-number" data-target="450">0</div>
+                <div class="stat-label">Indústrias Atendidas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="99">0</div>
+                <div class="stat-label">% de Uptime Operacional</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="15">0</div>
+                <div class="stat-label">Milhões Poupados em Desperdício</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="40">0</div>
+                <div class="stat-label">Módulos Integrados</div>
+            </div>
+        </div>
+
+        <h2 class="section-title"></i> Diretrizes Estratégicas</h2>
+        <div class="mvv-grid">
+            <div class="mvv-card">
+                <i class="fas fa-rocket"></i>
+                <h3>Missão</h3>
+                <p>Potencializar a eficiência e a competitividade da indústria nacional através de soluções tecnológicas integradas, transformando dados do chão de fábrica em decisões inteligentes em tempo real.</p>
+            </div>
+            <div class="mvv-card">
+                <i class="fas fa-eye"></i>
+                <h3>Visão</h3>
+                <p>Ser o ecossistema de gestão integrada (ERP) mais confiável e inovador do mercado de manufatura, consolidando-se como referência obrigatória na transição das empresas para a Indústria 4.0.</p>
+            </div>
+            <div class="mvv-card">
+                <i class="fas fa-handshake"></i>
+                <h3>Valores</h3>
+                <ul class="mvv-list">
+                    <li><i class="fas fa-check"></i> <strong>Precisão Industrial:</strong> Foco em dados exatos.</li>
+                    <li><i class="fas fa-check"></i> <strong>Inovação Prática:</strong> Tecnologia utilitária e ágil.</li>
+                    <li><i class="fas fa-check"></i> <strong>Parceria de Chão de Fábrica:</strong> Lado a lado com a operação.</li>
+                    <li><i class="fas fa-check"></i> <strong>Sustentabilidade:</strong> Redução drástica do desperdício.</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="section-title"> Nossa Trajetória</h2>
+        <div class="timeline-container">
+            <div class="timeline-nav">
+                <button class="timeline-btn active" data-year="2020">2020</button>
+                <button class="timeline-btn" data-year="2022">2022</button>
+                <button class="timeline-btn" data-year="2024">2024</button>
+                <button class="timeline-btn" data-year="2026">2026</button>
+            </div>
+            <div class="timeline-content-box">
+                <div class="timeline-event active" id="event-2020">
+                    <h3> O Início e Propósito</h3>
+                    <p>O ERP Flash nasceu com o objetivo claro de desmistificar a tecnologia no chão de fábrica, criando uma arquitetura leve, rápida e focada 100% nas dores reais do setor de manufatura.</p>
+                </div>
+                <div class="timeline-event" id="event-2022">
+                    <h3> Revolução no PCP</h3>
+                    <p>Lançamos o nosso algoritmo avançado de Planejamento e Controle de Produção (PCP), permitindo rastreabilidade total por código de barras de ponta a ponta e coleta móvel de dados.</p>
+                </div>
+                <div class="timeline-event" id="event-2024">
+                    <h3> Inteligência de Dados com BI</h3>
+                    <p>Integramos ferramentas nativas de Business Intelligence para calcular automaticamente métricas de OEE global e KPIs industriais direto na nuvem híbrida.</p>
+                </div>
+                <div class="timeline-event" id="event-2026">
+                    <h3> Ecossistema Conectado (Indústria 4.0)</h3>
+                    <p>Consolidação do ecossistema inteligente de gestão integrada com sensores IoT corporativos e manutenções preventivas automatizadas com foco em zero paradas críticas.</p>
+                </div>
+            </div>
+        </div>
+
     </section>
     
     <footer class="footer">© 2026 ERP Flash • Plataforma inteligente de gestão empresarial.</footer>
@@ -462,6 +721,80 @@
             }
             requestAnimationFrame(drawStars);
         }
+
+        // ============================================================
+        // NOVO SCRIPT: CONTADORES ANIMADOS (INTERSECTION OBSERVER)
+        // ============================================================
+        function animarContadores() {
+            const contadores = document.querySelectorAll('.stat-number');
+            
+            contadores.forEach(contador => {
+                const alvo = +contador.getAttribute('data-target');
+                const duracao = 1500; // Tempo total da animação em milissegundos
+                const incremento = alvo / (duracao / 16); // Estimativa de 60 FPS
+                
+                let contagemAtual = 0;
+                
+                const atualizarValor = () => {
+                    contagemAtual += incremento;
+                    if (contagemAtual < alvo) {
+                        if (alvo === 99) {
+                            contador.textContent = '99.7%';
+                            return;
+                        } else if (alvo === 15) {
+                            contador.textContent = 'R$ ' + Math.floor(contagemAtual) + 'M+';
+                        } else if (alvo === 40) {
+                            contador.textContent = '+' + Math.floor(contagemAtual);
+                        } else {
+                            contador.textContent = '+' + Math.floor(contagemAtual);
+                        }
+                        requestAnimationFrame(atualizarValor);
+                    } else {
+                        if (alvo === 99) contador.textContent = '99.7%';
+                        else if (alvo === 15) contador.textContent = 'R$ 15M+';
+                        else if (alvo === 40) contador.textContent = '+40';
+                        else contador.textContent = '+' + alvo;
+                    }
+                };
+                atualizarValor();
+            });
+        }
+
+        const statsSection = document.getElementById('statsSection');
+        if (statsSection) {
+            const observerOpcoes = { threshold: 0.4 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animarContadores();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOpcoes);
+            observer.observe(statsSection);
+        }
+
+        // ============================================================
+        // NOVO SCRIPT: SELEÇÃO DA LINHA DO TEMPO INTERATIVA
+        // ============================================================
+        const botoesLinhaTempo = document.querySelectorAll('.timeline-btn');
+        const eventosLinhaTempo = document.querySelectorAll('.timeline-event');
+
+        botoesLinhaTempo.forEach(botao => {
+            botao.addEventListener('click', () => {
+                botoesLinhaTempo.forEach(b => b.classList.remove('active'));
+                eventosLinhaTempo.forEach(ev => ev.classList.remove('active'));
+                
+                botao.classList.add('active');
+                
+                const anoSelecionado = botao.getAttribute('data-year');
+                const eventoAlvo = document.getElementById(`event-${anoSelecionado}`);
+                if (eventoAlvo) {
+                    eventoAlvo.classList.add('active');
+                }
+            });
+        });
+
     })();
 </script>
 
